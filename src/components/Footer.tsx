@@ -1,9 +1,9 @@
 import { FC } from "react";
-import borderVector from "@/assets/borderVector.svg";
-import bar_code from "@/assets/bar_code.svg";
-import telegram_icon from "@/assets/telegram-icon.svg";
-import x_icon from "@/assets/x-icon.svg";
-import github_icon from "@/assets/github-icon.svg";
+import borderVector from "@/assets/images/borderVector.svg";
+import bar_code from "@/assets/images/bar_code.svg";
+import telegram_icon from "@/assets/images/telegram-icon.svg";
+import x_icon from "@/assets/images/x-icon.svg";
+import github_icon from "@/assets/images/github-icon.svg";
 import { VerticalDivider } from "./VerticalDivider";
 import { Link } from "react-router-dom";
 
@@ -19,13 +19,13 @@ export const Footer: FC = () => {
         </div>
       </div>
       <div className="flex flex-row items-end gap-2">
-        <span className="text-[8px] uppercase">Dyphira Intelligence Technology</span>
+        <span className="text-[8px] uppercase bg-gradient-to-b from-[#C8FFD3] via-[#C8FFD3] to-[#C8FFF480] bg-clip-text text-transparent">Dyphira Intelligence Technology</span>
         <div className="flex flex-row items-center pb-2">
           <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
           <div className="w-[40vw] bg-[#C8FFF440] h-[0.5px]"></div>
           <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
         </div>
-        <span className="text-[8px] uppercase">User benchmark analytics summary</span>
+        <span className="text-[8px] uppercase bg-gradient-to-b from-[#C8FFD3] via-[#C8FFD3] to-[#C8FFF480] bg-clip-text text-transparent">User benchmark analytics summary</span>
       </div>
       <div className="flex flex-row items-center gap-2 pl-20">
         <SocialLink icon={telegram_icon} link="https://t.me/diphra" title="Telegram" />
