@@ -1,7 +1,7 @@
 import { FC } from "react";
 import logo from "@/assets/logo.svg";
-import { Link } from "react-router-dom";
 import { AngularCorner } from "./AngularCorner";
+import { VerticalDivider } from "./VerticalDivider";
 
 interface HeaderProps {
   activePage: string;
@@ -10,8 +10,9 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ activePage }) => {
   return (
     <header className="flex items-center justify-between px-10 py-5">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <img src={logo} alt="logo" />
+        <VerticalDivider style="h-5" />
         <div className="flex items-center gap-2">
           <AngularCorner title="Metrics" link="/" />
           <AngularCorner title="Assessments" link="/assessments" />
@@ -20,8 +21,7 @@ export const Header: FC<HeaderProps> = ({ activePage }) => {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <button>Login</button>
-        <button>Register</button>
+        
       </div>
     </header>
   );
