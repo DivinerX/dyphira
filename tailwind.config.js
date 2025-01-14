@@ -6,7 +6,11 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        meltmino: ["Meltmino", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 }
