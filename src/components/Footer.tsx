@@ -8,7 +8,7 @@ import { VerticalDivider } from "./VerticalDivider";
 import { Link } from "react-router-dom";
 
 export const Footer: FC = () => {
-  return <footer className="flex flex-col items-center justify-between">
+  return <footer className="flex flex-col items-center justify-between mt-4">
     <div className="flex justify-between w-full px-11 -mb-4 h-8">
       <div className="flex flex-row items-center gap-2">
         <img src={bar_code} alt="bar_code" />
@@ -46,13 +46,13 @@ interface SocialLinkProps {
 const SocialLink: FC<SocialLinkProps> = ({ icon, link, title }) => {
   return (
     <div className="relative p-0 overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#D9D9D9]"></div>
+      <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440]"></div>
       {/* Right top corner */}
       <div className="absolute top-0 right-0 w-1 h-1 border-r-[0.5px] border-t-[0.5px] border-[#fff] z-30"></div>
       {/* Left bottom corner */}
       <div className="absolute bottom-0 left-0 w-1 h-1 border-l-[0.5px] border-b-[0.5px] border-[#fff] z-30"></div>
-      <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#D9D9D9] bg-[#0d191a] z-30"></div>
-      <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#D9D9D9] bg-[#0d191a] z-30"></div>
+      <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
+      <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
       <Link to={link}>
         <div className="p-[6px]">
           <img src={icon} alt={title} className="h-[10px]" />

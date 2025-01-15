@@ -9,13 +9,13 @@ interface LayoutProps {
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
 	return (
-		<div className="flex flex-col min-h-screen">
-			<Header activePage="My App" />
-			<div className="flex-1 flex flex-col">
+		<div className="flex flex-col min-h-full">
+			<Header />
+			<div className="flex-1 flex flex-col p-4 relative">
 				{children}
+				<Sider />
 			</div>
 			<Footer />
-			<Sider />
 		</div>
 	);
 };

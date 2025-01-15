@@ -3,7 +3,7 @@ import { FC } from "react";
 export const Sider: FC = () => {
   return (
     <div className="absolute top-0 right-0 h-full">
-      <div className="flex flex-col items-end justify-between h-full pr-10 py-24">
+      <div className="flex flex-col items-end justify-between h-full pr-10 py-8">
         <div className="flex flex-row gap-1">
           <div className="flex flex-col justify-end gap-2">
             <div className="flex flex-col justify-end">

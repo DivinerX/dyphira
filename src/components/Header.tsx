@@ -8,11 +8,7 @@ import headerBorder from "@/assets/images/header-border.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { StyledBox } from "./StyledBox";
 
-interface HeaderProps {
-  activePage: string;
-}
-
-export const Header: FC<HeaderProps> = () => {
+export const Header: FC = () => {
   const navigate = useNavigate();
   const activePage = useLocation().pathname;
   return (
@@ -65,8 +61,6 @@ interface HoverChangeStyledBoxProps {
 
 const HoverChangeStyledBox: FC<HoverChangeStyledBoxProps> = ({ title, link, activePage }) => {
   const [isHover, setIsHover] = useState(false);
-
-  console.log(activePage);
 
   return (
     <div

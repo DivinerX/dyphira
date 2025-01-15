@@ -19,7 +19,7 @@ body {
 
 @font-face {
   font-family: "Meltmino";
-  src: url("../public/fonts/Meltmino-Regular.ttf") format("truetype");
+  src: url("/fonts/Meltmino-Regular.ttf") format("truetype");
 }
 
 p {
