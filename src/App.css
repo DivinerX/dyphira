@@ -12,9 +12,16 @@ body,
 }
 
 body {
-  background: radial-gradient(circle, #0d191a 100%, #050b0a 100%);
   color: #fff;
   font-family: "Meltmino", sans-serif;
+  position: relative;
+}
+
+#layout {
+  background:
+    linear-gradient(55deg, transparent 0%, #0a1514f8 45%),
+    radial-gradient(circle at center, transparent 0%, #050B0A 50%),
+    linear-gradient(270deg, transparent 0%, #0a1514f8 15%);
 }
 
 @font-face {

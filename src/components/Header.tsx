@@ -15,7 +15,7 @@ export const Header: FC = () => {
     <header className="flex flex-col px-10 py-5 gap-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src={logo} alt="logo" />
+          <img src={logo} alt="logo" onClick={() => navigate("/")} className="cursor-pointer" />
           <VerticalDivider style="h-5" />
           <div className="flex items-center gap-2">
             <HoverChangeStyledBox title="Metrics" link={() => navigate("/metrics")} activePage={activePage} />

@@ -15,7 +15,7 @@ export const Footer: FC = () => {
         <VerticalDivider style="h-4" />
         <div className="flex flex-col">
           <span className="text-[8px] uppercase">User benchmark test</span>
-          <span className="text-[8px] uppercase">Diphyra intelligence @ 2025</span>
+          <span className="text-[8px] uppercase">Diphyra intelligence @ {new Date().getFullYear()}</span>
         </div>
       </div>
       <div className="flex flex-row items-end gap-2">
