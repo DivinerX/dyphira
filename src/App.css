@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: radial-gradient(circle, #0d191a 100%, #050b0a 100%);
+  color: #fff;
+  font-family: "Meltmino", sans-serif;
+}
+
+@font-face {
+  font-family: "Meltmino";
+  src: url("/fonts/Meltmino-Regular.ttf") format("truetype");
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
