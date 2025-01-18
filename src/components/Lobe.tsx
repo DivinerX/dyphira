@@ -18,7 +18,6 @@ export const Lobe: FC = () => {
         className="absolute top-0 left-0 w-2/3 transform translate-x-[25%] translate-y-[40%] z-10 pointer-events-none"
       />
       <div className="flex flex-row w-full justify-center gap-24 -mt-36">
-
         <div className="flex flex-row gap-1">
           <div className="w-4 h-full py-1 px-1">
             <div className="relative w-full h-full">
