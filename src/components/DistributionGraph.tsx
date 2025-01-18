@@ -138,7 +138,7 @@ export const DistributionGraph: FC = () => {
 
   return (
     <div id="chart-container">
-      <Line data={data} options={options} />
+      <Line data={data} options={options as any} />
     </div>
   );
 }
