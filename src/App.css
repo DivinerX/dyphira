@@ -26,7 +26,7 @@ body {
 
 @font-face {
   font-family: "Meltmino";
-  src: url("/fonts/Meltmino-Regular.ttf") format("truetype");
+  src: url("/fonts/Meltmino-SemiBold.ttf") format("truetype");
 }
 
 p {

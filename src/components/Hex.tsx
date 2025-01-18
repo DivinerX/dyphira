@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { LobeDetail } from './LobeDetail';
 
 interface Point {
   x: number;
@@ -9,6 +10,7 @@ export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ set
   const [mousePos, setMousePos] = useState<Point | null>(null);
   const [isInside, setIsInside] = useState(false);
   const [dimensions, setDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
+  const [cursorPosition, setCursorPosition] = useState<{ left: number; top: number }>({ left: 0, top: 0 });
 
   // Calculate hex points based on container size
   const calculateHexPoints = useCallback(() => {
@@ -77,6 +79,12 @@ export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ set
         y: dimensions.height * ((e.clientY - rect.top) / rect.height),
       };
 
+      // Set actual cursor position for LobDetail positioning
+      setCursorPosition({
+        left: e.clientX,
+        top: e.clientY
+      });
+
       setMousePos(point);
       setIsInside(isPointInHex(point));
       setPoint(point);
@@ -96,98 +104,115 @@ export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ set
   const pointsString = hexPoints.map(p => `${p.x},${p.y}`).join(' ');
 
   return (
-    <svg className="w-full h-full z-20" viewBox={`0 0 ${dimensions.width} ${dimensions.height}`} preserveAspectRatio="xMidYMid meet">
-      <defs>
-        {/* Glowing circle filter */}
-        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-          <feMerge>
-            <feMergeNode in="coloredBlur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
+    <>
+      <svg className="w-full h-full z-20" viewBox={`0 0 ${dimensions.width} ${dimensions.height}`} preserveAspectRatio="xMidYMid meet">
+        <defs>
+          {/* Glowing circle filter */}
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
 
-      {/* Hex with transparent background */}
-      <polygon
-        points={pointsString}
-        fill="transparent"
-        stroke="#C8FFF440"
-        strokeWidth="1"
-        opacity="0.6"
-      />
-
-      {/* Dash lines */}
-      {isInside && mousePos && hexPoints.map((point, index) => (
-        <line
-          key={index}
-          x1={point.x}
-          y1={point.y}
-          x2={mousePos.x}
-          y2={mousePos.y}
+        {/* Hex with transparent background */}
+        <polygon
+          points={pointsString}
+          fill="transparent"
           stroke="#C8FFF440"
-          strokeWidth="0.5"
-          strokeDasharray="3,3"
+          strokeWidth="1"
           opacity="0.6"
         />
-      ))}
 
-      {/* Corner circles */}
-      {hexPoints.map((point, index) => (
-        <g key={index}>
-          {/* Outer ring */}
-          <circle
-            cx={point.x}
-            cy={point.y}
-            r="6"
-            fill="none"
-            stroke="#4a5568"
-            strokeWidth="1"
-            opacity="0.6"
-          />
-          {/* Inner dot */}
-          <circle
-            cx={point.x}
-            cy={point.y}
-            r="2"
-            fill="#C8FFF4"
-            filter="url(#glow)"
-          />
-        </g>
-      ))}
-
-      {/* Cursor circle */}
-      {isInside && mousePos && (
-        <g>
-          {/* Outerest ring */}
-          <circle
-            cx={mousePos.x}
-            cy={mousePos.y}
-            r="20"
-            fill="none"
+        {/* Dash lines */}
+        {isInside && mousePos && hexPoints.map((point, index) => (
+          <line
+            key={index}
+            x1={point.x}
+            y1={point.y}
+            x2={mousePos.x}
+            y2={mousePos.y}
             stroke="#C8FFF440"
-            strokeWidth="1"
+            strokeWidth="0.5"
+            strokeDasharray="3,3"
             opacity="0.6"
           />
-          {/* Outer ring */}
-          <circle
-            cx={mousePos.x}
-            cy={mousePos.y}
-            r="8"
-            fill="none"
-            stroke="#C8FFD3"
-            strokeWidth="1"
-            opacity="0.6"
-          />
-          {/* Inner dot */}
-          <circle
-            cx={mousePos.x}
-            cy={mousePos.y}
-            r="3"
-            fill="#C8FFF4"
-          />
-        </g>
+        ))}
+
+        {/* Corner circles */}
+        {hexPoints.map((point, index) => (
+          <g key={index}>
+            {/* Outer ring */}
+            <circle
+              cx={point.x}
+              cy={point.y}
+              r="6"
+              fill="none"
+              stroke="#4a5568"
+              strokeWidth="1"
+              opacity="0.6"
+            />
+            {/* Inner dot */}
+            <circle
+              cx={point.x}
+              cy={point.y}
+              r="2"
+              fill="#C8FFF4"
+              filter="url(#glow)"
+            />
+          </g>
+        ))}
+
+        {/* Cursor circle */}
+        {isInside && mousePos && (
+          <g>
+            {/* Outerest ring */}
+            <circle
+              cx={mousePos.x}
+              cy={mousePos.y}
+              r="20"
+              fill="none"
+              stroke="#C8FFF440"
+              strokeWidth="1"
+              opacity="0.6"
+            />
+            {/* Outer ring */}
+            <circle
+              cx={mousePos.x}
+              cy={mousePos.y}
+              r="8"
+              fill="none"
+              stroke="#C8FFD3"
+              strokeWidth="1"
+              opacity="0.6"
+            />
+            {/* Inner dot */}
+            <circle
+              cx={mousePos.x}
+              cy={mousePos.y}
+              r="3"
+              fill="#C8FFF4"
+            />
+          </g>
+        )}
+      </svg>
+      
+      {isInside && mousePos && (
+        <div 
+          style={{
+            position: 'fixed',
+            left: cursorPosition.left,
+            top: cursorPosition.top,
+            transform: 'translate(10px, 10px)', // Offset from cursor
+            pointerEvents: 'none', // Prevent interference with hex interaction
+            zIndex: 30
+          }}
+        >
+          <LobeDetail />
+        </div>
       )}
-    </svg>
+    </>
   );
 };

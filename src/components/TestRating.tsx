@@ -4,6 +4,8 @@ import titleDecorator from "@/assets/images/title-decorator.svg";
 import avatar from "@/assets/images/avatar.png";
 import scoreDecorator from "@/assets/images/score-decorator.svg";
 import testRatingDivider from "@/assets/images/test-rating-divider.svg";
+import liDecorator from "@/assets/images/li-decorator.svg";
+
 import { Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -26,7 +28,19 @@ ChartJS.register(
 
 export const TestRating: FC = () => {
   const chartData = {
-    labels: ['General Intelligence', 'Pattern Recognition', 'Impulse Control', 'Visual Perception', 'Decision Making', 'Problem Solving', 'Reaction Time', 'Processing Speed', 'Short Term Memory', 'Long Term Memory', 'Emotional Intelligence'],
+    labels: [
+      ['General', 'Intelligence'],
+      ['Pattern', 'Recognition'],
+      ['Impulse', 'Control'], 
+      ['Visual', 'Perception'],
+      ['Decision', 'Making'],
+      ['Problem', 'Solving'], 
+      ['Reaction', 'Time'], 
+      ['Processing', 'Speed'],
+      ['Short', 'Term Memory'], 
+      ['Long', 'Term Memory'], 
+      ['Emotional', 'Intelligence']
+    ],
     datasets: [{
       label: 'Average',
       data: [75, 69, 82, 71, 76, 85, 70, 60, 80, 70, 80],
@@ -108,7 +122,7 @@ export const TestRating: FC = () => {
             </div>
             <div className="flex flex-row items-center gap-2">
               <img src={scoreDecorator} alt="score decorator" />
-              <p className="text-[#C8FFD3] text-[30px] font-bold uppercase leading-none">73<span className="text-[8px] font-normal"> / 100</span></p>
+              <p className="text-[#C8FFD3] text-[30px] font-bold uppercase leading-none">73<span className="text-[8px] font-normal text-[#C8FFD380]"> / 100</span></p>
             </div>
           </div>
         </StyledBox>
@@ -171,7 +185,7 @@ const ScoreBar: FC<ScoreBarProps> = ({ skill, score }) => {
     <div className="flex flex-col justify-start items-start w-1/2 p-1">
       <div className="flex flex-row justify-between items-end w-full">
         <div className="flex flex-row items-center gap-1">
-          <LiDecorator />
+          <img src={liDecorator} alt="li decorator" />
           <p className="text-[#C8FFD3] text-[8px] uppercase">{skill}</p>
         </div>
         <div>
@@ -180,16 +194,6 @@ const ScoreBar: FC<ScoreBarProps> = ({ skill, score }) => {
       </div>
       <div className="flex flex-row justify-start h-[6px] p-[0.5px] border-[0.5px] border-[#C8FFF440] w-full rounded-full">
         <div className="w-2/3 h-full bg-[#C8FFD3] rounded-full"></div>
-      </div>
-    </div>
-  );
-};
-
-const LiDecorator: FC = () => {
-  return (
-    <div className="relative w-1 h-1">
-      <div className="absolute top-0 left-0 w-[3px] h-[3px] rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30 p-[0.5px]">
-        <div className="w-full h-full bg-[#C8FFD3]"></div>
       </div>
     </div>
   );
