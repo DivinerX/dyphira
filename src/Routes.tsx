@@ -3,6 +3,7 @@ import { Route, Routes as RouterRoutes } from "react-router-dom";
 import { Metrics } from "./pages/Metrics";
 import Assessments from "./pages/Assessments";
 import Leaderboard from "./pages/Leaderboard";
+import { Referrals } from "./pages/Referrals";
 
 const Loading = lazy(() => import("./pages/Loading"));
 
@@ -11,6 +12,7 @@ export const routes = [
   { path: "/metrics", element: <Metrics /> },
   { path: "/assessments", element: <Assessments /> },
   { path: "/rankings", element: <Leaderboard /> },
+  { path: "/referrals", element: <Referrals /> },
 ];
 
 const Routes = () => {

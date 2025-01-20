@@ -3,6 +3,7 @@ import { FC, ReactNode } from "react";
 interface StyledBoxProps {
   children: ReactNode;
   className?: string;
+  borderColor?: string;
 }
 
 export const StyledBox: FC<StyledBoxProps> = ({ children, className }) => {
@@ -16,6 +17,16 @@ export const StyledBox: FC<StyledBoxProps> = ({ children, className }) => {
       <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
       <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
       <div className="flex flex-col items-center h-full">{children}</div>
+    </div>
+  );
+};
+
+export const StyledBoxWithoutWhiteCorners: FC<StyledBoxProps> = ({ children, className, borderColor = "#C8FFF440" }) => {
+  return (
+    <div className={`relative p-0 overflow-hidden ${className}`}>
+      <div className={`flex flex-col items-center h-full border-[0.5px] border-[${borderColor}]`}>{children}</div>
+      <div className={`absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[${borderColor}] bg-[#0d191a] z-30`}></div>
+      <div className={`absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[${borderColor}] bg-[#0d191a] z-30`}></div>
     </div>
   );
 };
