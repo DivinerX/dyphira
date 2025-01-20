@@ -21,7 +21,7 @@ export const Header: FC = () => {
             <HoverChangeStyledBox title="Metrics" link={() => navigate("/metrics")} activePage={activePage} />
             <HoverChangeStyledBox title="Assessments" link={() => navigate("/assessments")} activePage={activePage} />
             <HoverChangeStyledBox title="Rankings" link={() => navigate("/rankings")} activePage={activePage} />
-            <HoverChangeStyledBox title="More" link={() => navigate("/more")} activePage={activePage} />
+            <HoverChangeStyledBox title="Referrals" link={() => navigate("/referrals")} activePage={activePage} />
           </div>
         </div>
         <div className="flex items-center gap-2">
