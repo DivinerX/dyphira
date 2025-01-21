@@ -1,4 +1,3 @@
-import React, { useRef, useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -107,30 +106,10 @@ const data = {
   ],
 };
 
-function App() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [chartHeight, setChartHeight] = useState(0);
-
-  useEffect(() => {
-    const updateChartHeight = () => {
-      if (containerRef.current) {
-        const width = containerRef.current.offsetWidth;
-        setChartHeight(width * 0.6);
-      }
-    };
-
-    updateChartHeight();
-
-    window.addEventListener('resize', updateChartHeight);
-    window.addEventListener('resize', updateChartHeight);
-    return () => window.removeEventListener('resize', updateChartHeight);
-  }, []);
-
+function EarnedBarChart() {
   return (
-    <div ref={containerRef} className="w-full">
-      <Bar options={options as any} data={data} />
-    </div>
+    <Bar options={options as any} data={data} />
   );
 }
 
-export default App;
+export default EarnedBarChart;
