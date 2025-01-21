@@ -2,6 +2,8 @@ import { FC } from "react";
 import { Layout } from "../components/Layout";
 import referralDecorator from "@/assets/images/referral-decorator.svg";
 import { StyledBox, StyledBoxWithoutWhiteCorners } from "@/components/StyledBox";
+import { VerticalDivider } from "@/components/VerticalDivider";
+import EarnedBarChart from "@/components/EarnedBarChart";
 import redBrain from "@/assets/images/red-brain.svg";
 import upArrow from "@/assets/images/up-arrow.svg";
 import referralStatisticsDecorator from "@/assets/images/referal-statistics-decorator.svg";
@@ -10,7 +12,7 @@ import avatar from "@/assets/images/avatar.png";
 import verifiedIcon from "@/assets/images/verified-icon.svg";
 import telegramIcon from "@/assets/images/telegram-icon.svg";
 import twitterIcon from "@/assets/images/x-icon.svg";
-import { VerticalDivider } from "@/components/VerticalDivider";
+import shareIcon from "@/assets/images/share-icon.svg";
 
 const referralLogs = [
   {
@@ -83,7 +85,7 @@ export const Referrals = () => {
     <Layout>
       <div className="flex flex-col items-center justify-center">
         <div className="flex flex-row items-start justify-center w-[70%] gap-4">
-          <div className="w-[40%] flex flex-col">
+          <div className="w-[44%] flex flex-col">
             <StyledHeader title="Referrals" icon={referralDecorator} />
             <div className="flex flex-row items-center justify-between w-full pt-4 pb-2">
               <span className="text-[6px] text-[#C8FFD380] uppercase">Dyphira intelligence metrics algorithm</span>
@@ -107,15 +109,29 @@ export const Referrals = () => {
               {/* referral link and share button */}
               <div className="w-[60%]">
                 <StyledBoxWithoutWhiteCorners className="bg-[#00000040]">
-                  <div className="flex flex-row items-center justify-start w-full px-2 py-1 gap-2">
+                  <div className="flex flex-row items-center justify-start w-full px-2 py-1 gap-2 cursor-pointer" 
+                       onClick={() => {
+                         navigator.clipboard.writeText('www.dyphira.com/ref/290561')
+                           .then(() => {
+                             // Optional: Add some visual feedback that the copy was successful
+                             alert('Copied to clipboard');
+                             console.log('Copied to clipboard');
+                           })
+                           .catch(err => {
+                             console.error('Failed to copy:', err);
+                           });
+                       }}>
                     <img src={clipboardIcon} alt="clipboard icon" />
-                    <p className="text-[10px] text-[#C8FFD380] -mb-[2px]">WWW.DYPHIRA.COM/REF/290651</p>
+                    <p className="text-[10px] text-[#C8FFD380] -mb-[2px] uppercase">www.dyphira.com/ref/290561</p>
                   </div>
                 </StyledBoxWithoutWhiteCorners>
               </div>
               <div className="w-[40%]">
                 <StyledBoxWithoutWhiteCorners>
-                  <p className="text-[10px] text-[#C8FFD3] uppercase -mb-[2px] py-1">share</p>
+                  <div className="flex flex-row items-center justify-center w-full gap-2">
+                    <p className="text-[10px] text-[#C8FFD3] uppercase -mb-[2px] py-1">share link</p>
+                    <img src={shareIcon} alt="share icon" />
+                  </div>
                 </StyledBoxWithoutWhiteCorners>
               </div>
             </div>
@@ -200,13 +216,13 @@ export const Referrals = () => {
               </div>
             </StyledBoxWithoutWhiteCorners>
           </div>
-          <div className="w-[40%] flex flex-col gap-2">
+          <div className="w-[44%] flex flex-col gap-2">
             <StyledBoxWithoutWhiteCorners>
-              <div className="bg-[#C8FFD306] w-full flex flex-row items-center justify-start gap-2 p-2">
+              <div className="bg-[#C8FFD306] w-full flex flex-row items-center justify-start gap-2 p-2 border-b border-[#C8FFF440]">
                 <img src={referralStatisticsDecorator} alt="referral statistics decorator" />
                 <span className="text-[10px] w-full uppercase -mb-[2px]">referral points</span>
               </div>
-              <div className="flex flex-row items-center justify-end w-full">
+              <div className="flex flex-row items-center justify-end w-full p-2">
                 <StyledBoxWithoutWhiteCorners>
                   <div className="flex flex-row items-center p-1 gap-1">
                     <StyledBoxWithoutWhiteCorners borderColor="#FC074780" className="bg-[#FC074726]">
@@ -218,8 +234,8 @@ export const Referrals = () => {
                   </div>
                 </StyledBoxWithoutWhiteCorners>
               </div>
-              <div className="flex flex-row items-center justify-between w-full p-2 bg-[#FC074726] h-36">
-
+              <div className="flex flex-row items-center justify-between w-full p-2 h-36">
+                <EarnedBarChart />
               </div>
             </StyledBoxWithoutWhiteCorners>
           </div>
