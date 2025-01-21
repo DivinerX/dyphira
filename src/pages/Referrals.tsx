@@ -10,6 +10,7 @@ import avatar from "@/assets/images/avatar.png";
 import verifiedIcon from "@/assets/images/verified-icon.svg";
 import telegramIcon from "@/assets/images/telegram-icon.svg";
 import twitterIcon from "@/assets/images/x-icon.svg";
+import { VerticalDivider } from "@/components/VerticalDivider";
 
 const referralLogs = [
   {
@@ -55,7 +56,7 @@ const referralLogs = [
     verified: false,
     overallScore: 84.5,
     pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
+    socials: ["telegram"],
   },
   {
     avatar: avatar,
@@ -64,9 +65,18 @@ const referralLogs = [
     verified: false,
     overallScore: 84.5,
     pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
+    socials: ["telegram"],
   },
-]
+];
+
+const referralActivity = [
+  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
+  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
+  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
+  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
+  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
+  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
+];
 
 export const Referrals = () => {
   return (
@@ -215,7 +225,7 @@ export const Referrals = () => {
           </div>
         </div>
         <div className="flex flex-row items-start justify-center w-[70%] gap-4">
-          <div className="w-[70%] flex flex-col">
+          <div className="w-[70%]">
             <StyledBoxWithoutWhiteCorners>
               <div className="bg-[#C8FFD306] w-full">
                 <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">referral points</span>
@@ -267,14 +277,16 @@ export const Referrals = () => {
                         </td>
                         <td className="pr-2 text-right">
                           <div className="flex flex-row items-center justify-end gap-1">
-                            {log.socials.includes("telegram") &&
-                              <StyledBox className="p-1">
-                                <img src={telegramIcon} alt="telegram icon" className="w-2 h-2" />
-                              </StyledBox>
-                            }
-                            {log.socials.includes("twitter") &&
+                            {
+                              log.socials.includes("twitter") &&
                               <StyledBox className="p-1">
                                 <img src={twitterIcon} alt="twitter icon" className="w-2" />
+                              </StyledBox>
+                            }
+                            {
+                              log.socials.includes("telegram") &&
+                              <StyledBox className="p-1">
+                                <img src={telegramIcon} alt="telegram icon" className="w-2 h-2" />
                               </StyledBox>
                             }
                           </div>
@@ -294,6 +306,18 @@ export const Referrals = () => {
                 </div>
               </div>
             </StyledBoxWithoutWhiteCorners>
+          </div>
+          <div className="w-[30%]">
+            <StyledBoxWithoutWhiteCorners>
+              <div className="bg-[#C8FFD306] w-full">
+                <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">referral activity</span>
+              </div>
+            </StyledBoxWithoutWhiteCorners>
+            <div className="flex flex-col items-center justify-center w-full gap-2 py-2">
+              {referralActivity.map((item, index) => (
+                <ReferralActivityItem {...item} key={index} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -322,6 +346,36 @@ const StyledHeader: FC<{ title: string, icon: string }> = ({ title, icon }) => {
     </div>
   );
 };
+
+type ReferralActivityItemProps = {
+  username: string;
+  avatar: string;
+  time: string;
+  activity: string;
+  verified: boolean;
+}
+
+const ReferralActivityItem: FC<ReferralActivityItemProps> = ({ username, time, avatar, activity, verified }) => {
+  return (
+    <StyledBoxWithoutWhiteCorners className="w-full bg-[#090E0F80]">
+      <div className="flex flex-row items-center justify-between w-full gap-2 px-2">
+        <StyledBox>
+          <img src={avatar} alt="avatar" className="w-6 h-6" />
+        </StyledBox>
+        <VerticalDivider style="h-5" />
+        <div className="flex flex-col items-center justify-center w-full">
+          <div className="flex flex-row items-center justify-between w-full">
+            <span className="flex flex-row items-center justify-start gap-1 text-[10px]">{username}{verified && <img src={verifiedIcon} alt="verified icon" />}</span>
+            <span className="text-[10px] text-[#C8FFD3]">{time}</span>
+          </div>
+          <div className="flex flex-row items-start w-full">
+            <span className="text-[10px] text-[#C8FFD380] uppercase">{activity}</span>
+          </div>
+        </div>
+      </div>
+    </StyledBoxWithoutWhiteCorners>
+  )
+}
 
 const PageButton: FC<{ active?: boolean, page?: number }> = ({ active = false, page }) => {
   return active ? (
