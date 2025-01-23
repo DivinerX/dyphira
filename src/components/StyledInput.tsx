@@ -7,8 +7,9 @@ type TStyledInput = {
   rightAddon?: ReactNode;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  type?: "text" | "password" | "email";
 }
-export const StyledInput: FC<TStyledInput> = ({ icon, placeholder, rightAddon, value, onChange }) => {
+export const StyledInput: FC<TStyledInput> = ({ icon, placeholder, rightAddon, value, onChange, type = "text" }) => {
   return (
     <StyledBoxWithoutWhiteCorners className="w-full">
       <div className="flex flex-row items-center justify-start gap-2 py-1 w-full">
@@ -18,6 +19,7 @@ export const StyledInput: FC<TStyledInput> = ({ icon, placeholder, rightAddon, v
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          type={type}
         />
         {rightAddon}
       </div>
