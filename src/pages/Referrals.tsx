@@ -13,6 +13,7 @@ import verifiedIcon from "@/assets/images/verified-icon.svg";
 import telegramIcon from "@/assets/images/telegram-icon.svg";
 import twitterIcon from "@/assets/images/x-icon.svg";
 import shareIcon from "@/assets/images/share-icon.svg";
+import { MovePageButton } from "@/components/MovePageButton";
 
 const referralLogs = [
   {
@@ -69,6 +70,33 @@ const referralLogs = [
     pointsGained: 1509.7,
     socials: ["telegram"],
   },
+  {
+    avatar: avatar,
+    name: "chrome 307",
+    referralId: "#305678",
+    verified: false,
+    overallScore: 84.5,
+    pointsGained: 1509.7,
+    socials: ["telegram"],
+  },
+  {
+    avatar: avatar,
+    name: "chrome 307",
+    referralId: "#305678",
+    verified: false,
+    overallScore: 84.5,
+    pointsGained: 1509.7,
+    socials: ["telegram"],
+  },
+  {
+    avatar: avatar,
+    name: "chrome 307",
+    referralId: "#305678",
+    verified: false,
+    overallScore: 84.5,
+    pointsGained: 1509.7,
+    socials: ["telegram"],
+  },
 ];
 
 const referralActivity = [
@@ -85,136 +113,154 @@ export const Referrals = () => {
     <Layout>
       <div className="flex flex-col items-center justify-center">
         <div className="flex flex-row items-start justify-center w-[70%] gap-4">
-          <div className="w-[44%] flex flex-col">
-            <StyledHeader title="Referrals" icon={referralDecorator} />
-            <div className="flex flex-row items-center justify-between w-full pt-4 pb-2">
-              <span className="text-[6px] text-[#C8FFD380] uppercase">Dyphira intelligence metrics algorithm</span>
-              <span className="text-[6px] text-[#C8FFD380] uppercase">#referral_system</span>
-            </div>
-            <div className="flex flex-row items-center justify-between">
-              <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-              <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
-              <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-            </div>
-            <div className="flex flex-row w-full py-4 gap-2">
-              <div className="w-1/2 text-[10px] text-[#C8FFD3] font-mono">
-                <p>This task evaluates your ability</p>
-                <p>Process visual information, recognize patterns, and react quickly under pressure.</p>
-                <p>Process visual information, recognize patterns, and react quickly.</p>
-              </div>
-              <div className="w-1/2 h-28 bg-[#C8FFD306]">
-              </div>
-            </div>
-            <div className="flex flex-row items-center justify-between gap-2">
-              {/* referral link and share button */}
-              <div className="w-[60%]">
-                <StyledBoxWithoutWhiteCorners className="bg-[#00000040]">
-                  <div className="flex flex-row items-center justify-start w-full px-2 py-1 gap-2 cursor-pointer" 
-                       onClick={() => {
-                         navigator.clipboard.writeText('www.dyphira.com/ref/290561')
-                           .then(() => {
-                             // Optional: Add some visual feedback that the copy was successful
-                             alert('Copied to clipboard');
-                             console.log('Copied to clipboard');
-                           })
-                           .catch(err => {
-                             console.error('Failed to copy:', err);
-                           });
-                       }}>
-                    <img src={clipboardIcon} alt="clipboard icon" />
-                    <p className="text-[10px] text-[#C8FFD380] -mb-[2px] uppercase">www.dyphira.com/ref/290561</p>
+          <div className="w-[66%] flex flex-col">
+            <div className="flex flex-row items-start justify-start gap-4 w-full">
+              <div className="w-[75%] flex flex-col">
+                <StyledHeader title="Referrals" icon={referralDecorator} />
+                <div className="flex flex-row items-center justify-between w-full pt-4 pb-2">
+                  <span className="text-[6px] text-[#C8FFD380] uppercase">Dyphira intelligence metrics algorithm</span>
+                  <span className="text-[6px] text-[#C8FFD380] uppercase">#referral_system</span>
+                </div>
+                <div className="flex flex-row items-center justify-between">
+                  <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                  <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
+                  <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                </div>
+                <div className="flex flex-row w-full py-4 gap-2">
+                  <div className="w-1/2 text-[10px] text-[#C8FFD3] font-mono">
+                    <p>This task evaluates your ability</p>
+                    <p>Process visual information, recognize patterns, and react quickly under pressure.</p>
+                    <p>Process visual information, recognize patterns, and react quickly.</p>
                   </div>
-                </StyledBoxWithoutWhiteCorners>
+                  <div className="w-1/2 h-28 bg-[#C8FFD306]">
+                  </div>
+                </div>
+                <div className="flex flex-row items-center justify-between gap-2">
+                  {/* referral link and share button */}
+                  <div className="w-[60%]">
+                    <StyledBoxWithoutWhiteCorners className="bg-[#00000040]">
+                      <div className="flex flex-row items-center justify-start w-full px-2 py-1 gap-2 cursor-pointer"
+                        onClick={() => {
+                          navigator.clipboard.writeText('www.dyphira.com/ref/290561')
+                            .then(() => {
+                              alert('Copied to clipboard');
+                              console.log('Copied to clipboard');
+                            })
+                            .catch(err => {
+                              console.error('Failed to copy:', err);
+                            });
+                        }}>
+                        <img src={clipboardIcon} alt="clipboard icon" />
+                        <p className="text-[10px] text-[#C8FFD380] -mb-[2px] uppercase">www.dyphira.com/ref/290561</p>
+                      </div>
+                    </StyledBoxWithoutWhiteCorners>
+                  </div>
+                  <div className="w-[40%]">
+                    <StyledBoxWithoutWhiteCorners>
+                      <div className="flex flex-row items-center justify-center w-full gap-2">
+                        <p className="text-[10px] text-[#C8FFD3] uppercase -mb-[2px] py-1">share link</p>
+                        <img src={shareIcon} alt="share icon" />
+                      </div>
+                    </StyledBoxWithoutWhiteCorners>
+                  </div>
+                </div>
               </div>
-              <div className="w-[40%]">
+              <div className="w-[25%] flex flex-col gap-2">
                 <StyledBoxWithoutWhiteCorners>
-                  <div className="flex flex-row items-center justify-center w-full gap-2">
-                    <p className="text-[10px] text-[#C8FFD3] uppercase -mb-[2px] py-1">share link</p>
-                    <img src={shareIcon} alt="share icon" />
+                  <div className="bg-[#C8FFD306] w-full">
+                    <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">Total referred</span>
+                  </div>
+                  <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
+                    <img src={redBrain} alt="red brain" />
+                    <p className="-mb-[2px]">42</p>
+                  </div>
+                  <div className="flex flex-row items-center justify-between px-2 w-full">
+                    <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                    <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
+                    <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                  </div>
+                  <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
+                    <div className="flex flex-row items-center justify-start gap-2">
+                      <img src={upArrow} alt="up arrow" />
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
+                    </div>
+                    <div>
+                      <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
+                    </div>
+                  </div>
+                </StyledBoxWithoutWhiteCorners>
+                <StyledBoxWithoutWhiteCorners>
+                  <div className="bg-[#C8FFD306] w-full">
+                    <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">referral points</span>
+                  </div>
+                  <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
+                    <img src={redBrain} alt="red brain" />
+                    <p className="-mb-[2px]">42</p>
+                  </div>
+                  <div className="flex flex-row items-center justify-between px-2 w-full">
+                    <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                    <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
+                    <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                  </div>
+                  <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
+                    <div className="flex flex-row items-center justify-start gap-2">
+                      <img src={upArrow} alt="up arrow" />
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
+                    </div>
+                    <div>
+                      <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
+                    </div>
+                  </div>
+                </StyledBoxWithoutWhiteCorners>
+                <StyledBoxWithoutWhiteCorners>
+                  <div className="bg-[#C8FFD306] w-full">
+                    <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">clicks</span>
+                  </div>
+                  <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
+                    <img src={redBrain} alt="red brain" />
+                    <p className="-mb-[2px]">42</p>
+                  </div>
+                  <div className="flex flex-row items-center justify-between px-2 w-full">
+                    <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                    <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
+                    <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                  </div>
+                  <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
+                    <div className="flex flex-row items-center justify-start gap-2">
+                      <img src={upArrow} alt="up arrow" />
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
+                    </div>
+                    <div>
+                      <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
+                    </div>
                   </div>
                 </StyledBoxWithoutWhiteCorners>
               </div>
             </div>
-            <div className="flex flex-row items-center justify-between pt-2">
-              <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-              <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
-              <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+            <div className="flex flex-row items-start justify-start gap-4 w-full">
+              <div className="flex flex-col items-center justify-between w-[75%]">
+                <div className="flex flex-row items-center justify-between pt-2 w-full">
+                  <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                  <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
+                  <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                </div>
+                <div className="flex flex-row items-center justify-between w-full py-2">
+                  <span className="text-[6px] text-[#C8FFD380] uppercase">Dyphira intelligence<br />metrics algorithm</span>
+                  <span className="text-[6px] text-[#C8FFD380] uppercase text-right">ID<br /> #28950</span>
+                </div>
+              </div>
+              
+              <div className="flex flex-col items-center justify-between w-[25%]">
+                <div className="flex flex-row items-center justify-between pt-2 w-full">
+                  <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                  <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
+                  <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                </div>
+                <div className="flex flex-row items-center justify-between w-full py-2">
+                  <span className="text-[6px] text-[#C8FFD380] uppercase">Dyphira intelligence<br />metrics algorithm</span>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-row items-center justify-between w-full py-2">
-              <span className="text-[6px] text-[#C8FFD380] uppercase">Dyphira intelligence<br />metrics algorithm</span>
-              <span className="text-[6px] text-[#C8FFD380] uppercase text-right">ID<br /> #28950</span>
-            </div>
-          </div>
-          <div className="w-[12%] flex flex-col gap-2">
-            <StyledBoxWithoutWhiteCorners>
-              <div className="bg-[#C8FFD306] w-full">
-                <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">Total referred</span>
-              </div>
-              <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
-                <img src={redBrain} alt="red brain" />
-                <p className="-mb-[2px]">42</p>
-              </div>
-              <div className="flex flex-row items-center justify-between px-2 w-full">
-                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-                <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
-                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-              </div>
-              <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
-                <div className="flex flex-row items-center justify-start gap-2">
-                  <img src={upArrow} alt="up arrow" />
-                  <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
-                </div>
-                <div>
-                  <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
-                </div>
-              </div>
-            </StyledBoxWithoutWhiteCorners>
-            <StyledBoxWithoutWhiteCorners>
-              <div className="bg-[#C8FFD306] w-full">
-                <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">referral points</span>
-              </div>
-              <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
-                <img src={redBrain} alt="red brain" />
-                <p className="-mb-[2px]">42</p>
-              </div>
-              <div className="flex flex-row items-center justify-between px-2 w-full">
-                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-                <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
-                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-              </div>
-              <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
-                <div className="flex flex-row items-center justify-start gap-2">
-                  <img src={upArrow} alt="up arrow" />
-                  <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
-                </div>
-                <div>
-                  <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
-                </div>
-              </div>
-            </StyledBoxWithoutWhiteCorners>
-            <StyledBoxWithoutWhiteCorners>
-              <div className="bg-[#C8FFD306] w-full">
-                <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">clicks</span>
-              </div>
-              <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
-                <img src={redBrain} alt="red brain" />
-                <p className="-mb-[2px]">42</p>
-              </div>
-              <div className="flex flex-row items-center justify-between px-2 w-full">
-                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-                <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
-                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-              </div>
-              <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
-                <div className="flex flex-row items-center justify-start gap-2">
-                  <img src={upArrow} alt="up arrow" />
-                  <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
-                </div>
-                <div>
-                  <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
-                </div>
-              </div>
-            </StyledBoxWithoutWhiteCorners>
           </div>
           <div className="w-[44%] flex flex-col gap-2">
             <StyledBoxWithoutWhiteCorners>
@@ -313,11 +359,13 @@ export const Referrals = () => {
                 </table>
                 <div className="flex flex-row items-center justify-center p-1 w-full">
                   <div className="flex flex-row items-center justify-center gap-2">
+                    <MovePageButton direction="previous" />
                     <PageButton active={true} page={1} />
                     <PageButton page={2} />
                     <PageButton page={3} />
                     <PageButton page={4} />
                     <PageButton page={5} />
+                    <MovePageButton direction="next" />
                   </div>
                 </div>
               </div>

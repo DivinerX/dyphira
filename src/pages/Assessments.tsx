@@ -9,6 +9,7 @@ import reportIcon from "@/assets/images/report-icon.svg";
 import boxes from "@/assets/images/boxes.svg";
 import { StyledBox } from "@/components/StyledBox";
 import checkIcon from "@/assets/images/check-icon.svg";
+import back_logo from "@/assets/images/back-logo.svg";
 import { DistributionGraph } from "@/components/DistributionGraph";
 
 const Assessments: FC = () => {
@@ -165,6 +166,9 @@ const Assessments: FC = () => {
           </div>
           <CompletedButton />
         </div>
+      </div>
+      <div className="absolute top-0 left-0 w-full h-screen">
+        <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </Layout>
   );
