@@ -359,13 +359,13 @@ export const Referrals = () => {
                 </table>
                 <div className="flex flex-row items-center justify-center p-1 w-full">
                   <div className="flex flex-row items-center justify-center gap-2">
-                    <MovePageButton direction="previous" />
+                    <MovePageButton direction="previous" onClick={() => {}} disabled={false} />
                     <PageButton active={true} page={1} />
                     <PageButton page={2} />
                     <PageButton page={3} />
                     <PageButton page={4} />
                     <PageButton page={5} />
-                    <MovePageButton direction="next" />
+                    <MovePageButton direction="next" onClick={() => {}} disabled={false} />
                   </div>
                 </div>
               </div>

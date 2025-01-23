@@ -81,7 +81,7 @@ export const LobeDetail: FC = () => {
     },
   }
   return (
-    <div className="w-[200px]">
+    <div className="w-[200px] backdrop-blur-sm">
       <StyledBox>
         <div className="w-full px-2 py-1 flex flex-row justify-start items-center gap-1 bg-[#3B4D4A]">
           <img src={titleDecorator} alt="title decorator" />

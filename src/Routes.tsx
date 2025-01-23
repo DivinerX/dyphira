@@ -4,6 +4,7 @@ import { Metrics } from "./pages/Metrics";
 import Assessments from "./pages/Assessments";
 import { LeaderboardContainer } from "./pages/Leaderboard/LeaderboardContainer";
 import { Referrals } from "./pages/Referrals";
+import { SignInContainer } from "./pages/SignIn/SignInContainer";
 
 const Loading = lazy(() => import("./pages/Loading"));
 
@@ -13,6 +14,7 @@ export const routes = [
   { path: "/assessments", element: <Assessments /> },
   { path: "/rankings", element: <LeaderboardContainer /> },
   { path: "/referrals", element: <Referrals /> },
+  { path: "/signin", element: <SignInContainer /> },
 ];
 
 const Routes = () => {
