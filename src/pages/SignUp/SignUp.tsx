@@ -7,15 +7,16 @@ import logo_text from "@/assets/images/big_logo.svg";
 import personIcon from "@/assets/images/person-icon.svg";
 import dialIcon from "@/assets/images/dial-icon.svg";
 import personPlusIcon from "@/assets/images/person-plus-icon.svg";
-import { TSignupUser } from "@/types";
+import { TRegisterError, TSignupUser } from "@/types";
 
 type TSignUpProps = {
   formData: TSignupUser
+  error: TRegisterError
   setFormData: (data: TSignupUser) => void
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-export const SignUp: FC<TSignUpProps> = ({ formData, setFormData, handleSubmit }) => {
+export const SignUp: FC<TSignUpProps> = ({ formData, error, setFormData, handleSubmit }) => {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center h-full w-full">
@@ -36,19 +37,29 @@ export const SignUp: FC<TSignUpProps> = ({ formData, setFormData, handleSubmit }
               <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
             </div>
           </div>
-          <StyledInput
-            icon={personIcon}
-            placeholder="USERNAME"
-            value={formData.username}
-            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-          />
-          <StyledInput
-            icon={personIcon}
-            placeholder="E-MAIL ADDRESS"
-            type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          />
+          <div className="flex flex-col w-full justify-start">
+            <StyledInput
+              icon={personIcon}
+              placeholder="USERNAME"
+              value={formData.username}
+              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+            />
+            {
+              error.username && <span className="text-[10px] text-[#C8FFD380] uppercase pt-1">{error.username}</span>
+            }
+          </div>
+          <div className="flex flex-col w-full justify-start">
+            <StyledInput
+              icon={personIcon}
+              placeholder="E-MAIL ADDRESS"
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
+            {
+              error.email && <span className="text-[10px] text-[#C8FFD380] uppercase pt-1">{error.email}</span>
+            }
+          </div>
           <div className="flex flex-row items-center justify-between w-full">
             <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
             <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
@@ -61,13 +72,19 @@ export const SignUp: FC<TSignUpProps> = ({ formData, setFormData, handleSubmit }
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           />
-          <StyledInput
-            icon={dialIcon}
-            placeholder="REPEAT PASSWORD"
-            type="password"
-            value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          />
+          <div className="flex flex-col w-full justify-start">
+            <StyledInput
+              icon={dialIcon}
+              placeholder="REPEAT PASSWORD"
+              type="password"
+              value={formData.confirmPassword}
+              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+              rightAddon={error.password && <p className="text-[10px] text-[#FF9F7E] uppercase pr-2 flex flex-row gap-1"><span>very</span> <span>weak</span></p>}
+            />
+            {
+              error.password && <span className="text-[8px] text-[#C8FFD380] uppercase pt-1">{error.password}</span>
+            }
+          </div>
           <div className="flex flex-row items-center justify-start w-full">
             <p className="text-[10px] text-[#C8FFD380] uppercase">Forgot Password?</p>
           </div>

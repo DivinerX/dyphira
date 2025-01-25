@@ -1,8 +1,8 @@
 import api from "./api";
-import { TSignupUser, TLoginUser, TUser } from "@/types";
+import { TSignupUser, TLoginUser, TUser, TRegisterResponse } from "@/types";
 
 export const signup = async (user: TSignupUser) => {
-  return await api.post<TUser>("/auth/signup", user);
+  return await api.post<TRegisterResponse>("/users", user);
 };
 
 export const signin = async (user: TLoginUser) => {

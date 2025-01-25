@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { SignUp } from "./SignUp";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/auth.hook";
-import { TSignupUser } from "@/types";
+import { TSignupUser, TRegisterError } from "@/types";
 
 export const SignUpContainer: FC = () => {
   const [formData, setFormData] = useState<TSignupUser>({
@@ -10,6 +10,11 @@ export const SignUpContainer: FC = () => {
     email: "",
     password: "",
     confirmPassword: "",
+  });
+  const [error, setError] = useState<TRegisterError>({
+    username: "",
+    email: "",
+    password: ""
   })
   const navigate = useNavigate()
   const { register } = useAuth()
@@ -17,14 +22,46 @@ export const SignUpContainer: FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(formData)
+    const signUpData = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password
+    }
+    if (!validateRegister(formData)) return;
     try {
-      await register(formData)
+      await register(signUpData)
       navigate("/")
-    } catch (error) {
+    } catch (error: any) {
       console.error("register error", error)
+      setError(error?.response?.data)
       throw error
     }
   }
-  return <SignUp formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} />;
+
+  const validateRegister = (formData: TSignupUser) => {
+    let isValid = true
+    if (formData.username === "") {
+      console.log("short?")
+      setError({ ...error, username: "username is required" })
+      console.log(error)
+      isValid = false
+    }
+    console.log(error)
+    if (formData.email === "") {
+      setError({ ...error, email: "email is required" })
+      isValid = false
+    }
+    if (formData.password.length < 8) {
+      setError({ ...error, password: "password is too weak" })
+      isValid = false
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError({ ...error, password: "password is not matched" })
+      isValid = false
+    }
+    console.log(error)
+    return isValid
+  }
+  return <SignUp formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} error={error} />;
 };
 

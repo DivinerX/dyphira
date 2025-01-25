@@ -11,7 +11,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const register = async (user: TSignupUser) => {
     try {
       const response = await signupApi(user)
-      setUser(response.data)
+      setUser(response.data.user)
+      storage.setAccessToken(response.data.accessToken)
+      storage.setRefreshToken(response.data.refreshToken)
     } catch (error) {
       console.error("signup error", error)
       throw error

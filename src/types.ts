@@ -17,7 +17,7 @@ export type TSignupUser = {
   username: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
   referralId?: string;
 }
 
@@ -50,8 +50,8 @@ export type TAuthContext = {
 };
 
 export type TRegisterResponse = {
-  status: number;
-  message: string;
+  accessToken: string;
+  refreshToken: string;
   user: TUser;
 }
 
@@ -59,4 +59,10 @@ export type TLoginResponse = {
   status: number;
   message: string;
   accessToken: string;
+}
+
+export type TRegisterError = {
+  username?: string;
+  email?: string;
+  password?: string;
 }
