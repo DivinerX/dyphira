@@ -66,3 +66,9 @@ export type TRegisterError = {
   email?: string;
   password?: string;
 }
+
+export type TLoginError = {
+  email?: string;
+  password?: string;
+  attempts: boolean;
+}

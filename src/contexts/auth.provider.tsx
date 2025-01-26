@@ -6,7 +6,7 @@ import { AuthContext } from './auth.context'
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<TUser | null>(null)
-  const loggedIn = !!user
+  const loggedIn = !!storage.getAccessToken()
 
   const register = async (user: TSignupUser) => {
     try {
