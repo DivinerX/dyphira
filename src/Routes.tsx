@@ -1,21 +1,24 @@
 import { lazy } from "react";
 import { Route, Routes as RouterRoutes } from "react-router-dom";
 import { Metrics } from "./pages/Metrics";
-import Assessments from "./pages/Assessments";
+import { Assessments } from "./pages/Assessments/Assessments";
+import { TakeAssessmentContainer } from "./pages/TakeAssessment/TakeAssessmentContainer";
 import { LeaderboardContainer } from "./pages/Leaderboard/LeaderboardContainer";
 import { Referrals } from "./pages/Referrals";
 import { SignInContainer } from "./pages/SignIn/SignInContainer";
 import { SignUpContainer } from "./pages/SignUp/SignUpContainer";
+import PrivateRoute from "./components/PrivateRoute";
 
 const Loading = lazy(() => import("./pages/Loading"));
 
 export const routes = [
-  { path: "/", element: <Loading /> },
-  { path: "/metrics", element: <Metrics /> },
-  { path: "/assessments", element: <Assessments /> },
+  { path: "/", element: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
+  { path: "/metrics", element: <PrivateRoute><Metrics /></PrivateRoute> },
+  { path: "/assessments", element: <PrivateRoute><Assessments /></PrivateRoute> },
+  { path: "/assessment", elements: <TakeAssessmentContainer /> },
   { path: "/rankings", element: <LeaderboardContainer /> },
   { path: "/referrals", element: <Referrals /> },
-  { path: "/signin", element: <SignInContainer /> },
+  { path: "/login", element: <SignInContainer /> },
   { path: "/signup", element: <SignUpContainer /> },
 ];
 

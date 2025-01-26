@@ -8,15 +8,16 @@ import personIcon from "@/assets/images/person-icon.svg";
 import dialIcon from "@/assets/images/dial-icon.svg";
 import fingerprintIcon from "@/assets/images/fingerprint-icon.svg";
 import personPlusIcon from "@/assets/images/person-plus-icon.svg";
-import { TLoginUser } from "@/types";
+import { TLoginError, TLoginUser } from "@/types";
 
 type TSignInProps = {
   formData: TLoginUser
+  error: TLoginError
   setFormData: (data: TLoginUser) => void
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-export const SignIn: FC<TSignInProps> = ({ formData, setFormData, handleSubmit }) => {
+export const SignIn: FC<TSignInProps> = ({ formData, error, setFormData, handleSubmit }) => {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center h-full w-full">
@@ -37,19 +38,32 @@ export const SignIn: FC<TSignInProps> = ({ formData, setFormData, handleSubmit }
               <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
             </div>
           </div>
-          <StyledInput
-            icon={personIcon}
-            placeholder="USERNAME"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          />
-          <StyledInput
-            icon={dialIcon}
-            placeholder="PASSWORD"
-            type="password"
-            value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          />
+          <div className="flex flex-col w-full justify-start">
+            <StyledInput
+              icon={personIcon}
+              placeholder="EMAIL"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
+            {
+              error.email && <span className="text-[10px] text-[#C8FFD380] uppercase pt-1">{error.email}</span>
+            }
+          </div>
+          <div className="flex flex-col w-full justify-start">
+            <StyledInput
+              icon={dialIcon}
+              placeholder="PASSWORD"
+              type="password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            />
+            {
+              error.password && <span className="text-[10px] text-[#C8FFD380] uppercase pt-1">{error.password}</span>
+            }
+            {
+              error.attempts && <span className="text-[10px] text-[#C8FFD380] uppercase pt-1">Too many login attempts</span>
+            }
+          </div>
           <div className="flex flex-row items-center justify-start w-full">
             <p className="text-[10px] text-[#C8FFD380] uppercase">Forgot Password?</p>
           </div>

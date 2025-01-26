@@ -12,7 +12,7 @@ import checkIcon from "@/assets/images/check-icon.svg";
 import back_logo from "@/assets/images/back-logo.svg";
 import { DistributionGraph } from "@/components/DistributionGraph";
 
-const Assessments: FC = () => {
+export const Assessments: FC = () => {
   return (
     <Layout>
       <div className="flex flex-row gap-8 py-12 px-36 w-full h-full">
@@ -254,4 +254,3 @@ const CompletedButton: FC = () => {
     </div>
   )
 }
-export default Assessments;

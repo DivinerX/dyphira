@@ -6,10 +6,10 @@ export const signup = async (user: TSignupUser) => {
 };
 
 export const signin = async (user: TLoginUser) => {
-  return await api.post<{ accessToken: string }>("/auth/signin", user);
+  return await api.post<{ accessToken: string }>("/auth", user);
 };
 
 export const getUser = async () => {
-  return await api.get<TUser>("/auth/user");
+  return await api.get<TUser>("/users/me");
 };
 
