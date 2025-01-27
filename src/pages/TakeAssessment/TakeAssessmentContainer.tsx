@@ -30,8 +30,6 @@ export const TakeAssessmentContainer = () => {
   const isLastSection = activeSectionIndex === sections.length - 1;
   const isLastQuestion = activeQuestionIndex === questions.length - 1;
 
-  const chatRef = useRef(null);
-
   useEffect(() => {
     dispatch(fetchSections());
   }, [dispatch]);
@@ -81,26 +79,13 @@ export const TakeAssessmentContainer = () => {
     );
   };
 
-  const endAssessment = () => {
-    if (!assessment) navigate("/dashboard");
-    dispatch(
-      updateAssessment({
-        assessmentId: assessment!._id,
-        status: "abandoned",
-      }),
-    )
-      .unwrap()
-      .then(() => {
-        navigate("/dashboard");
-      });
-  };
-
   const createNewAnswer = async ({ assessmentId, sectionId, questionId }: { assessmentId: string, sectionId: string, questionId: string }) => {
     await dispatch(
       createAnswer({
         assessmentId,
         sectionId,
         questionId,
+        // @ts-ignore
         videoStartTimestamp: videoStartTimestamp - recordingStartedAt,
       }),
     ).unwrap();
@@ -110,6 +95,7 @@ export const TakeAssessmentContainer = () => {
     return await dispatch(
       updateAnswer({
         answerId: answer._id!,
+        // @ts-ignore
         videoEndTimestamp: Date.now() - recordingStartedAt,
         ...(text && { text }),
       }),
@@ -171,6 +157,7 @@ export const TakeAssessmentContainer = () => {
 
   const handleRecordingStart = () => {
     const now = Date.now();
+    // @ts-ignore
     setRecordingStartedAt(now);
     setVideoStartTimestamp(now);
   };

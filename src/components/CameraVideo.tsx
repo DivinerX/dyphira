@@ -1,7 +1,7 @@
 import { useReactMediaRecorder } from "react-media-recorder";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { uploadRecordedVideo } from "@/redux/slices/assessment";
-import clsx from "clsx";
+import { StyledBox } from "./StyledBox";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +17,6 @@ type CamVideoProps = {
 export default function CamVideo({
   assessmentCompleted,
   onRecordingStart,
-  isAudioPermissionGranted,
-  isVideoPermissionGranted,
 }: CamVideoProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -29,7 +27,6 @@ export default function CamVideo({
   const videoRef = useRef(null);
   const mediaStreamRef = useRef(null);
 
-  const [isVideoEnabled, setIsVideoEnabled] = useState(true);
   const toastId = useRef(null);
 
   const {
@@ -37,9 +34,6 @@ export default function CamVideo({
     startRecording,
     stopRecording,
     previewStream,
-    isAudioMuted,
-    muteAudio,
-    unMuteAudio,
   } = useReactMediaRecorder({
     askPermissionOnMount: true,
     video: true,
@@ -59,6 +53,7 @@ export default function CamVideo({
         assessmentId: assessment!._id,
         data: formData,
         onProgress: (progress) => {
+          console.log(progress)
           if (toastId.current === null) {
             toastId.current = toast(`Uploading your video... ${Math.round(progress * 100)}%`, {
               progress,
@@ -67,7 +62,7 @@ export default function CamVideo({
               autoClose: false,
             });
           } else {
-            toast.update(toastId.current, { 
+            toast.update(toastId.current, {
               progress,
               render: `Uploading your video... ${Math.round(progress * 100)}%`
             });
@@ -100,25 +95,6 @@ export default function CamVideo({
     }
   }, [assessmentCompleted]);
 
-  const toggleAudio = () => {
-    if (isAudioMuted) {
-      unMuteAudio();
-    } else {
-      muteAudio();
-    }
-  };
-
-  // console.log("status", status)
-
-  const toggleVideo = () => {
-    if (mediaStreamRef.current) {
-      mediaStreamRef.current
-        .getVideoTracks()
-        .forEach((track) => (track.enabled = !isVideoEnabled));
-    }
-    setIsVideoEnabled((prev) => !prev);
-  };
-
   useEffect(() => {
     if (previewStream) {
       if (videoRef.current) {
@@ -134,46 +110,23 @@ export default function CamVideo({
 
   return (
     <>
-      <div className="flex gap-2 z-50 items-center justify-center min-[1100px]:mt-0 md:mt-28 mt-12 lg:-ml-[35%] md:-ml-[20%] min-[1260px]:-ml-12">
-        <button
-          className={clsx(
-            "bg-purple-fade w-12 h-12 flex items-center justify-center rounded-[5px]",
-            !isAudioPermissionGranted && "opacity-50",
-          )}
-          onClick={toggleAudio}
-          disabled={!isAudioPermissionGranted}
-        >
-          {isAudioMuted || !isAudioPermissionGranted ? (
-            <img src="/voice.svg" alt="un-mute voice" />
-          ) : (
-            <img src="/voice2.svg" alt="mute voice" />
-          )}
-        </button>
-        <button
-          className={clsx(
-            "bg-purple-fade w-12 h-12 flex items-center justify-center rounded-[5px]",
-            !isVideoPermissionGranted && "opacity-50",
-          )}
-          onClick={toggleVideo}
-          disabled={!isVideoPermissionGranted}
-        >
-          {!isVideoEnabled || !isVideoPermissionGranted ? (
-            <img src="/video.svg" alt="" width={30} />
-          ) : (
-            <img src="/video2.svg" alt="" width={30} />
-          )}
-        </button>
-      </div>
       {status === "recording" && (
-        <div className="bg-[#1E2748] rounded-lg p-2 w-fit m-auto md:mt-0 mt-6 md:absolute bottom-6 right-6 cursor-pointer z-50">
-          <p>{status}</p>
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            style={{ width: "300px", height: "168px", objectFit: "cover" }}
-          />
-        </div>
+        <StyledBox>
+          <div className='flex flex-col justify-center items-center h-[160px] bg-[#C8FFD303]'>
+            {
+              status === 'recording' ? (
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  className="w-full h-full"
+                />
+              ) : (
+                <span className='text-[10px] text-[#C8FFD380] uppercase'>camera off</span>
+              )
+            }
+          </div>
+        </StyledBox>
       )}
     </>
   );

@@ -112,6 +112,7 @@ export const fetchLastAssessmentCompletionDate = async (
 
 export type FetchAssessmentReturnType = AssessmentReturnType & {
   videoUrl?: string;
+  duration?: number;
 };
 
 export const fetchAssessment = async (
