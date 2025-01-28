@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Layout } from "../components/Layout";
+import { Layout } from "../../components/Layout";
 import referralDecorator from "@/assets/images/referral-decorator.svg";
 import { StyledBox, StyledBoxWithoutWhiteCorners } from "@/components/StyledBox";
 import { VerticalDivider } from "@/components/VerticalDivider";
@@ -108,7 +108,11 @@ const referralActivity = [
   { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
 ];
 
-export const Referrals = () => {
+type TReferralsProps = {
+  referralLink: string;
+}
+
+export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center">
@@ -141,7 +145,7 @@ export const Referrals = () => {
                     <StyledBoxWithoutWhiteCorners className="bg-[#00000040]">
                       <div className="flex flex-row items-center justify-start w-full px-2 py-1 gap-2 cursor-pointer"
                         onClick={() => {
-                          navigator.clipboard.writeText('www.dyphira.com/ref/290561')
+                          navigator.clipboard.writeText(referralLink)
                             .then(() => {
                               alert('Copied to clipboard');
                               console.log('Copied to clipboard');
@@ -151,7 +155,7 @@ export const Referrals = () => {
                             });
                         }}>
                         <img src={clipboardIcon} alt="clipboard icon" />
-                        <p className="text-[10px] text-[#C8FFD380] -mb-[2px] uppercase">www.dyphira.com/ref/290561</p>
+                        <p className="text-[10px] text-[#C8FFD380] -mb-[2px] uppercase">{referralLink}</p>
                       </div>
                     </StyledBoxWithoutWhiteCorners>
                   </div>
@@ -249,7 +253,7 @@ export const Referrals = () => {
                   <span className="text-[6px] text-[#C8FFD380] uppercase text-right">ID<br /> #28950</span>
                 </div>
               </div>
-              
+
               <div className="flex flex-col items-center justify-between w-[25%]">
                 <div className="flex flex-row items-center justify-between pt-2 w-full">
                   <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
@@ -359,13 +363,13 @@ export const Referrals = () => {
                 </table>
                 <div className="flex flex-row items-center justify-center p-1 w-full">
                   <div className="flex flex-row items-center justify-center gap-2">
-                    <MovePageButton direction="previous" onClick={() => {}} disabled={false} />
+                    <MovePageButton direction="previous" onClick={() => { }} disabled={false} />
                     <PageButton active={true} page={1} />
                     <PageButton page={2} />
                     <PageButton page={3} />
                     <PageButton page={4} />
                     <PageButton page={5} />
-                    <MovePageButton direction="next" onClick={() => {}} disabled={false} />
+                    <MovePageButton direction="next" onClick={() => { }} disabled={false} />
                   </div>
                 </div>
               </div>

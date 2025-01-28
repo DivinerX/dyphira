@@ -7,6 +7,7 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
   const { loggedIn } = useAuth();
+  console.log(loggedIn)
 
   return loggedIn ? (
     <>
