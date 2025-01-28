@@ -1,12 +1,39 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { TUser, TSignupUser, TLoginUser } from '@/types'
 import { signup as signupApi, signin as signinApi, getUser as getUserApi } from '@/api/auth.api'
 import storage from '@/utils/storage'
 import { AuthContext } from './auth.context'
+import axios, { AxiosError } from 'axios'
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<TUser | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
   const loggedIn = !!storage.getAccessToken()
+
+  const fetchCurrentUser = useCallback(async () => {
+    const token = storage.getAccessToken();
+    if (!token) return;
+
+    setLoading(true);
+    try {
+      const res = await getUserApi();
+      setUser(res.data);
+    } catch (error) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response?.status === 404 || axiosError.response?.status === 401) {
+          logout();
+        }
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCurrentUser()
+  }, [fetchCurrentUser])
 
   const register = async (user: TSignupUser) => {
     try {
@@ -38,6 +65,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const getUser = async () => {
     try {
       const response = await getUserApi()
+      console.log(response)
       setUser(response.data)
     } catch (error) {
       console.error("getUser error", error)

@@ -62,7 +62,7 @@ export default function ProgressBarComp() {
 
       <div className='flex flex-row justify-between items-center py-2 w-full'>
         <div className='flex flex-col justify-center items-start'>
-          <span className='text-[12px]'>{Math.floor((assessment?.duration! - progress) / 60)}:{(assessment?.duration! - progress) % 60}</span>
+          <span className='text-[12px]'>{typeof assessment?.duration === "number" ? Math.floor((assessment?.duration - progress) / 60) : "-"}:{typeof assessment?.duration === "number" ? (assessment?.duration - progress) % 60 : "-"}</span>
           <span className='text-[10px] text-[#C8FFF480] uppercase'>time left</span>
         </div>
         <div className='flex flex-col justify-center items-end'>

@@ -10,8 +10,6 @@ import { fetchRewards } from "@/redux/slices/rewards";
 type CamVideoProps = {
   assessmentCompleted: boolean;
   onRecordingStart: () => void;
-  isAudioPermissionGranted: boolean;
-  isVideoPermissionGranted: boolean;
 };
 
 export default function CamVideo({

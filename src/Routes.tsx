@@ -4,7 +4,7 @@ import { Metrics } from "./pages/Metrics";
 import { Assessments } from "./pages/Assessments/Assessments";
 import { TakeAssessmentContainer } from "./pages/TakeAssessment/TakeAssessmentContainer";
 import { LeaderboardContainer } from "./pages/Leaderboard/LeaderboardContainer";
-import { Referrals } from "./pages/Referrals";
+import { ReferralsContainer } from "./pages/Referrals/ReferralsContainer";
 import { SignInContainer } from "./pages/SignIn/SignInContainer";
 import { SignUpContainer } from "./pages/SignUp/SignUpContainer";
 import PrivateRoute from "./components/PrivateRoute";
@@ -17,7 +17,7 @@ export const routes = [
   { path: "/assessments", element: <PrivateRoute><Assessments /></PrivateRoute> },
   { path: "/assessment", elements: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
   { path: "/rankings", element: <LeaderboardContainer /> },
-  { path: "/referrals", element: <Referrals /> },
+  { path: "/referrals", element: <ReferralsContainer /> },
   { path: "/login", element: <SignInContainer /> },
   { path: "/signup", element: <SignUpContainer /> },
 ];

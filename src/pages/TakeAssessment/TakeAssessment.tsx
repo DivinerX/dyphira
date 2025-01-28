@@ -44,7 +44,7 @@ export const TakeAssessment: FC<TTakeAssessment> = ({
 
               <div className='flex flex-col justify-center items-center py-12 w-full text-[12px] text-[#E4FFEA] uppercase text-center gap-8 [text-shadow:0_0_15px_rgba(70,255,91,0.25),0_0_2px_rgba(125,255,151,0.5)]'>
                 <p >Imagine you’re presenting an investment thesis<br /> for a controversial or misunderstood technology.</p>
-                <p >What’s your framework for converting skeptics<br /> into believers?</p>
+                {assessment && <p >Why should you receive Dyphira?</p>}
               </div>
 
               <div className='flex flex-row justify-between items-end w-full'>
@@ -54,8 +54,6 @@ export const TakeAssessment: FC<TTakeAssessment> = ({
                     <CamVideo
                       assessmentCompleted={assessmentCompleted}
                       onRecordingStart={handleRecordingStart}
-                      isAudioPermissionGranted={isAudioPermissionGranted}
-                      isVideoPermissionGranted={isVideoPermissionGranted}
                     />
                   )
                 }

@@ -18,7 +18,7 @@ export type TSignupUser = {
   email: string;
   password: string;
   confirmPassword?: string;
-  referralId?: string;
+  referralCode?: string;
 }
 
 export type TLoginUser = {
@@ -31,6 +31,7 @@ export type TUser = {
   username: string;
   email: string;
   referralId: string;
+  fund?: any;
 }
 
 export type TUserState = {
@@ -65,6 +66,7 @@ export type TRegisterError = {
   username?: string;
   email?: string;
   password?: string;
+  referralCode?: string;
 }
 
 export type TLoginError = {

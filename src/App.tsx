@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import Routes from '@/Routes'
 import { store } from '@/redux'
 import { AuthProvider } from '@/contexts/auth.provider'
+import { ToastContainer } from 'react-toastify';
 function App() {
 
   return (
@@ -11,6 +12,7 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes />
+          <ToastContainer />
         </BrowserRouter>
       </AuthProvider>
     </Provider>

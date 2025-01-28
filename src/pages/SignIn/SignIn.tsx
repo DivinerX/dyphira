@@ -13,11 +13,12 @@ import { TLoginError, TLoginUser } from "@/types";
 type TSignInProps = {
   formData: TLoginUser
   error: TLoginError
+  navigate: any
   setFormData: (data: TLoginUser) => void
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-export const SignIn: FC<TSignInProps> = ({ formData, error, setFormData, handleSubmit }) => {
+export const SignIn: FC<TSignInProps> = ({ formData, error, navigate, setFormData, handleSubmit }) => {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center h-full w-full">
@@ -74,7 +75,7 @@ export const SignIn: FC<TSignInProps> = ({ formData, error, setFormData, handleS
               <img src={fingerprintIcon} alt="fingerprint icon" />
             </div>
           </StyledButton>
-          <StyledButton>
+          <StyledButton onClick={() => navigate('/signup')}>
             <div className="flex flex-row items-center justify-center gap-2">
               <span>CREATE ACCOUNT</span>
               <img src={personPlusIcon} alt="person plus icon" />

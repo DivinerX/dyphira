@@ -37,6 +37,7 @@ export const SignInContainer: FC = () => {
   return <SignIn
     formData={formData}
     error={error}
+    navigate={navigate}
     setFormData={setFormData}
     handleSubmit={handleSubmit}
   />;
