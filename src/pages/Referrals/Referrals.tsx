@@ -14,6 +14,7 @@ import telegramIcon from "@/assets/images/telegram-icon.svg";
 import twitterIcon from "@/assets/images/x-icon.svg";
 import shareIcon from "@/assets/images/share-icon.svg";
 import { MovePageButton } from "@/components/MovePageButton";
+import { format, formatDistance, formatDistanceToNow } from "date-fns";
 
 const referralLogs = [
   {
@@ -111,9 +112,10 @@ const referralActivity = [
 type TReferralsProps = {
   referralLink: string;
   referrals: any;
+  notifications: any;
 }
 
-export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals }) => {
+export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifications }) => {
   console.log(referralLink) 
   return (
     <Layout>
@@ -384,8 +386,8 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals }) => {
               </div>
             </StyledBoxWithoutWhiteCorners>
             <div className="flex flex-col items-center justify-center w-full gap-2 py-2">
-              {referralActivity.map((item, index) => (
-                <ReferralActivityItem {...item} key={index} />
+              {notifications.map((item: any, index: number) => (
+                <ReferralActivityItem avatar={avatar} username={item.userId.username} time={item.createdAt} activity={item.message} verified={item.userId.verified} key={index} />
               ))}
             </div>
           </div>
@@ -436,7 +438,7 @@ const ReferralActivityItem: FC<ReferralActivityItemProps> = ({ username, time, a
         <div className="flex flex-col items-center justify-center w-full">
           <div className="flex flex-row items-center justify-between w-full">
             <span className="flex flex-row items-center justify-start gap-1 text-[10px]">{username}{verified && <img src={verifiedIcon} alt="verified icon" />}</span>
-            <span className="text-[10px] text-[#C8FFD3]">{time}</span>
+            <span className="text-[10px] text-[#C8FFD3] uppercase">{formatDistanceToNow(new Date(time), { addSuffix: true })}</span>
           </div>
           <div className="flex flex-row items-start w-full">
             <span className="text-[10px] text-[#C8FFD380] uppercase">{activity}</span>

@@ -24,5 +24,5 @@ export const ReferralsContainer = () => {
 		}
 	}, [user]);
 	console.log(userState)
-	return <Referrals referralLink={referralLink} referrals={userState?.referrals} />
+	return <Referrals referralLink={referralLink} referrals={userState?.referrals ?? []} notifications={userState?.notifications ?? []}/>
 }
