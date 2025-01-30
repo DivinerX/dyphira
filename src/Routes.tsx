@@ -17,7 +17,7 @@ export const routes = [
   { path: "/assessments", element: <PrivateRoute><Assessments /></PrivateRoute> },
   { path: "/assessment", elements: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
   { path: "/rankings", element: <LeaderboardContainer /> },
-  { path: "/referrals", element: <ReferralsContainer /> },
+  { path: "/referrals", element: <PrivateRoute><ReferralsContainer /></PrivateRoute> },
   { path: "/login", element: <SignInContainer /> },
   { path: "/signup", element: <SignUpContainer /> },
 ];

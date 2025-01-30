@@ -110,9 +110,11 @@ const referralActivity = [
 
 type TReferralsProps = {
   referralLink: string;
+  referrals: any;
 }
 
-export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
+export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals }) => {
+  console.log(referralLink) 
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center">
@@ -309,48 +311,48 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {referralLogs.map((log, index) => (
+                    {referrals.map((referral, index) => (
                       <tr className="text-[10px] border-t border-[#C8FFF440]" key={index}>
                         <td className="pl-2 flex flex-row items-center justify-start gap-2 py-1">
                           <div className="w-5 h-5">
                             <StyledBoxWithoutWhiteCorners className="p-0" borderColor="">
                               <div className="w-full h-full">
-                                <img src={log.avatar} alt="avatar" className="w-full h-full object-cover" />
+                                <img src={avatar} alt="avatar" className="w-full h-full object-cover" />
                               </div>
                             </StyledBoxWithoutWhiteCorners>
                           </div>
-                          <p className="text-[10px] text-white">{log.name}</p>
+                          <p className="text-[10px] text-white">{referral.username}</p>
                         </td>
                         <td>
-                          <span className="text-[10px] text-[#C8FFD380]">{log.referralId}</span>
+                          <span className="text-[10px] text-[#C8FFD380]">{referral.fund?.referralCode}</span>
                         </td>
                         <td>
                           <span className="text-[10px] text-[#C8FFD380]">
-                            {log.verified ?
+                            {referral.verified ?
                               (<span className="text-[10px] text-[#C8FFD3] uppercase flex flex-row items-center justify-start gap-1">verified<img src={verifiedIcon} alt="verified icon" /></span>) :
                               (<span className="text-[10px] text-[#C8FFD380] uppercase">unverified</span>)
                             }
                           </span>
                         </td>
                         <td>
-                          <span className="text-[10px] text-[#C8FFD3]">{log.overallScore}</span>
+                          <span className="text-[10px] text-[#C8FFD3]">{referral.twitterScore}</span>
                         </td>
                         <td>
                           <div className="flex flex-row items-center justify-start gap-1">
                             <div className="w-1 h-1 rotate-45 bg-[#FC074726] border border-[#FC0747]"></div>
-                            <span className="text-[10px] text-[#C8FFD3]">{log.pointsGained}</span>
+                            <span className="text-[10px] text-[#C8FFD3]">{referral.totalRewardsEarned}</span>
                           </div>
                         </td>
                         <td className="pr-2 text-right">
                           <div className="flex flex-row items-center justify-end gap-1">
                             {
-                              log.socials.includes("twitter") &&
+                              referral.twitterId &&
                               <StyledBox className="p-1">
                                 <img src={twitterIcon} alt="twitter icon" className="w-2" />
                               </StyledBox>
                             }
                             {
-                              log.socials.includes("telegram") &&
+                              referral.telegramId &&
                               <StyledBox className="p-1">
                                 <img src={telegramIcon} alt="telegram icon" className="w-2 h-2" />
                               </StyledBox>
