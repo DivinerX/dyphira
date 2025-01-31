@@ -17,99 +17,7 @@ import { MovePageButton } from "@/components/MovePageButton";
 import { format, formatDistance, formatDistanceToNow } from "date-fns";
 import QRCode from "react-qr-code";
 import { toast } from "react-toastify";
-
-const referralLogs = [
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: true,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-];
-
-const referralActivity = [
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-];
+import { PageButtons } from "@/components/PageButton";
 
 type TReferralsProps = {
   referralLink: string;
@@ -193,7 +101,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                   <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
                     <div className="flex flex-row items-center justify-start gap-2">
                       <img src={upArrow} alt="up arrow" />
-                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{referrals.filter((referral: any) => referral.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length}</p>
                     </div>
                     <div>
                       <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
@@ -217,10 +125,11 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                   <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
                     <div className="flex flex-row items-center justify-start gap-2">
                       <img src={upArrow} alt="up arrow" />
-                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{referrals.filter((referral: any) => referral.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length}</p>
                     </div>
                     <div>
                       <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
+
                     </div>
                   </div>
                 </StyledBoxWithoutWhiteCorners>
@@ -372,11 +281,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                 <div className="flex flex-row items-center justify-center p-1 w-full">
                   <div className="flex flex-row items-center justify-center gap-2">
                     <MovePageButton direction="previous" onClick={() => { }} disabled={false} />
-                    <PageButton active={true} page={1} />
-                    <PageButton page={2} />
-                    <PageButton page={3} />
-                    <PageButton page={4} />
-                    <PageButton page={5} />
+                    <PageButtons page={1} setPage={() => { }} items={referrals} itemsPerPage={10} />
                     <MovePageButton direction="next" onClick={() => { }} disabled={false} />
                   </div>
                 </div>
