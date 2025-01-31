@@ -15,6 +15,8 @@ import twitterIcon from "@/assets/images/x-icon.svg";
 import shareIcon from "@/assets/images/share-icon.svg";
 import { MovePageButton } from "@/components/MovePageButton";
 import { format, formatDistance, formatDistanceToNow } from "date-fns";
+import QRCode from "react-qr-code";
+import { toast } from "react-toastify";
 
 const referralLogs = [
   {
@@ -116,7 +118,7 @@ type TReferralsProps = {
 }
 
 export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifications }) => {
-  console.log(referralLink) 
+  console.log(referralLink)
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center">
@@ -134,13 +136,14 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                   <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
                   <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
                 </div>
-                <div className="flex flex-row w-full py-4 gap-2">
+                <div className="flex flex-row justify-between w-full py-4 gap-2">
                   <div className="w-1/2 text-[10px] text-[#C8FFD3] font-mono">
                     <p>This task evaluates your ability</p>
                     <p>Process visual information, recognize patterns, and react quickly under pressure.</p>
                     <p>Process visual information, recognize patterns, and react quickly.</p>
                   </div>
-                  <div className="w-1/2 h-28 bg-[#C8FFD306]">
+                  <div className="w-28 h-28 bg-[#C8FFD306]">
+                    <QRCode value={referralLink} className="w-full h-full" />
                   </div>
                 </div>
                 <div className="flex flex-row items-center justify-between gap-2">
@@ -151,9 +154,9 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                         onClick={() => {
                           navigator.clipboard.writeText(referralLink)
                             .then(() => {
-                              alert('Copied to clipboard');
-                              console.log('Copied to clipboard');
+                              toast.info('Link Copied to clipboard');
                             })
+
                             .catch(err => {
                               console.error('Failed to copy:', err);
                             });
@@ -180,7 +183,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                   </div>
                   <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
                     <img src={redBrain} alt="red brain" />
-                    <p className="-mb-[2px]">42</p>
+                    <p className="-mb-[2px]">{referrals.length}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between px-2 w-full">
                     <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
@@ -203,9 +206,10 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                   </div>
                   <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
                     <img src={redBrain} alt="red brain" />
-                    <p className="-mb-[2px]">42</p>
+                    <p className="-mb-[2px]">{referrals.length}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between px-2 w-full">
+
                     <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
                     <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
                     <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
