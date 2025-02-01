@@ -1,6 +1,6 @@
 // import { lazy } from "react";
 import { Route, Routes as RouterRoutes } from "react-router-dom";
-import { Metrics } from "./pages/Metrics";
+import { MetricsContainer } from "./pages/Metrics/MetricsContainer";
 import { Assessments } from "./pages/Assessments/Assessments";
 import { TakeAssessmentContainer } from "./pages/TakeAssessment/TakeAssessmentContainer";
 import { LeaderboardContainer } from "./pages/Leaderboard/LeaderboardContainer";
@@ -13,7 +13,7 @@ import PrivateRoute from "./components/PrivateRoute";
 
 export const routes = [
   { path: "/", element: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
-  { path: "/metrics", element: <PrivateRoute><Metrics /></PrivateRoute> },
+  { path: "/metrics", element: <PrivateRoute><MetricsContainer /></PrivateRoute> },
   { path: "/assessments", element: <PrivateRoute><Assessments /></PrivateRoute> },
   { path: "/assessment", elements: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
   { path: "/rankings", element: <LeaderboardContainer /> },

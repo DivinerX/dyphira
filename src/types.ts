@@ -74,3 +74,21 @@ export type TLoginError = {
   password?: string;
   attempts: boolean;
 }
+
+export type TAssessmentScore = {
+  confidence: number;
+  knowledgeability: number;
+  determination: number;
+  evangelism: number;
+  workEthic: number;
+  vision: number;
+  interests: number;
+  pastWorkQuality: number;
+  intelligence: number;
+  personality: number;
+  horsepower: number;
+  hustle: number;
+  curiosity: number;
+  focus: number;
+  ferocity: number;
+}

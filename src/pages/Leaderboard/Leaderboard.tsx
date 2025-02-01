@@ -191,37 +191,26 @@ const Rank: FC<RankProps> = ({ rank, username, twitterId, score, rankFrom, locat
                 <span className="text-[8px] text-[#C8FFD380] uppercase">leader for</span>
                 <div className="flex flex-row items-center justify-start gap-2">
                   {/* <img src={wangIcon} alt="wang-icon"/> */}
-                  <p className={`text-[10px] text-[#FFEC7E] uppercase pt-1 -mt-2 bg-blend-color-burn`}>{rankFrom.toLocaleDateString()}</p>
+                  <p className={`text-[10px] text-[#FFEC7E] uppercase pt-1 -mt-2 bg-blend-color-burn drop-shadow-md`}>{rankFrom.toLocaleDateString()}</p>
                 </div>
               </div>
             </>
           )
         }
       </div>
-      <div className="w-[60%] flex flex-row items-center justify-end gap-2">
-        {/* <div className="w-[30%] flex flex-col">
-          <span className="text-[8px] text-[#C8FFD380] uppercase">location</span>
-          <div className="flex flex-row items-center justify-start gap-2">
-            <img src={USFlag} alt="US-flag" className="-mt-[2px]" />
-            <p className={`text-[10px] uppercase`}>{location}</p>
-          </div>
-        </div> */}
-        <div className="w-[25%] flex flex-col">
-          <span className="text-[8px] text-[#C8FFD380] uppercase">USD claimed</span>
-          <div className="flex flex-row items-center justify-start gap-1">
-            <p className={`text-[10px] uppercase`}>{claimedUSD ? claimedUSD.toFixed(2) : "-"}</p>
-            <img src={USDIcon} alt="usd-icon" className="-mt-1" />
-          </div>
-        </div>
-        <div className="w-[25%] flex flex-col">
-          <span className="text-[8px] text-[#C8FFD380] uppercase">total points</span>
+      <div className="flex flex-row items-center justify-end gap-2 w-[60%]">
+        <div className="flex flex-col items-end">
+          <span className="text-[8px] text-[#C8FFD380] uppercase">overall score</span>
           <div className="flex flex-row items-center justify-start gap-1">
             <div className="w-1 h-1 border border-[#FC0747] bg-[#FC074726] rotate-45 -mt-[2px]"></div>
-            <p className={`text-[10px] uppercase`}>{Math.floor(totalPoints)}</p>
+            <p className={`text-[10px] uppercase`}>{score ? score.toFixed(2) : "-"}</p>
           </div>
         </div>
-        <div className="w-[20%] flex flex-col items-end">
-          <span className="text-[8px] text-[#C8FFD380] uppercase">overall score</span>
+        <div>
+          <VerticalDivider style="h-4" />
+        </div>
+        <div className="flex flex-col items-end">
+          <span className="text-[8px] text-[#C8FFD380] uppercase">gained xp</span>
           <div className="flex flex-row items-center justify-start gap-1">
             <div className="w-1 h-1 border border-[#FC0747] bg-[#FC074726] rotate-45 -mt-[2px]"></div>
             <p className={`text-[10px] uppercase`}>{score ? score.toFixed(2) : "-"}</p>

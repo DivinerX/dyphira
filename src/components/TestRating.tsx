@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { StyledBox } from "./StyledBox";
 import titleDecorator from "@/assets/images/title-decorator.svg";
 import avatar from "@/assets/images/avatar.png";
@@ -16,6 +16,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import { TAssessmentScore } from "@/types";
 
 ChartJS.register(
   RadialLinearScale,
@@ -26,45 +27,31 @@ ChartJS.register(
   Legend
 );
 
-export const TestRating: FC = () => {
-  const chartData = {
-    labels: [
-      ['General', 'Intelligence'],
-      ['Pattern', 'Recognition'],
-      ['Impulse', 'Control'], 
-      ['Visual', 'Perception'],
-      ['Decision', 'Making'],
-      ['Problem', 'Solving'], 
-      ['Reaction', 'Time'], 
-      ['Processing', 'Speed'],
-      ['Short', 'Term Memory'], 
-      ['Long', 'Term Memory'], 
-      ['Emotional', 'Intelligence']
-    ],
-    datasets: [{
-      label: 'Average',
-      data: [75, 69, 82, 71, 76, 85, 70, 60, 80, 70, 80],
-      fill: true,
-      borderWidth: 2,
-      pointRadius: 4,
-      backgroundColor: '#FC07471A',
-      pointBackgroundColor: '#FC0747',
-      pointBorderColor: '#FC0747',
-      pointBorderWidth: 0,
-      borderColor: '#FC0747',
-    }, {
-      label: 'User',
-      data: [67, 60, 75, 65, 68, 75, 85, 55, 85, 65, 75],
-      fill: true,
-      borderWidth: 2,
-      pointRadius: 4,
-      backgroundColor: '#C8FFD30D',
-      pointBackgroundColor: '#C8FFD3',
-      pointBorderColor: '#C8FFD3',
-      pointBorderWidth: 0,
-      borderColor: '#C8FFD3',
-    }]
-  };
+type TestRatingProps = {
+  score: TAssessmentScore;
+  averageScore: number;
+  avgScoreList: any;
+};
+
+export const TestRating: FC<TestRatingProps> = ({ score, averageScore, avgScoreList }) => {
+  const [currentMetrics, setCurrentMetrics] = useState<'your' | 'average'>('your');
+  let labels = [
+    ['confidence'],
+    ['knowledgeability'],
+    ['determination'],
+    ['evangelism'],
+    ['work ethic'],
+    ['vision'],
+    ['interests'],
+    ['past work', 'quality'],
+    ['intelligence'],
+    ['personality'],
+    ['horsepower'],
+    ['hustle'],
+    ['curiosity'],
+    ['focus'],
+    ['ferocity'],
+  ];
 
   const options = {
     plugins: {
@@ -102,6 +89,90 @@ export const TestRating: FC = () => {
       },
     },
   }
+  const [averageData, setAverageData] = useState({
+    label: 'Average',
+    fill: true,
+    borderWidth: 2,
+    pointRadius: 4,
+    backgroundColor: '#FC07471A',
+    pointBackgroundColor: '#FC0747',
+    pointBorderColor: '#FC0747',
+    pointBorderWidth: 0,
+    borderColor: '#FC0747',
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  });
+  const [userData, setUserData] = useState({
+    label: 'User',
+    fill: true,
+    borderWidth: 2,
+    pointRadius: 4,
+    backgroundColor: '#C8FFD30D',
+    pointBackgroundColor: '#C8FFD3',
+    pointBorderColor: '#C8FFD3',
+    pointBorderWidth: 0,
+    borderColor: '#C8FFD3',
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  });
+
+  useEffect(() => {
+    setAverageData({
+      label: 'Average',
+      fill: true,
+      borderWidth: 2,
+      pointRadius: 4,
+      backgroundColor: '#FC07471A',
+      pointBackgroundColor: '#FC0747',
+      pointBorderColor: '#FC0747',
+      pointBorderWidth: 0,
+      borderColor: '#FC0747',
+      data: [
+        avgScoreList.confidence,
+        avgScoreList.knowledgeability,
+        avgScoreList.determination,
+        avgScoreList.evangelism,
+        avgScoreList.workEthic,
+        avgScoreList.vision,
+        avgScoreList.interests,
+        avgScoreList.pastWorkQuality,
+        avgScoreList.intelligence,
+        avgScoreList.personality,
+        avgScoreList.horsepower,
+        avgScoreList.hustle,
+        avgScoreList.curiosity,
+        avgScoreList.focus,
+        avgScoreList.ferocity,
+      ]
+    });
+    setUserData({
+      label: 'User',
+      fill: true,
+      borderWidth: 2,
+      pointRadius: 4,
+      backgroundColor: '#C8FFD30D',
+      pointBackgroundColor: '#C8FFD3',
+      pointBorderColor: '#C8FFD3',
+      pointBorderWidth: 0,
+      borderColor: '#C8FFD3',
+      data: [
+        score.confidence,
+        score.knowledgeability,
+        score.determination,
+        score.evangelism,
+        score.workEthic,
+        score.vision,
+        score.interests,
+        score.pastWorkQuality,
+        score.intelligence,
+        score.personality,
+        score.horsepower,
+        score.hustle,
+        score.curiosity,
+        score.focus,
+        score.ferocity,
+      ]
+    });
+  }, [score]);
+
   return (
     <StyledBox className="w-1/3 flex flex-col">
       <div className="w-full px-2 py-1 flex flex-row justify-start items-center gap-1 bg-[#3B4D4A]">
@@ -122,7 +193,7 @@ export const TestRating: FC = () => {
             </div>
             <div className="flex flex-row items-center gap-2">
               <img src={scoreDecorator} alt="score decorator" />
-              <p className="text-[#C8FFD3] text-[30px] font-bold uppercase leading-none">73<span className="text-[8px] font-normal text-[#C8FFD380]"> / 100</span></p>
+              <p className="text-[#C8FFD3] text-[30px] font-bold uppercase leading-none">{(averageScore).toFixed(1)}<span className="text-[8px] font-normal text-[#C8FFD380]"> / 100</span></p>
             </div>
           </div>
         </StyledBox>
@@ -133,29 +204,39 @@ export const TestRating: FC = () => {
       <div className="flex flex-col justify-start items-start w-full p-2">
         <StyledBox className="p-1">
           <div className="flex flex-row gap-1">
-            <StyledBox className="px-4 py-1">
-              <p className="text-[#C8FFD3] text-[8px] uppercase">your metrics</p>
+            <StyledBox className="px-4 py-1" backgroundColor={currentMetrics === 'your' ? '#C8FFD380' : 'transparent'}>
+              <p className="text-[#C8FFD3] text-[8px] uppercase cursor-pointer" onClick={() => setCurrentMetrics('your')}>your metrics</p>
             </StyledBox>
-            <StyledBox className="px-4 py-1">
-              <p className="text-[#C8FFD3] text-[8px] uppercase">average metrics</p>
+            <StyledBox className="px-4 py-1" backgroundColor={currentMetrics === 'average' ? '#C8FFD380' : 'transparent'}>
+              <p className="text-[#C8FFD3] text-[8px] uppercase cursor-pointer" onClick={() => setCurrentMetrics('average')}>average metrics</p>
             </StyledBox>
           </div>
         </StyledBox>
       </div>
       <div className="flex flex-wrap w-full p-2">
-        <ScoreBar skill="General Intelligence" score={73} />
-        <ScoreBar skill="General Intelligence" score={73} />
-        <ScoreBar skill="General Intelligence" score={73} />
-        <ScoreBar skill="General Intelligence" score={73} />
-        <ScoreBar skill="General Intelligence" score={73} />
-        <ScoreBar skill="General Intelligence" score={73} />
-        <ScoreBar skill="General Intelligence" score={73} />
-        <ScoreBar skill="General Intelligence" score={73} />
+        <ScoreBar skill="confidence" score={currentMetrics === 'your' ? score.confidence : avgScoreList.confidence} />
+        <ScoreBar skill="knowledgeability" score={currentMetrics === 'your' ? score.knowledgeability : avgScoreList.knowledgeability} />
+        <ScoreBar skill="determination" score={currentMetrics === 'your' ? score.determination : avgScoreList.determination} />
+        <ScoreBar skill="evangelism" score={currentMetrics === 'your' ? score.evangelism : avgScoreList.evangelism} />
+        <ScoreBar skill="work ethic" score={currentMetrics === 'your' ? score.workEthic : avgScoreList.workEthic} />
+        <ScoreBar skill="vision" score={currentMetrics === 'your' ? score.vision : avgScoreList.vision} />
+        <ScoreBar skill="interests" score={currentMetrics === 'your' ? score.interests : avgScoreList.interests} />
+        <ScoreBar skill="past work quality" score={currentMetrics === 'your' ? score.pastWorkQuality : avgScoreList.pastWorkQuality} />
+        <ScoreBar skill="intelligence" score={currentMetrics === 'your' ? score.intelligence : avgScoreList.intelligence} />
+        <ScoreBar skill="personality" score={currentMetrics === 'your' ? score.personality : avgScoreList.personality} />
+        <ScoreBar skill="horsepower" score={currentMetrics === 'your' ? score.horsepower : avgScoreList.horsepower} />
+        <ScoreBar skill="hustle" score={currentMetrics === 'your' ? score.hustle : avgScoreList.hustle} />
+        <ScoreBar skill="curiosity" score={currentMetrics === 'your' ? score.curiosity : avgScoreList.curiosity} />
+        <ScoreBar skill="focus" score={currentMetrics === 'your' ? score.focus : avgScoreList.focus} />
+        <ScoreBar skill="ferocity" score={currentMetrics === 'your' ? score.ferocity : avgScoreList.ferocity} />
       </div>
       <img src={testRatingDivider} alt="test rating divider" className="w-full rotate-180 py-2" />
       <div className="flex flex-col items-center w-full p-2">
         <Radar
-          data={chartData}
+          data={{
+            labels: labels,
+            datasets: [averageData, userData]
+          }}
           options={options} />
       </div>
       <img src={testRatingDivider} alt="test rating divider" className="w-full py-2" />
@@ -189,11 +270,11 @@ const ScoreBar: FC<ScoreBarProps> = ({ skill, score }) => {
           <p className="text-[#C8FFD3] text-[8px] uppercase">{skill}</p>
         </div>
         <div>
-          <p className="text-[#C8FFD3] text-sm uppercase">{score}<span className="text-[8px] text-[#C8FFF480] font-normal"> / 100</span></p>
+          <p className="text-[#C8FFD3] text-sm uppercase">{Math.floor(score)}<span className="text-[8px] text-[#C8FFF480] font-normal"> / 100</span></p>
         </div>
       </div>
       <div className="flex flex-row justify-start h-[6px] p-[0.5px] border-[0.5px] border-[#C8FFF440] w-full rounded-full">
-        <div className="w-2/3 h-full bg-[#C8FFD3] rounded-full"></div>
+        <div className={`h-full bg-[#C8FFD3] rounded-full`} style={{ width: `${score}%` }}></div>
       </div>
     </div>
   );
