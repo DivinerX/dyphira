@@ -14,10 +14,23 @@ export const fetchUserReferrals = createAsyncThunk(
 	},
 );
 
+export const fetchUserClicks = createAsyncThunk(
+	"users/fetchUserClicks",
+	async (_, thunkAPI: any) => {
+		try {
+			const response = await api.get(`/users/clicks`);
+			return response.data;
+		} catch (error) {
+			return handleAsyncThunkError(error, thunkAPI);
+		}
+	},
+)
+
 const userSlice = createSlice({
 	name: "user",
 	initialState: {
 		user: null,
+		click: { clicks: [] }
 	},
 	reducers: {
 		setUser: (state, action) => {
@@ -27,6 +40,9 @@ const userSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(fetchUserReferrals.fulfilled, (state, action) => {
 			state.user = action.payload;
+		});
+		builder.addCase(fetchUserClicks.fulfilled, (state, action) => {
+			state.click = action.payload;
 		});
 	},
 });

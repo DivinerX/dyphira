@@ -14,7 +14,7 @@ import telegramIcon from "@/assets/images/telegram-icon.svg";
 import twitterIcon from "@/assets/images/x-icon.svg";
 import shareIcon from "@/assets/images/share-icon.svg";
 import { MovePageButton } from "@/components/MovePageButton";
-import { format, formatDistance, formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import QRCode from "react-qr-code";
 import { toast } from "react-toastify";
 import { PageButtons } from "@/components/PageButton";
@@ -23,10 +23,10 @@ type TReferralsProps = {
   referralLink: string;
   referrals: any;
   notifications: any;
+  click: any
 }
 
-export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifications }) => {
-  console.log(referralLink)
+export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifications, click }) => {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center">
@@ -101,7 +101,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                   <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
                     <div className="flex flex-row items-center justify-start gap-2">
                       <img src={upArrow} alt="up arrow" />
-                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{referrals.filter((referral: any) => referral.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length}</p>
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{referrals.filter((referral: any) => (new Date(referral.createdAt).getTime() > (Date.now() - 7 * 24 * 60 * 60 * 1000))).length}</p>
                     </div>
                     <div>
                       <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
@@ -125,7 +125,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                   <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
                     <div className="flex flex-row items-center justify-start gap-2">
                       <img src={upArrow} alt="up arrow" />
-                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{referrals.filter((referral: any) => referral.createdAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length}</p>
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{referrals.filter((referral: any) => (new Date(referral.createdAt).getTime() > (Date.now() - 7 * 24 * 60 * 60 * 1000))).length}</p>
                     </div>
                     <div>
                       <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
@@ -139,7 +139,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                   </div>
                   <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
                     <img src={redBrain} alt="red brain" />
-                    <p className="-mb-[2px]">42</p>
+                    <p className="-mb-[2px]">{click.clicks.length}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between px-2 w-full">
                     <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
@@ -149,7 +149,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                   <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
                     <div className="flex flex-row items-center justify-start gap-2">
                       <img src={upArrow} alt="up arrow" />
-                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{click.clicks.filter((click: any) => (new Date(click).getTime() > (Date.now() - 7 * 24 * 60 * 60 * 1000))).length}</p>
                     </div>
                     <div>
                       <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>

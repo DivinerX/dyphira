@@ -3,16 +3,18 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Referrals } from "./Referrals";
 import { useAuth } from "@/contexts/auth.hook";
 import { fetchUserReferrals } from "@/redux/slices/users";
+import { fetchUserClicks } from "@/redux/slices/users";
 
 export const ReferralsContainer = () => {
 	const { user } = useAuth();
-	const { user: userState } = useAppSelector(state => state.user)
+	const { user: userState, click } = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch();
 	const [referralLink, setReferralLink] = useState<string>('');
 
 	useEffect(() => {
 		if (user) {
 			dispatch(fetchUserReferrals())
+			dispatch(fetchUserClicks())
 		}
 	}, [user])
 	useEffect(() => {
@@ -23,6 +25,5 @@ export const ReferralsContainer = () => {
 			}
 		}
 	}, [user]);
-	console.log(userState)
-	return <Referrals referralLink={referralLink} referrals={userState?.referrals ?? []} notifications={userState?.notifications ?? []}/>
+	return <Referrals referralLink={referralLink} referrals={userState?.referrals ?? []} notifications={userState?.notifications ?? []} click={click} />
 }

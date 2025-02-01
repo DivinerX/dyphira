@@ -198,14 +198,14 @@ const Rank: FC<RankProps> = ({ rank, username, twitterId, score, rankFrom, locat
           )
         }
       </div>
-      <div className="w-[60%] flex flex-row items-center justify-start gap-2">
-        <div className="w-[30%] flex flex-col">
+      <div className="w-[60%] flex flex-row items-center justify-end gap-2">
+        {/* <div className="w-[30%] flex flex-col">
           <span className="text-[8px] text-[#C8FFD380] uppercase">location</span>
           <div className="flex flex-row items-center justify-start gap-2">
             <img src={USFlag} alt="US-flag" className="-mt-[2px]" />
             <p className={`text-[10px] uppercase`}>{location}</p>
           </div>
-        </div>
+        </div> */}
         <div className="w-[25%] flex flex-col">
           <span className="text-[8px] text-[#C8FFD380] uppercase">USD claimed</span>
           <div className="flex flex-row items-center justify-start gap-1">
