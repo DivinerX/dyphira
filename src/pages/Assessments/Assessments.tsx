@@ -10,9 +10,14 @@ import boxes from "@/assets/images/boxes.svg";
 import { StyledBox } from "@/components/StyledBox";
 import checkIcon from "@/assets/images/check-icon.svg";
 import back_logo from "@/assets/images/back-logo.svg";
+import resumeIcon from "@/assets/images/resume-icon.svg";
 import { DistributionGraph } from "@/components/DistributionGraph";
+import { useNavigate } from "react-router-dom";
 
-export const Assessments: FC = () => {
+type AssessmentsProps = {
+  nextAssessmentDate: string | null;
+}
+export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate }) => {
   return (
     <Layout>
       <div className="flex flex-row gap-8 py-12 px-36 w-full h-full">
@@ -164,10 +169,12 @@ export const Assessments: FC = () => {
             <div className="w-full bg-[#C8FFF440] h-[0.5px]"></div>
             <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
           </div>
-          <CompletedButton />
+          {
+            new Date(nextAssessmentDate).getTime() > new Date().getTime() ? <CompletedButton /> : <ResumeButton />
+          }
         </div>
       </div>
-      <div className="absolute top-0 left-0 w-full h-screen">
+      <div className="absolute top-0 left-0 w-full h-screen pointer-events-none">
         <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </Layout>
@@ -250,6 +257,23 @@ const CompletedButton: FC = () => {
       <div className="flex flex-row items-center justify-center gap-2 p-2 h-full">
         <p className="text-[10px] text-[#C8FFD3] uppercase pt-1">completed</p>
         <img src={checkIcon} alt="check" />
+      </div>
+    </div>
+  )
+}
+
+const ResumeButton: FC = () => {
+  const navigate = useNavigate();
+  return (
+    <div className={`relative p-0 overflow-hidden cursor-pointer`} onClick={() => {
+      navigate("/assessment");
+    }}>
+      <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440] pointer-events-none"></div>
+      <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
+      <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
+      <div className="flex flex-row items-center justify-center gap-2 p-2 h-full">
+        <p className="text-[10px] text-[#C8FFD3] uppercase pt-1">start assessment</p>
+        <img src={resumeIcon} alt="resume" />
       </div>
     </div>
   )
