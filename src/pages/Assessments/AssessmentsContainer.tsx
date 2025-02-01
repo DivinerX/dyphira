@@ -3,7 +3,7 @@ import { Assessments } from "./Assessments";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/redux/hooks";
 
-export const AssessmentContainer = () => {
+export const AssessmentsContainer = () => {
   const [nextAssessmentDate, setNextAssessmentDate] = useState<string | null>(
     null,
   );

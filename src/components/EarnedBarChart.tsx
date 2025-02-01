@@ -123,8 +123,6 @@ function EarnedBarChart({ data, type }: TEarnedBarChartProps) {
     const date = new Date();
     date.setDate(date.getDate() - i);
     const day = date.getDay();
-    console.log(day);
-    console.log(data.map((item: any) => new Date(item.createdAt).getDay()));
     const item = data.filter((item: any) => new Date(item.createdAt).getDay() === day);
     if (type === 'referrals') {
       dataset.push(item?.length || 0);

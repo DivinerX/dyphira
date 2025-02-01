@@ -183,7 +183,7 @@ export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate }) => {
 
 const StyledHeader: FC<{ title: string }> = ({ title }) => {
   return (
-    <div className={`relative overflow-hidden p-2 bg-[#C8FFD306]`}>
+    <div className={`relative overflow-hidden p-2 bg-[#C8FFD306] backdrop-blur-sm z-10`}>
       <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440]"></div>
       {/* Right top corner */}
       <div className="absolute top-0 right-0 w-1 h-1 border-r-[0.5px] border-t-[0.5px] border-[#fff] z-30"></div>

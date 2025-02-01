@@ -4,18 +4,21 @@ import { VerticalDivider } from "./VerticalDivider";
 import settingIcon from "@/assets/images/setting-icon.svg";
 import notiIcon from "@/assets/images/noti-icon.svg";
 import avatar from "@/assets/images/avatar.png";
+import userIcon from "@/assets/images/user-icon.svg";
 import headerBorder from "@/assets/images/header-border.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { StyledBox } from "./StyledBox";
+import { useAuth } from "@/contexts/auth.hook";
 
 export const Header: FC = () => {
   const navigate = useNavigate();
+  const { loggedIn } = useAuth();
   const activePage = useLocation().pathname;
   return (
     <header className="flex flex-col px-10 py-5 gap-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src={logo} alt="logo" onClick={() => navigate("/")} className="cursor-pointer" />
+          <img src={logo} alt="logo" className="cursor-pointer" />
           <VerticalDivider style="h-5" />
           <div className="flex items-center gap-2">
             <HoverChangeStyledBox title="Metrics" link={() => navigate("/metrics")} activePage={activePage} />
@@ -25,27 +28,46 @@ export const Header: FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <StyledBox className="h-[22px] items-center">
-            <div className="flex flex-col p-[4px]">
-              <div className="flex justify-end">
-                <span className="text-[6px] leading-none uppercase text-[#C8FFD3]">points</span>
-              </div>
-              <div className="flex items-center justify-start gap-1">
-                <span className="text-[10px] leading-none font-bold text-[#C8FFD3]">17430</span>
-                <div className="w-1 h-1 border-[1px] rotate-45 border-[#F00]"></div>
-              </div>
-            </div>
-          </StyledBox>
-          <StyledBox>
-            <div className="p-[6px]">
-              <img src={settingIcon} alt="setting" className="h-[10px]" />
-            </div>
-          </StyledBox>
-          <NotificationBox hasNotification={true} />
-          <VerticalDivider style="h-5" />
-          <StyledBox>
-            <img src={avatar} alt="avatar" className="h-[22px]" />
-          </StyledBox>
+          {
+            loggedIn ? (
+              <>
+                <StyledBox className="h-[22px] items-center">
+                  <div className="flex flex-col p-[4px]">
+                    <div className="flex justify-end">
+                      <span className="text-[6px] leading-none uppercase text-[#C8FFD3]">points</span>
+                    </div>
+                    <div className="flex items-center justify-start gap-1">
+                      <span className="text-[10px] leading-none font-bold text-[#C8FFD3]">17430</span>
+                      <div className="w-1 h-1 border-[1px] rotate-45 border-[#F00]"></div>
+                    </div>
+                  </div>
+                </StyledBox>
+                <StyledBox>
+                  <div className="p-[6px]">
+                    <img src={settingIcon} alt="setting" className="h-[10px]" />
+                  </div>
+                </StyledBox>
+                <NotificationBox hasNotification={true} />
+                <VerticalDivider style="h-5" />
+                <StyledBox>
+                  <img src={avatar} alt="avatar" className="h-[22px]" />
+                </StyledBox>
+              </>
+            ) : (
+              <>
+                <StyledBox>
+                  <div className="p-[6px]">
+                    <img src={settingIcon} alt="setting" className="h-[10px]" />
+                  </div>
+                </StyledBox>
+                <StyledBox>
+                  <div className="p-[6px]">
+                    <img src={userIcon} alt="user" className="h-[10px]" />
+                  </div>
+                </StyledBox>
+              </>
+            )
+          }
         </div>
       </div>
       <img src={headerBorder} alt="header-border" className="w-full h-[6px]" />

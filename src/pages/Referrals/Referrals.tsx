@@ -18,6 +18,7 @@ import { formatDistanceToNow } from "date-fns";
 import QRCode from "react-qr-code";
 import { toast } from "react-toastify";
 import { PageButtons } from "@/components/PageButton";
+import back_logo from "@/assets/images/back-logo.svg";
 
 type TReferralsProps = {
   referralLink: string;
@@ -318,6 +319,9 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
             </div>
           </div>
         </div>
+      </div>
+      <div className="absolute top-0 left-0 w-full h-screen pointer-events-none">
+        <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </Layout >
   )
