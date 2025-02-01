@@ -28,7 +28,7 @@ export const PageButtons = ({ page, setPage, items, itemsPerPage }: TPageButtons
 
       {
         Array.from({ length: totalPages }, (_, index) => (
-          <PageButton active={page === index + 1} page={index + 1} onClick={() => setPage(index + 1)} />
+          <PageButton key={index} active={page === index + 1} page={index + 1} onClick={() => setPage(index + 1)} />
         ))
       }
     </>
