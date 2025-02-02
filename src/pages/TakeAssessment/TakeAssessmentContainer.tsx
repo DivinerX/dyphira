@@ -1,20 +1,20 @@
 import { TakeAssessment } from "./TakeAssessment";
 import { useMediaPermissions } from "@/contexts/media.hook";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { createAssessment, updateAssessment } from "@/redux/slices/assessment";
 import { createAnswer, updateAnswer, addQuestion } from "@/redux/slices/chat";
 import { fetchSectionQuestions, fetchSections } from "@/redux/slices/sections";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAuth } from "@/contexts/auth.hook";
+import storage from "@/utils/storage";
+import { TUser } from "@/types";
 
 export const TakeAssessmentContainer = () => {
+  const { user } = useAuth();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const {
-    isAudioEnabled: isAudioPermissionGranted,
-    isVideoEnabled: isVideoPermissionGranted,
     audioError,
     videoError,
   } = useMediaPermissions();
@@ -103,6 +103,41 @@ export const TakeAssessmentContainer = () => {
       .unwrap()
   };
 
+  
+  const openAccount = (provider: string) => {
+    switch (provider) {
+      case "twitter":
+        window.open(
+          `https://twitter.com/i/user/${user?.twitterId}`,
+          "_blank",
+          "noreferrer",
+        );
+        break;
+      case "linkedin":
+        window.open(
+          `https://www.linkedin.com/in/${user?.linkedinId}`,
+          "_blank",
+          "noreferrer",
+        );
+        break;
+
+      default:
+        console.log("Uknown strategy");
+    }
+  };
+  
+  const accountLinked = (provider: string) => {
+    return !!user?.[`${provider}Id` as keyof TUser];
+  };
+
+  const handleLinkAccount = (provider: string) => () => {
+    if (accountLinked(provider)) {
+      openAccount(provider);
+    } else {
+      const accessToken = storage.getAccessToken();
+      window.location.href = `${import.meta.env.VITE_BASE_API_URL}/social/${provider}?accessToken=${accessToken}`;
+    }
+  };
   const processQuestionCompletion = async () => {
     try {
       await handleUpdateAnswer();
@@ -168,14 +203,12 @@ export const TakeAssessmentContainer = () => {
   const assessmentCompleted =
     !!assessment && assessment.status !== "in-progress";
   return <TakeAssessment
+    user={user}
     assessmentCompleted={assessmentCompleted}
     assessment={assessment}
-    status={status}
     startAssessment={startAssessment}
+    handleLinkAccount={handleLinkAccount}
     handleRecordingStart={handleRecordingStart}
-    handleNextQuestion={handleNextQuestion}
     processQuestionCompletion={processQuestionCompletion}
-    isAudioPermissionGranted={isAudioPermissionGranted}
-    isVideoPermissionGranted={isVideoPermissionGranted}
   />;
 }

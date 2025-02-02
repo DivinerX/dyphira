@@ -32,6 +32,8 @@ export type TUser = {
   email: string;
   referralId: string;
   fund?: any;
+  twitterId?: string;
+  linkedinId?: string;
 }
 
 export type TUserState = {
