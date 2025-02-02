@@ -2,13 +2,13 @@ import { FC, useEffect, useState } from "react";
 import { Metrics } from "./Metrics";
 import { useAppSelector } from "@/redux/hooks";
 import { useAppDispatch } from "@/redux/hooks";
-import { fetchAvgScoreList, fetchUserAssessments } from "@/redux/slices/users";
+import { fetchAvgScoreList, fetchRank, fetchUserAssessments } from "@/redux/slices/users";
 import { TAssessmentScore } from "@/types";
 import { extractScore } from "@/utils/extractScore";
 
 export const MetricsContainer: FC = () => {
   const dispatch = useAppDispatch();
-  const { assessments, avgScoreList } = useAppSelector((state) => state.user);
+  const { assessments, avgScoreList, rank } = useAppSelector((state) => state.user);
   const [score, setScore] = useState<TAssessmentScore>({
     confidence: 0,
     knowledgeability: 0,
@@ -30,6 +30,7 @@ export const MetricsContainer: FC = () => {
   useEffect(() => {
     dispatch(fetchUserAssessments());
     dispatch(fetchAvgScoreList());
+    dispatch(fetchRank());
   }, []);
   useEffect(() => {
     let rawScores = assessments.map((assessment) => assessment.ranking);
@@ -91,8 +92,7 @@ export const MetricsContainer: FC = () => {
     const average = Object.values(score).reduce((acc, curr) => acc + curr, 0) / Object.values(score).length;
     setAverageScore(average);
   }, [assessments]);
-  console.log(avgScoreList);
-  return <Metrics score={score} averageScore={averageScore} avgScoreList={avgScoreList} />;
+  return <Metrics score={score} averageScore={averageScore} avgScoreList={avgScoreList} rank={rank} />;
 };
 
 const getScore = (jsonScores: any[], scoreName: string) => {

@@ -42,12 +42,24 @@ export const fetchAvgScoreList = createAsyncThunk(
 	},
 );
 
+export const fetchRank = createAsyncThunk(
+	"users/fetchRank",
+	async (_, thunkAPI: any) => {
+		const response = await api.get(`/users/rank`);
+		return response.data;
+	},
+);
+
 const userSlice = createSlice({
 	name: "user",
 	initialState: {
 		user: null,
 		click: { clicks: [] },
 		assessments: [],
+		rank: {
+			rank: undefined,
+			percentile: undefined,
+		},
 		avgScoreList: {
 			confidence: 0,
 			knowledgeability: 0,
@@ -84,6 +96,10 @@ const userSlice = createSlice({
 		builder.addCase(fetchAvgScoreList.fulfilled, (state, action) => {
 			// @ts-ignore
 			state.avgScoreList = action.payload;
+		});
+		builder.addCase(fetchRank.fulfilled, (state, action) => {
+			// @ts-ignore
+			state.rank = action.payload;
 		});
 	},
 });

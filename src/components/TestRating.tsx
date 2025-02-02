@@ -17,6 +17,7 @@ import {
   Legend
 } from 'chart.js';
 import { TAssessmentScore } from "@/types";
+import { Link } from "react-router-dom";
 
 ChartJS.register(
   RadialLinearScale,
@@ -31,9 +32,10 @@ type TestRatingProps = {
   score: TAssessmentScore;
   averageScore: number;
   avgScoreList: any;
+  rank: any;
 };
 
-export const TestRating: FC<TestRatingProps> = ({ score, averageScore, avgScoreList }) => {
+export const TestRating: FC<TestRatingProps> = ({ score, averageScore, avgScoreList, rank }) => {
   const [currentMetrics, setCurrentMetrics] = useState<'your' | 'average'>('your');
   let labels = [
     ['confidence'],
@@ -245,11 +247,11 @@ export const TestRating: FC<TestRatingProps> = ({ score, averageScore, avgScoreL
           <span className="text-[#C8FFD3] text-[6px] uppercase">Your Ranked</span>
           <div className="flex flex-row items-center gap-1">
             <div className="w-[5px] h-[2px] bg-[#FDFB8F] rounded-full"></div>
-            <span className="text-[#FDFB8F] text-[10px] uppercase">TOP 30%</span>
+            <span className="text-[#FDFB8F] text-[10px] uppercase">TOP {rank.percentile ? rank.percentile.toFixed(1) : "-"}%</span>
           </div>
         </div>
         <StyledBox className="px-10 py-1 cursor-pointer">
-          <p className="text-[#C8FFD3] text-[10px] uppercase">VIEW RANKINGS ...</p>
+          <Link to="/rankings" className="text-[#C8FFD3] text-[10px] uppercase">VIEW RANKINGS ...</Link>
         </StyledBox>
       </div>
     </StyledBox>

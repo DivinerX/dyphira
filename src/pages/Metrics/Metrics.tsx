@@ -10,13 +10,14 @@ type MetricsProps = {
   score: TAssessmentScore;
   averageScore: number;
   avgScoreList: any;
+  rank: any;
 };
 
-export const Metrics: FC<MetricsProps> = ({ score, averageScore, avgScoreList }) => {
+export const Metrics: FC<MetricsProps> = ({ score, averageScore, avgScoreList, rank }) => {
   return (
     <Layout>
       <div className=" w-full flex flex-row justify-start items-start gap-4">
-        <TestRating score={score} averageScore={averageScore} avgScoreList={avgScoreList} />
+        <TestRating score={score} averageScore={averageScore} avgScoreList={avgScoreList} rank={rank} />
         <TestSummary />
         <Lobe />
       </div>
