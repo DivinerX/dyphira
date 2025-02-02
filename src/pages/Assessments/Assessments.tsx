@@ -16,8 +16,9 @@ import { useNavigate } from "react-router-dom";
 
 type AssessmentsProps = {
   nextAssessmentDate: string | null;
+  rank: any;
 }
-export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate }) => {
+export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank }) => {
   return (
     <Layout>
       <div className="flex flex-row gap-8 py-12 px-36 w-full h-full">
@@ -157,11 +158,11 @@ export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate }) => {
               </div>
             </div>
             <div className="w-full flex flex-row items-center justify-center p-2">
-              <DistributionGraph />
+              <DistributionGraph rank={rank} />
             </div>
             <div className="w-full flex flex-row items-center justify-between border-t border-[#1E2927] bg-[#C8FFD303] p-2">
               <span className="text-[10px] text-[#C8FFD380] uppercase">You ranked:</span>
-              <p className="text-[10px] text-[#FFF047] font-bold uppercase">Top 30%</p>
+              <p className="text-[10px] text-[#FFF047] font-bold uppercase">Top {rank.percentile ? rank.percentile.toFixed(1) : "-"}%</p>
             </div>
           </StyledBox>
           <div className="flex flex-row items-center justify-between py-4">

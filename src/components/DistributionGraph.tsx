@@ -23,7 +23,11 @@ ChartJS.register(
   annotationPlugin
 );
 
-export const DistributionGraph: FC = () => {
+interface DistributionGraphProps {
+  rank: any;
+}
+
+export const DistributionGraph: FC<DistributionGraphProps> = ({ rank }) => {
   // Function to calculate normal distribution
   const normalDistribution = (x: number, mean: number, stdDev: number) => {
     const coefficient = 1 / (stdDev * Math.sqrt(2 * Math.PI));
@@ -32,38 +36,23 @@ export const DistributionGraph: FC = () => {
   };
 
   // Generate data points
-  const mean = 65;
-  const stdDev = 10;
+  const mean = 50;
+  const stdDev = 15;
   const points = [];
-  for (let x = 40; x <= 90; x += 0.5) {
+  for (let x = 0; x <= 100; x += 0.5) {
     points.push({
       x: x,
       y: normalDistribution(x, mean, stdDev)
     });
   }
 
-  // Create steppers array for x-axis markers
-  const stepperPositions = [40, 48, 56, 65, 73, 81, 89];
   const stepperAnnotations: Record<string, any> = {};
-
-  // Generate stepper annotations
-  stepperPositions.forEach((position, index) => {
-    stepperAnnotations[`stepper${index}`] = {
-      type: 'line',
-      xMin: position,
-      xMax: position,
-      borderColor: 'rgba(255, 255, 255, 0.3)',
-      borderWidth: 1,
-      borderDash: [5, 5],
-      drawTime: 'beforeDatasetsDraw'
-    };
-  });
 
   const data = {
     datasets: [{
       data: points,
-      borderColor: '#ffffff',
-      borderWidth: 2,
+      borderColor: '#6A8B74',
+      borderWidth: 1,
       fill: false,
       tension: 0.4,
       pointRadius: 0
@@ -82,7 +71,7 @@ export const DistributionGraph: FC = () => {
         ticks: {
           color: '#ffffff',
           callback: (value: number) => {
-            return stepperPositions.includes(value) ? value : '';
+            return value;
           }
         }
       },
@@ -105,8 +94,8 @@ export const DistributionGraph: FC = () => {
           ...stepperAnnotations,
           youAreHere: {
             type: 'line' as const,
-            xMin: 73,
-            xMax: 73,
+            xMin: rank.percentile,
+            xMax: rank.percentile,
             borderColor: '#FFD700',
             borderWidth: 2,
             label: {
@@ -116,21 +105,11 @@ export const DistributionGraph: FC = () => {
               backgroundColor: 'transparent',
               color: '#FFD700',
               font: {
-                size: 14,
+                size: 8,
                 weight: 'bold'
               }
             }
           },
-          percentages: {
-            type: 'label' as const,
-            content: ['0.1%', '13.6%', '34.1%', '34.1%', '13.6%', '0.1%'],
-            xValue: [40, 48, 56, 73, 81, 89],
-            yValue: 0.02,
-            color: '#ffffff',
-            font: {
-              size: 12
-            }
-          }
         }
       }
     }
