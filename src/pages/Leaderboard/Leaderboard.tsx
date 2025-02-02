@@ -4,12 +4,11 @@ import { FC, ReactNode } from "react";
 import leaderboardDecorator from "@/assets/images/leaderboard-decorator.svg";
 import rightArrow from "@/assets/images/right-arrow-icon.svg";
 import xIcon from "@/assets/images/x-icon.svg";
-import USFlag from "@/assets/images/US-flag.svg";
-import USDIcon from "@/assets/images/usdc-coin.png";
 import back_logo from "@/assets/images/back-logo.svg";
 import { VerticalDivider } from "@/components/VerticalDivider";
 import { MovePageButton } from "@/components/MovePageButton";
 import { TLeaderboard } from "@/types";
+import { PageButtons } from "@/components/PageButton";
 
 type TLeaderboardProps = {
   leaderboard: TLeaderboard[];
@@ -93,11 +92,10 @@ export const Leaderboard: FC<TLeaderboardProps> = ({ leaderboard, status, error,
                         rank={page * 10 - 10 + index + 1}
                         username={leader.username}
                         twitterId={leader.twitterId}
-                        score={leader.overallScore}
+                        twitterScore={leader.twitterScore}
+                        xp={leader.xp}
+                        overallScore={leader.overallScore}
                         rankFrom={new Date("2025-01-19")}
-                        location="United States"
-                        claimedUSD={leader.totalRewardEarned}
-                        totalPoints={leader.twitterScore}
                       />
                     )) : (
                       <div className="flex flex-row items-center justify-center gap-2 p-2">
@@ -110,14 +108,15 @@ export const Leaderboard: FC<TLeaderboardProps> = ({ leaderboard, status, error,
             <div className="flex flex-row items-center justify-center gap-2 py-3 border-t border-[#1E2927] w-full">
               <div className="flex flex-row items-center justify-center gap-2">
                 <MovePageButton direction="previous" onClick={() => setPage(page - 1)} disabled={page === 1} />
-                <PageButtons page={page} setPage={setPage} leaderboard={leaderboard} />
+                <PageButtons page={page} setPage={setPage} items={leaderboard} itemsPerPage={10} />
                 <MovePageButton direction="next" onClick={() => setPage(page + 1)} disabled={page === Math.ceil(leaderboard.length / 10)} />
               </div>
             </div>
+
           </StyledBox>
         </div>
       </Layout>
-      <div className="absolute top-0 left-0 w-full h-screen -z-10">
+      <div className="absolute top-0 left-0 w-full h-screen pointer-events-none">
         <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </>
@@ -137,33 +136,18 @@ const StyledButton: FC<{ children: ReactNode, className?: string }> = ({ childre
   )
 }
 
-const PageButton: FC<{ active?: boolean, page?: number, onClick: () => void, disabled?: boolean }> = ({ active = false, page, onClick, disabled }) => {
-  return active ? (
-    <div className={`relative p-0 overflow-hidden`}>
-      <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440]"></div>
-      <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
-      <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
-      <div className="flex flex-row items-center justify-center gap-2 px-2 py-1 bg-[#C8FFD30D]">
-        <p className="text-[10px] text-[#C8FFD3]">{page}</p>
-      </div>
-    </div>
-  ) : (
-    <p className={`text-[10px] text-[#C8FFD3] p-2 cursor-pointer ${disabled ? "opacity-50 cursor-not-allowed" : ""}`} onClick={onClick}>{page}</p>
-  )
-}
 
 type RankProps = {
   rank: number,
   username: string,
   twitterId: string,
-  score: number,
-  location: string,
-  claimedUSD: number,
-  totalPoints: number,
+  twitterScore: number,
+  xp: number,
+  overallScore: number,
   rankFrom?: Date
 }
 
-const Rank: FC<RankProps> = ({ rank, username, twitterId, score, rankFrom, location, claimedUSD, totalPoints }) => {
+const Rank: FC<RankProps> = ({ rank, username, twitterId, twitterScore, xp, overallScore, rankFrom }) => {
   const color = rank > 3 ? "#C8FFD3" : rank === 1 ? "#FC0757" : rank === 2 ? "#EC69BD" : "#B7A5FF";
   const style = color !== "#C8FFD3" ? {
     background: `linear-gradient(to right, ${color}40 0%, transparent 40%)`,
@@ -194,7 +178,7 @@ const Rank: FC<RankProps> = ({ rank, username, twitterId, score, rankFrom, locat
           </div>
         </div>
         {
-          rankFrom && (
+          rankFrom && rank <= 3 && (
             <>
               <div>
                 <VerticalDivider style="h-4" />
@@ -203,63 +187,32 @@ const Rank: FC<RankProps> = ({ rank, username, twitterId, score, rankFrom, locat
                 <span className="text-[8px] text-[#C8FFD380] uppercase">leader for</span>
                 <div className="flex flex-row items-center justify-start gap-2">
                   {/* <img src={wangIcon} alt="wang-icon"/> */}
-                  <p className={`text-[10px] text-[#FFEC7E] uppercase pt-1 -mt-2 bg-blend-color-burn`}>{rankFrom.toLocaleDateString()}</p>
+                  <p className={`text-[10px] text-[#FFEC7E] uppercase pt-1 -mt-2 bg-blend-color-burn drop-shadow-md`}>{rankFrom.toLocaleDateString()}</p>
                 </div>
               </div>
             </>
           )
         }
       </div>
-      <div className="w-[60%] flex flex-row items-center justify-start gap-2">
-        <div className="w-[30%] flex flex-col">
-          <span className="text-[8px] text-[#C8FFD380] uppercase">location</span>
-          <div className="flex flex-row items-center justify-start gap-2">
-            <img src={USFlag} alt="US-flag" className="-mt-[2px]" />
-            <p className={`text-[10px] uppercase`}>{location}</p>
-          </div>
-        </div>
-        <div className="w-[25%] flex flex-col">
-          <span className="text-[8px] text-[#C8FFD380] uppercase">USD claimed</span>
-          <div className="flex flex-row items-center justify-start gap-1">
-            <p className={`text-[10px] uppercase`}>{claimedUSD ? claimedUSD.toFixed(2) : "-"}</p>
-            <img src={USDIcon} alt="usd-icon" className="-mt-1" />
-          </div>
-        </div>
-        <div className="w-[25%] flex flex-col">
-          <span className="text-[8px] text-[#C8FFD380] uppercase">total points</span>
-          <div className="flex flex-row items-center justify-start gap-1">
-            <div className="w-1 h-1 border border-[#FC0747] bg-[#FC074726] rotate-45 -mt-[2px]"></div>
-            <p className={`text-[10px] uppercase`}>{Math.floor(totalPoints)}</p>
-          </div>
-        </div>
-        <div className="w-[20%] flex flex-col items-end">
+      <div className="flex flex-row items-center justify-end gap-2 w-[60%]">
+        <div className="flex flex-col items-end">
           <span className="text-[8px] text-[#C8FFD380] uppercase">overall score</span>
           <div className="flex flex-row items-center justify-start gap-1">
             <div className="w-1 h-1 border border-[#FC0747] bg-[#FC074726] rotate-45 -mt-[2px]"></div>
-            <p className={`text-[10px] uppercase`}>{score ? score.toFixed(2) : "-"}</p>
+            <p className={`text-[10px] uppercase`}>{overallScore ? overallScore.toFixed(2) : "-"}</p>
+          </div>
+        </div>
+        <div>
+          <VerticalDivider style="h-4" />
+        </div>
+        <div className="flex flex-col items-end">
+          <span className="text-[8px] text-[#C8FFD380] uppercase">gained xp</span>
+          <div className="flex flex-row items-center justify-start gap-1">
+            <div className="w-1 h-1 border border-[#FC0747] bg-[#FC074726] rotate-45 -mt-[2px]"></div>
+            <p className={`text-[10px] uppercase`}>{xp ? xp.toFixed(2) : "-"}</p>
           </div>
         </div>
       </div>
     </div>
   )
 }
-
-type TPageButtonsProps = {
-  page: number,
-  setPage: (page: number) => void,
-  leaderboard: TLeaderboard[]
-}
-
-const PageButtons = ({ page, setPage, leaderboard }: TPageButtonsProps) => {
-  const totalPages = Math.ceil(leaderboard.length / 10);
-  return (
-    <>
-      {
-        Array.from({ length: totalPages }, (_, index) => (
-          <PageButton active={page === index + 1} page={index + 1} onClick={() => setPage(index + 1)} />
-        ))
-      }
-    </>
-  )
-}
-

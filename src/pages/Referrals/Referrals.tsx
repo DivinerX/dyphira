@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Layout } from "../../components/Layout";
 import referralDecorator from "@/assets/images/referral-decorator.svg";
 import { StyledBox, StyledBoxWithoutWhiteCorners } from "@/components/StyledBox";
@@ -14,105 +14,23 @@ import telegramIcon from "@/assets/images/telegram-icon.svg";
 import twitterIcon from "@/assets/images/x-icon.svg";
 import shareIcon from "@/assets/images/share-icon.svg";
 import { MovePageButton } from "@/components/MovePageButton";
-
-const referralLogs = [
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: true,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["twitter", "telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-  {
-    avatar: avatar,
-    name: "chrome 307",
-    referralId: "#305678",
-    verified: false,
-    overallScore: 84.5,
-    pointsGained: 1509.7,
-    socials: ["telegram"],
-  },
-];
-
-const referralActivity = [
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-  { username: "chrome 307", time: "10:00", activity: "COMPLETED ASSESSMENT #001 AND SCORED 57.90", verified: true, avatar: avatar },
-];
+import { formatDistanceToNow } from "date-fns";
+import QRCode from "react-qr-code";
+import { toast } from "react-toastify";
+import { PageButtons } from "@/components/PageButton";
+import back_logo from "@/assets/images/back-logo.svg";
 
 type TReferralsProps = {
   referralLink: string;
+  referrals: any;
+  notifications: any;
+  click: any
 }
 
-export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
+export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifications, click }) => {
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 10;
+  const [referralGraphType, setReferralGraphType] = useState<'referrals' | 'earnings'>('referrals');
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center">
@@ -130,13 +48,14 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                   <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
                   <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
                 </div>
-                <div className="flex flex-row w-full py-4 gap-2">
+                <div className="flex flex-row justify-between w-full py-4 gap-2">
                   <div className="w-1/2 text-[10px] text-[#C8FFD3] font-mono">
                     <p>This task evaluates your ability</p>
                     <p>Process visual information, recognize patterns, and react quickly under pressure.</p>
                     <p>Process visual information, recognize patterns, and react quickly.</p>
                   </div>
-                  <div className="w-1/2 h-28 bg-[#C8FFD306]">
+                  <div className="w-28 h-28 bg-[#C8FFD306]">
+                    <QRCode value={referralLink} className="w-full h-full" />
                   </div>
                 </div>
                 <div className="flex flex-row items-center justify-between gap-2">
@@ -147,9 +66,9 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                         onClick={() => {
                           navigator.clipboard.writeText(referralLink)
                             .then(() => {
-                              alert('Copied to clipboard');
-                              console.log('Copied to clipboard');
+                              toast.info('Link Copied to clipboard');
                             })
+
                             .catch(err => {
                               console.error('Failed to copy:', err);
                             });
@@ -176,7 +95,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                   </div>
                   <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
                     <img src={redBrain} alt="red brain" />
-                    <p className="-mb-[2px]">42</p>
+                    <p className="-mb-[2px]">{referrals.length}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between px-2 w-full">
                     <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
@@ -186,7 +105,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                   <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
                     <div className="flex flex-row items-center justify-start gap-2">
                       <img src={upArrow} alt="up arrow" />
-                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{referrals.filter((referral: any) => (new Date(referral.createdAt).getTime() > (Date.now() - 7 * 24 * 60 * 60 * 1000))).length}</p>
                     </div>
                     <div>
                       <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
@@ -199,9 +118,10 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                   </div>
                   <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
                     <img src={redBrain} alt="red brain" />
-                    <p className="-mb-[2px]">42</p>
+                    <p className="-mb-[2px]">{referrals.length}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between px-2 w-full">
+
                     <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
                     <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
                     <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
@@ -209,10 +129,11 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                   <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
                     <div className="flex flex-row items-center justify-start gap-2">
                       <img src={upArrow} alt="up arrow" />
-                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{referrals.filter((referral: any) => (new Date(referral.createdAt).getTime() > (Date.now() - 7 * 24 * 60 * 60 * 1000))).length}</p>
                     </div>
                     <div>
                       <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
+
                     </div>
                   </div>
                 </StyledBoxWithoutWhiteCorners>
@@ -222,7 +143,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                   </div>
                   <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
                     <img src={redBrain} alt="red brain" />
-                    <p className="-mb-[2px]">42</p>
+                    <p className="-mb-[2px]">{click.clicks.length}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between px-2 w-full">
                     <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
@@ -232,7 +153,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                   <div className="flex flex-row items-center justify-between w-full px-2 gap-1">
                     <div className="flex flex-row items-center justify-start gap-2">
                       <img src={upArrow} alt="up arrow" />
-                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">37</p>
+                      <p className="-mb-[2px] text-[8px] text-[#C8FFD3]">{click.clicks.filter((click: any) => (new Date(click).getTime() > (Date.now() - 7 * 24 * 60 * 60 * 1000))).length}</p>
                     </div>
                     <div>
                       <span className="text-[8px] text-[#C8FFD380] uppercase">past 7 days</span>
@@ -275,17 +196,19 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
               <div className="flex flex-row items-center justify-end w-full p-2">
                 <StyledBoxWithoutWhiteCorners>
                   <div className="flex flex-row items-center p-1 gap-1">
-                    <StyledBoxWithoutWhiteCorners borderColor="#FC074780" className="bg-[#FC074726]">
-                      <span className="text-[10px] text-white uppercase py-1 px-2 -mb-[2px]">referrals</span>
+                    <StyledBoxWithoutWhiteCorners borderColor={referralGraphType === 'referrals' ? '#FC0747' : '#C8FFD380'} className={`${referralGraphType === 'referrals' ? 'bg-[#FC074726]' : ''}`}>
+                      <span className="text-[10px] text-white uppercase py-1 px-2 -mb-[2px]" onClick={() => setReferralGraphType('referrals')}>referrals</span>
                     </StyledBoxWithoutWhiteCorners>
-                    <StyledBoxWithoutWhiteCorners>
-                      <span className="text-[10px] text-white uppercase py-1 px-2 -mb-[2px]">Earnings</span>
+                    <StyledBoxWithoutWhiteCorners borderColor={referralGraphType === 'earnings' ? '#FC0747' : '#C8FFD380'} className={`${referralGraphType === 'earnings' ? 'bg-[#FC074726]' : ''}`}>
+                      <span className="text-[10px] text-white uppercase py-1 px-2 -mb-[2px]" onClick={() => setReferralGraphType('earnings')}>Earnings</span>
                     </StyledBoxWithoutWhiteCorners>
                   </div>
                 </StyledBoxWithoutWhiteCorners>
               </div>
               <div className="flex flex-row items-center justify-between w-full p-2 h-36">
-                <EarnedBarChart />
+                <EarnedBarChart
+                  type={referralGraphType}
+                  data={referrals.filter((referral: any) => (new Date(referral.createdAt).getTime() > (Date.now() - 7 * 24 * 60 * 60 * 1000)))} />
               </div>
             </StyledBoxWithoutWhiteCorners>
           </div>
@@ -309,66 +232,68 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {referralLogs.map((log, index) => (
-                      <tr className="text-[10px] border-t border-[#C8FFF440]" key={index}>
-                        <td className="pl-2 flex flex-row items-center justify-start gap-2 py-1">
-                          <div className="w-5 h-5">
-                            <StyledBoxWithoutWhiteCorners className="p-0" borderColor="">
-                              <div className="w-full h-full">
-                                <img src={log.avatar} alt="avatar" className="w-full h-full object-cover" />
+                    {
+                      referrals.length > 0 ?
+                        referrals.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((referral, index) => (
+                          <tr className="text-[10px] border-t border-[#C8FFF440]" key={index}>
+                            <td className="pl-2 flex flex-row items-center justify-start gap-2 py-1">
+                              <div className="w-5 h-5">
+                                <StyledBoxWithoutWhiteCorners className="p-0" borderColor="">
+                                  <div className="w-full h-full">
+                                    <img src={avatar} alt="avatar" className="w-full h-full object-cover" />
+                                  </div>
+                                </StyledBoxWithoutWhiteCorners>
                               </div>
-                            </StyledBoxWithoutWhiteCorners>
-                          </div>
-                          <p className="text-[10px] text-white">{log.name}</p>
-                        </td>
-                        <td>
-                          <span className="text-[10px] text-[#C8FFD380]">{log.referralId}</span>
-                        </td>
-                        <td>
-                          <span className="text-[10px] text-[#C8FFD380]">
-                            {log.verified ?
-                              (<span className="text-[10px] text-[#C8FFD3] uppercase flex flex-row items-center justify-start gap-1">verified<img src={verifiedIcon} alt="verified icon" /></span>) :
-                              (<span className="text-[10px] text-[#C8FFD380] uppercase">unverified</span>)
-                            }
-                          </span>
-                        </td>
-                        <td>
-                          <span className="text-[10px] text-[#C8FFD3]">{log.overallScore}</span>
-                        </td>
-                        <td>
-                          <div className="flex flex-row items-center justify-start gap-1">
-                            <div className="w-1 h-1 rotate-45 bg-[#FC074726] border border-[#FC0747]"></div>
-                            <span className="text-[10px] text-[#C8FFD3]">{log.pointsGained}</span>
-                          </div>
-                        </td>
-                        <td className="pr-2 text-right">
-                          <div className="flex flex-row items-center justify-end gap-1">
-                            {
-                              log.socials.includes("twitter") &&
-                              <StyledBox className="p-1">
-                                <img src={twitterIcon} alt="twitter icon" className="w-2" />
-                              </StyledBox>
-                            }
-                            {
-                              log.socials.includes("telegram") &&
-                              <StyledBox className="p-1">
-                                <img src={telegramIcon} alt="telegram icon" className="w-2 h-2" />
-                              </StyledBox>
-                            }
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                              <p className="text-[10px] text-white">{referral.username}</p>
+                            </td>
+                            <td>
+                              <span className="text-[10px] text-[#C8FFD380]">{referral.fund?.referralCode}</span>
+                            </td>
+                            <td>
+                              <span className="text-[10px] text-[#C8FFD380]">
+                                {referral.verified ?
+                                  (<span className="text-[10px] text-[#C8FFD3] uppercase flex flex-row items-center justify-start gap-1">verified<img src={verifiedIcon} alt="verified icon" /></span>) :
+                                  (<span className="text-[10px] text-[#C8FFD380] uppercase">unverified</span>)
+                                }
+                              </span>
+                            </td>
+                            <td>
+                              <span className="text-[10px] text-[#C8FFD3]">{referral.twitterScore}</span>
+                            </td>
+                            <td>
+                              <div className="flex flex-row items-center justify-start gap-1">
+                                <div className="w-1 h-1 rotate-45 bg-[#FC074726] border border-[#FC0747]"></div>
+                                <span className="text-[10px] text-[#C8FFD3]">{referral.totalRewardsEarned}</span>
+                              </div>
+                            </td>
+                            <td className="pr-2 text-right">
+                              <div className="flex flex-row items-center justify-end gap-1">
+                                {
+                                  referral.twitterId &&
+                                  <StyledBox className="p-1">
+                                    <img src={twitterIcon} alt="twitter icon" className="w-2" />
+                                  </StyledBox>
+                                }
+                                {
+                                  referral.telegramId &&
+                                  <StyledBox className="p-1">
+                                    <img src={telegramIcon} alt="telegram icon" className="w-2 h-2" />
+                                  </StyledBox>
+                                }
+                              </div>
+                            </td>
+                          </tr>
+                        )) :
+                        <tr>
+                          <td colSpan={6} className="text-[10px] text-[#C8FFD380] uppercase">No referrals found</td>
+                        </tr>
+                    }
                   </tbody>
                 </table>
                 <div className="flex flex-row items-center justify-center p-1 w-full">
                   <div className="flex flex-row items-center justify-center gap-2">
                     <MovePageButton direction="previous" onClick={() => { }} disabled={false} />
-                    <PageButton active={true} page={1} />
-                    <PageButton page={2} />
-                    <PageButton page={3} />
-                    <PageButton page={4} />
-                    <PageButton page={5} />
+                    <PageButtons page={1} setPage={() => { }} items={referrals} itemsPerPage={10} />
                     <MovePageButton direction="next" onClick={() => { }} disabled={false} />
                   </div>
                 </div>
@@ -382,12 +307,21 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink }) => {
               </div>
             </StyledBoxWithoutWhiteCorners>
             <div className="flex flex-col items-center justify-center w-full gap-2 py-2">
-              {referralActivity.map((item, index) => (
-                <ReferralActivityItem {...item} key={index} />
-              ))}
+              {
+                notifications.length > 0 ?
+                  notifications.slice(notifications.length - 5).map((item: any, index: number) => (
+                    <ReferralActivityItem avatar={avatar} username={item.userId.username} time={item.createdAt} activity={item.message} verified={item.userId.verified} key={index} />
+                  )) :
+                  <div className="flex flex-row items-center justify-center w-full">
+                    <p className="text-[10px] text-[#C8FFD380] uppercase">No notifications found</p>
+                  </div>
+              }
             </div>
           </div>
         </div>
+      </div>
+      <div className="absolute top-0 left-0 w-full h-screen pointer-events-none">
+        <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </Layout >
   )
@@ -434,7 +368,7 @@ const ReferralActivityItem: FC<ReferralActivityItemProps> = ({ username, time, a
         <div className="flex flex-col items-center justify-center w-full">
           <div className="flex flex-row items-center justify-between w-full">
             <span className="flex flex-row items-center justify-start gap-1 text-[10px]">{username}{verified && <img src={verifiedIcon} alt="verified icon" />}</span>
-            <span className="text-[10px] text-[#C8FFD3]">{time}</span>
+            <span className="text-[10px] text-[#C8FFD3] uppercase">{formatDistanceToNow(new Date(time), { addSuffix: true })}</span>
           </div>
           <div className="flex flex-row items-start w-full">
             <span className="text-[10px] text-[#C8FFD380] uppercase">{activity}</span>

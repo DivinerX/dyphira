@@ -1,7 +1,7 @@
 // import { lazy } from "react";
 import { Route, Routes as RouterRoutes } from "react-router-dom";
-import { Metrics } from "./pages/Metrics";
-import { Assessments } from "./pages/Assessments/Assessments";
+import { MetricsContainer } from "./pages/Metrics/MetricsContainer";
+import { AssessmentsContainer } from "./pages/Assessments/AssessmentsContainer";
 import { TakeAssessmentContainer } from "./pages/TakeAssessment/TakeAssessmentContainer";
 import { LeaderboardContainer } from "./pages/Leaderboard/LeaderboardContainer";
 import { ReferralsContainer } from "./pages/Referrals/ReferralsContainer";
@@ -13,11 +13,11 @@ import PrivateRoute from "./components/PrivateRoute";
 
 export const routes = [
   { path: "/", element: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
-  { path: "/metrics", element: <PrivateRoute><Metrics /></PrivateRoute> },
-  { path: "/assessments", element: <PrivateRoute><Assessments /></PrivateRoute> },
-  { path: "/assessment", elements: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
-  { path: "/rankings", element: <LeaderboardContainer /> },
-  { path: "/referrals", element: <ReferralsContainer /> },
+  { path: "/metrics", element: <PrivateRoute><MetricsContainer /></PrivateRoute> },
+  { path: "/assessment", element: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
+  { path: "/assessments", element: <PrivateRoute><AssessmentsContainer /></PrivateRoute> },
+  { path: "/rankings", element: <PrivateRoute><LeaderboardContainer /></PrivateRoute> },
+  { path: "/referrals", element: <PrivateRoute><ReferralsContainer /></PrivateRoute> },
   { path: "/login", element: <SignInContainer /> },
   { path: "/signup", element: <SignUpContainer /> },
 ];

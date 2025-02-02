@@ -4,6 +4,7 @@ import assessmentReducer from "./slices/assessment";
 import rewardsReducer from './slices/rewards'
 import sectionsReducer from './slices/sections'
 import chatReducer from './slices/chat'
+import userReducer from './slices/users'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     rewards: rewardsReducer,
     sections: sectionsReducer,
     chat: chatReducer,
+    user: userReducer,
   },
 });
 

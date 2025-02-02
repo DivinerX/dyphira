@@ -10,9 +10,15 @@ import boxes from "@/assets/images/boxes.svg";
 import { StyledBox } from "@/components/StyledBox";
 import checkIcon from "@/assets/images/check-icon.svg";
 import back_logo from "@/assets/images/back-logo.svg";
+import resumeIcon from "@/assets/images/resume-icon.svg";
 import { DistributionGraph } from "@/components/DistributionGraph";
+import { useNavigate } from "react-router-dom";
 
-export const Assessments: FC = () => {
+type AssessmentsProps = {
+  nextAssessmentDate: string | null;
+  rank: any;
+}
+export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank }) => {
   return (
     <Layout>
       <div className="flex flex-row gap-8 py-12 px-36 w-full h-full">
@@ -142,7 +148,7 @@ export const Assessments: FC = () => {
             </div>
             <div className="w-full flex flex-row items-center justify-between border-t border-b border-[#1E2927] py-1 px-2">
               <span className="text-[#C8FFD380] text-[10px] uppercase">time to finish</span>
-              <span className="text-[10px] font-bold uppercase">00:16:35</span>
+              <span className="text-[10px] font-bold uppercase">{new Date(nextAssessmentDate).getTime() > new Date().getTime() ? `${Math.floor((new Date(nextAssessmentDate).getTime() - new Date().getTime()) / (1000 * 60 * 60))}h:${Math.floor((new Date(nextAssessmentDate).getTime() - new Date().getTime()) % (1000 * 60 * 60) / (1000 * 60))}m` : "-"}</span>
             </div>
             <div className="w-full flex flex-row items-center justify-between border-b border-[#1E2927] py-1 px-2 bg-[#C8FFD303]">
               <span className="text-[#C8FFD380] text-[10px] uppercase">points earned</span>
@@ -152,11 +158,11 @@ export const Assessments: FC = () => {
               </div>
             </div>
             <div className="w-full flex flex-row items-center justify-center p-2">
-              <DistributionGraph />
+              <DistributionGraph rank={rank} />
             </div>
             <div className="w-full flex flex-row items-center justify-between border-t border-[#1E2927] bg-[#C8FFD303] p-2">
               <span className="text-[10px] text-[#C8FFD380] uppercase">You ranked:</span>
-              <p className="text-[10px] text-[#FFF047] font-bold uppercase">Top 30%</p>
+              <p className="text-[10px] text-[#FFF047] font-bold uppercase">Top {rank.percentile ? rank.percentile.toFixed(1) : "-"}%</p>
             </div>
           </StyledBox>
           <div className="flex flex-row items-center justify-between py-4">
@@ -164,10 +170,12 @@ export const Assessments: FC = () => {
             <div className="w-full bg-[#C8FFF440] h-[0.5px]"></div>
             <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
           </div>
-          <CompletedButton />
+          {
+            new Date(nextAssessmentDate).getTime() > new Date().getTime() ? <CompletedButton /> : <ResumeButton />
+          }
         </div>
       </div>
-      <div className="absolute top-0 left-0 w-full h-screen">
+      <div className="absolute top-0 left-0 w-full h-screen pointer-events-none">
         <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </Layout>
@@ -176,7 +184,7 @@ export const Assessments: FC = () => {
 
 const StyledHeader: FC<{ title: string }> = ({ title }) => {
   return (
-    <div className={`relative overflow-hidden p-2 bg-[#C8FFD306]`}>
+    <div className={`relative overflow-hidden p-2 bg-[#C8FFD306] backdrop-blur-sm z-10`}>
       <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440]"></div>
       {/* Right top corner */}
       <div className="absolute top-0 right-0 w-1 h-1 border-r-[0.5px] border-t-[0.5px] border-[#fff] z-30"></div>
@@ -250,6 +258,23 @@ const CompletedButton: FC = () => {
       <div className="flex flex-row items-center justify-center gap-2 p-2 h-full">
         <p className="text-[10px] text-[#C8FFD3] uppercase pt-1">completed</p>
         <img src={checkIcon} alt="check" />
+      </div>
+    </div>
+  )
+}
+
+const ResumeButton: FC = () => {
+  const navigate = useNavigate();
+  return (
+    <div className={`relative p-0 overflow-hidden cursor-pointer`} onClick={() => {
+      navigate("/assessment");
+    }}>
+      <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440] pointer-events-none"></div>
+      <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
+      <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
+      <div className="flex flex-row items-center justify-center gap-2 p-2 h-full">
+        <p className="text-[10px] text-[#C8FFD3] uppercase pt-1">start assessment</p>
+        <img src={resumeIcon} alt="resume" />
       </div>
     </div>
   )

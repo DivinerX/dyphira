@@ -5,8 +5,9 @@ import Routes from '@/Routes'
 import { store } from '@/redux'
 import { AuthProvider } from '@/contexts/auth.provider'
 import { ToastContainer } from 'react-toastify';
-function App() {
 
+
+function App() {
   return (
     <Provider store={store}>
       <AuthProvider>

@@ -106,9 +106,33 @@ const data = {
   ],
 };
 
-function EarnedBarChart() {
+type TEarnedBarChartProps = {
+  data: any
+  type: 'referrals' | 'earnings'
+}
+
+function EarnedBarChart({ data, type }: TEarnedBarChartProps) {
+  console.log(data);
+  const labels = new Array(7).fill(0).map((_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    return date.toLocaleDateString('en-US', { weekday: 'short' });
+  });
+  const dataset = [];
+  for (let i = 0; i < 7; i++) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    const day = date.getDay();
+    const item = data.filter((item: any) => new Date(item.createdAt).getDay() === day);
+    if (type === 'referrals') {
+      dataset.push(item?.length || 0);
+    } else {
+      dataset.push(item?.reduce((acc: number, item: any) => acc + item.earned, 0) || 0);
+    }
+  }
+  console.log(dataset);
   return (
-    <Bar options={options as any} data={data} />
+    <Bar options={options as any} data={{ labels, datasets: [{ data: dataset, backgroundColor: '#FC074740', hoverBackgroundColor: '#FC0747BF', borderColor: '#FC0747', borderWidth: { top: 2, right: 1, bottom: 1, left: 1 }, borderRadius: 0, barThickness: 40 }] }} />
   );
 }
 

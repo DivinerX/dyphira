@@ -66,7 +66,7 @@ export default function ProgressBarComp() {
           <span className='text-[10px] text-[#C8FFF480] uppercase'>time left</span>
         </div>
         <div className='flex flex-col justify-center items-end'>
-          <span className='text-[12px]'>12/15</span>
+          {/* <span className='text-[12px]'>12/15</span> */}
           <span className='text-[10px] text-[#C8FFF480] uppercase'>progress</span>
         </div>
       </div>

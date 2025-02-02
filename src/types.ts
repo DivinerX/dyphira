@@ -3,7 +3,7 @@ export type TLeaderboard = {
   username: string;
   twitterId: string;
   twitterScore: number;
-  totalRewardEarned: number;
+  xp: number;
   overallScore: number;
 };
 
@@ -32,6 +32,8 @@ export type TUser = {
   email: string;
   referralId: string;
   fund?: any;
+  twitterId?: string;
+  linkedinId?: string;
 }
 
 export type TUserState = {
@@ -73,4 +75,22 @@ export type TLoginError = {
   email?: string;
   password?: string;
   attempts: boolean;
+}
+
+export type TAssessmentScore = {
+  confidence: number;
+  knowledgeability: number;
+  determination: number;
+  evangelism: number;
+  workEthic: number;
+  vision: number;
+  interests: number;
+  pastWorkQuality: number;
+  intelligence: number;
+  personality: number;
+  horsepower: number;
+  hustle: number;
+  curiosity: number;
+  focus: number;
+  ferocity: number;
 }
