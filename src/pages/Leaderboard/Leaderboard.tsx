@@ -4,8 +4,6 @@ import { FC, ReactNode } from "react";
 import leaderboardDecorator from "@/assets/images/leaderboard-decorator.svg";
 import rightArrow from "@/assets/images/right-arrow-icon.svg";
 import xIcon from "@/assets/images/x-icon.svg";
-import USFlag from "@/assets/images/US-flag.svg";
-import USDIcon from "@/assets/images/usdc-coin.png";
 import back_logo from "@/assets/images/back-logo.svg";
 import { VerticalDivider } from "@/components/VerticalDivider";
 import { MovePageButton } from "@/components/MovePageButton";
@@ -94,11 +92,10 @@ export const Leaderboard: FC<TLeaderboardProps> = ({ leaderboard, status, error,
                         rank={page * 10 - 10 + index + 1}
                         username={leader.username}
                         twitterId={leader.twitterId}
-                        score={leader.overallScore}
+                        twitterScore={leader.twitterScore}
+                        xp={leader.xp}
+                        overallScore={leader.overallScore}
                         rankFrom={new Date("2025-01-19")}
-                        location="United States"
-                        claimedUSD={leader.totalRewardEarned}
-                        totalPoints={leader.twitterScore}
                       />
                     )) : (
                       <div className="flex flex-row items-center justify-center gap-2 p-2">
@@ -144,14 +141,13 @@ type RankProps = {
   rank: number,
   username: string,
   twitterId: string,
-  score: number,
-  location: string,
-  claimedUSD: number,
-  totalPoints: number,
+  twitterScore: number,
+  xp: number,
+  overallScore: number,
   rankFrom?: Date
 }
 
-const Rank: FC<RankProps> = ({ rank, username, twitterId, score, rankFrom, location, claimedUSD, totalPoints }) => {
+const Rank: FC<RankProps> = ({ rank, username, twitterId, twitterScore, xp, overallScore, rankFrom }) => {
   const color = rank > 3 ? "#C8FFD3" : rank === 1 ? "#FC0757" : rank === 2 ? "#EC69BD" : "#B7A5FF";
   const style = color !== "#C8FFD3" ? {
     background: `linear-gradient(to right, ${color}40 0%, transparent 40%)`,
@@ -203,7 +199,7 @@ const Rank: FC<RankProps> = ({ rank, username, twitterId, score, rankFrom, locat
           <span className="text-[8px] text-[#C8FFD380] uppercase">overall score</span>
           <div className="flex flex-row items-center justify-start gap-1">
             <div className="w-1 h-1 border border-[#FC0747] bg-[#FC074726] rotate-45 -mt-[2px]"></div>
-            <p className={`text-[10px] uppercase`}>{score ? score.toFixed(2) : "-"}</p>
+            <p className={`text-[10px] uppercase`}>{overallScore ? overallScore.toFixed(2) : "-"}</p>
           </div>
         </div>
         <div>
@@ -213,18 +209,10 @@ const Rank: FC<RankProps> = ({ rank, username, twitterId, score, rankFrom, locat
           <span className="text-[8px] text-[#C8FFD380] uppercase">gained xp</span>
           <div className="flex flex-row items-center justify-start gap-1">
             <div className="w-1 h-1 border border-[#FC0747] bg-[#FC074726] rotate-45 -mt-[2px]"></div>
-            <p className={`text-[10px] uppercase`}>{score ? score.toFixed(2) : "-"}</p>
+            <p className={`text-[10px] uppercase`}>{xp ? xp.toFixed(2) : "-"}</p>
           </div>
         </div>
       </div>
     </div>
   )
 }
-
-type TPageButtonsProps = {
-  page: number,
-  setPage: (page: number) => void,
-  leaderboard: TLeaderboard[]
-}
-
-

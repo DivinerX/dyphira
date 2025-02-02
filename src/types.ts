@@ -3,7 +3,7 @@ export type TLeaderboard = {
   username: string;
   twitterId: string;
   twitterScore: number;
-  totalRewardEarned: number;
+  xp: number;
   overallScore: number;
 };
 
