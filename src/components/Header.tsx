@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import logo from "@/assets/images/logo.svg";
 import { VerticalDivider } from "./VerticalDivider";
 import settingIcon from "@/assets/images/setting-icon.svg";
@@ -12,11 +12,15 @@ import { useAuth } from "@/contexts/auth.hook";
 
 export const Header: FC = () => {
   const navigate = useNavigate();
-  const { loggedIn } = useAuth();
+  const { user, loggedIn, getUser } = useAuth();
   const activePage = useLocation().pathname;
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <header className="flex flex-col px-10 py-5 gap-4">
       <div className="flex items-center justify-between">
+
         <div className="flex items-center gap-3">
           <img src={logo} alt="logo" className="cursor-pointer" />
           <VerticalDivider style="h-5" />
@@ -37,10 +41,11 @@ export const Header: FC = () => {
                       <span className="text-[6px] leading-none uppercase text-[#C8FFD3]">points</span>
                     </div>
                     <div className="flex items-center justify-start gap-1">
-                      <span className="text-[10px] leading-none font-bold text-[#C8FFD3]">17430</span>
+                      <span className="text-[10px] leading-none font-bold text-[#C8FFD3]">{user && user?.xp}</span>
                       <div className="w-1 h-1 border-[1px] rotate-45 border-[#F00]"></div>
                     </div>
                   </div>
+
                 </StyledBox>
                 <StyledBox>
                   <div className="p-[6px]">

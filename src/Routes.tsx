@@ -14,6 +14,7 @@ import PrivateRoute from "./components/PrivateRoute";
 export const routes = [
   { path: "/", element: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
   { path: "/metrics", element: <PrivateRoute><MetricsContainer /></PrivateRoute> },
+  // { path: "/metrics", element: <MetricsContainer /> },
   { path: "/assessment", element: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
   { path: "/assessments", element: <PrivateRoute><AssessmentsContainer /></PrivateRoute> },
   { path: "/rankings", element: <PrivateRoute><LeaderboardContainer /></PrivateRoute> },

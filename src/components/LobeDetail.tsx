@@ -4,31 +4,39 @@ import titleDecorator from "@/assets/images/title-decorator.svg";
 import liDecorator from "@/assets/images/li-decorator.svg";
 import { Radar } from "react-chartjs-2";
 import testRatingDivider from "@/assets/images/test-rating-divider.svg";
+import { TAssessmentScore } from "@/types";
+type LobeDetailProps = {
+  part: "front" | "back" | "top" | "bottom" | "center" | "out"
+  score: TAssessmentScore;
+  averageScoreList: any;
+  rank: any;
+}
 
-export const LobeDetail: FC = () => {
+export const LobeDetail: FC<LobeDetailProps> = ({ part, score, averageScoreList, rank }) => {
   const chartData = {
     labels: [
-      ['Mathematical', 'Reasoning'],
-      ['Spatial', 'Awareness'],
-      ['Language', 'Comprehension'],
-      ['Attention', 'and Focus'],
-      ['Object', 'Recognition']
+      "IQ",
+      "evangelism",
+      "determination",
+      "effectiveness",
+      "vision"
     ],
     datasets: [{
       label: 'Average',
-      data: [75, 69, 82, 71, 76],
+      data: [averageScoreList.intelligence, averageScoreList.evangelism, averageScoreList.determination, averageScoreList.horsepower, averageScoreList.vision],
       fill: true,
       borderWidth: 2,
       pointRadius: 3,
       backgroundColor: '#FC07471A',
       pointBackgroundColor: '#FC0747',
       pointBorderColor: '#FC0747',
+
       pointBorderWidth: 0,
       borderColor: '#FC0747',
     },
     {
       label: 'User',
-      data: [75, 89, 72, 81, 66],
+      data: [score.intelligence, score.evangelism, score.determination, score.horsepower, score.vision],
       fill: true,
       borderWidth: 2,
       pointRadius: 3,
@@ -58,7 +66,7 @@ export const LobeDetail: FC = () => {
           font: {
             size: 8
           },
-          callback: function(_label: string, index: number) {
+          callback: function (_label: string, index: number) {
             return chartData.labels[index];
           }
         },
@@ -80,6 +88,14 @@ export const LobeDetail: FC = () => {
       },
     },
   }
+  const renderLetter = {
+    "front": "intelligence",
+    "back": "vision",
+    "top": "determination",
+    "bottom": "horsepower",
+    "center": "evangelism"
+  }
+
   return (
     <div className="w-[200px] backdrop-blur-sm">
       <StyledBox>
@@ -90,11 +106,12 @@ export const LobeDetail: FC = () => {
         <div className="flex flex-row w-full justify-around items-center p-2 gap-4">
           <div className="flex flex-col">
             <span className="text-[#C8FFF480] text-[6px] uppercase">ability index</span>
-            <p className="text-[#C8FFD3] text-[8px] uppercase">parietal lobe</p>
+            <p className="text-[#C8FFD3] text-[8px] uppercase">{renderLetter[part]}</p>
           </div>
           <div className="w-[1px] h-5 border-r border-[#C8FFD380] border-dashed"></div>
           <div className="flex flex-col justify-center items-center">
-            <p className="text-[#C8FFD3] text-[20px]">67 <span className="text-[#C8FFF480] text-[8px]"> / 100</span></p>
+
+            <p className="text-[#C8FFD3] text-[20px]">{score[renderLetter[part]]} <span className="text-[#C8FFF480] text-[8px]"> / 100</span></p>
           </div>
         </div>
         <div className="flex flex-row w-full items-center px-2">
@@ -109,46 +126,47 @@ export const LobeDetail: FC = () => {
           <div className="flex flex-row w-full justify-between items-center">
             <div className="flex flex-row items-center gap-1">
               <img src={liDecorator} alt="li decorator" />
-              <p className="text-[#C8FFD380] text-[8px] uppercase">mathmatical reasoning</p>
+              <p className="text-[#C8FFD380] text-[8px] uppercase">Intelligence Quotient</p>
             </div>
             <div>
-              <p className="text-[#C8FFD3] text-[8px] uppercase">85 <span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
+              <p className="text-[#C8FFD3] text-[8px] uppercase">{score.intelligence}<span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
             </div>
           </div>
           <div className="flex flex-row w-full justify-between items-center">
             <div className="flex flex-row items-center gap-1">
               <img src={liDecorator} alt="li decorator" />
-              <p className="text-[#C8FFD380] text-[8px] uppercase">mathmatical reasoning</p>
+              <p className="text-[#C8FFD380] text-[8px] uppercase">Evangelism</p>
             </div>
             <div>
-              <p className="text-[#C8FFD3] text-[8px] uppercase">85 <span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
+              <p className="text-[#C8FFD3] text-[8px] uppercase">{score.evangelism}<span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
             </div>
           </div>
           <div className="flex flex-row w-full justify-between items-center">
             <div className="flex flex-row items-center gap-1">
               <img src={liDecorator} alt="li decorator" />
-              <p className="text-[#C8FFD380] text-[8px] uppercase">mathmatical reasoning</p>
+              <p className="text-[#C8FFD380] text-[8px] uppercase">Determination</p>
             </div>
             <div>
-              <p className="text-[#C8FFD3] text-[8px] uppercase">85 <span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
+              <p className="text-[#C8FFD3] text-[8px] uppercase">{score.determination}<span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
             </div>
           </div>
           <div className="flex flex-row w-full justify-between items-center">
             <div className="flex flex-row items-center gap-1">
               <img src={liDecorator} alt="li decorator" />
-              <p className="text-[#C8FFD380] text-[8px] uppercase">mathmatical reasoning</p>
+              <p className="text-[#C8FFD380] text-[8px] uppercase">Effectiveness</p>
             </div>
             <div>
-              <p className="text-[#C8FFD3] text-[8px] uppercase">85 <span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
+              <p className="text-[#C8FFD3] text-[8px] uppercase">{score.horsepower}<span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
             </div>
           </div>
           <div className="flex flex-row w-full justify-between items-center">
+
             <div className="flex flex-row items-center gap-1">
               <img src={liDecorator} alt="li decorator" />
-              <p className="text-[#C8FFD380] text-[8px] uppercase">mathmatical reasoning</p>
+              <p className="text-[#C8FFD380] text-[8px] uppercase">Vision</p>
             </div>
             <div>
-              <p className="text-[#C8FFD3] text-[8px] uppercase">85 <span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
+              <p className="text-[#C8FFD3] text-[8px] uppercase">{score.vision}<span className="text-[#C8FFF480] text-[6px]"> / 100</span></p>
             </div>
           </div>
         </div>
@@ -162,9 +180,10 @@ export const LobeDetail: FC = () => {
         </div>
         <div className="flex flex-row w-full p-2 justify-between items-center">
           <span className="text-[#C8FFD3] text-[6px] uppercase">your ranked:</span>
-          <p className="text-[#FCFA7F] text-[10px] font-bold uppercase">Top 30%</p>
+          <p className="text-[#FCFA7F] text-[10px] font-bold uppercase">Top {rank.percentile ? rank.percentile.toFixed(1) : "UNRANKED"}%</p>
         </div>
       </StyledBox>
     </div>
+
   );
 };

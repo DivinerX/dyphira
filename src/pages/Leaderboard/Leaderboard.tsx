@@ -184,7 +184,7 @@ const Rank: FC<RankProps> = ({ rank, username, twitterId, twitterScore, xp, over
                 <VerticalDivider style="h-4" />
               </div>
               <div>
-                <span className="text-[8px] text-[#C8FFD380] uppercase">leader for</span>
+                <span className="text-[8px] text-[#C8FFD380] uppercase">leader from</span>
                 <div className="flex flex-row items-center justify-start gap-2">
                   {/* <img src={wangIcon} alt="wang-icon"/> */}
                   <p className={`text-[10px] text-[#FFEC7E] uppercase pt-1 -mt-2 bg-blend-color-burn drop-shadow-md`}>{rankFrom.toLocaleDateString()}</p>

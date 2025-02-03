@@ -34,6 +34,7 @@ export type TUser = {
   fund?: any;
   twitterId?: string;
   linkedinId?: string;
+  xp?: number;
 }
 
 export type TUserState = {

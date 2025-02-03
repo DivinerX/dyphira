@@ -15,10 +15,11 @@ import { DistributionGraph } from "@/components/DistributionGraph";
 import { useNavigate } from "react-router-dom";
 
 type AssessmentsProps = {
+  user: any;
   nextAssessmentDate: string | null;
   rank: any;
 }
-export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank }) => {
+export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank, user }) => {
   return (
     <Layout>
       <div className="flex flex-row gap-8 py-12 px-36 w-full h-full">
@@ -33,28 +34,36 @@ export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank }) 
             decorator={<img src={documentIcon} alt="document" />}
           />
           <StyledItem
-            title="Focus Dynamics"
-            caption="MEDIUM"
+            title="Pattern Fusion"
+            caption="EASY"
             icon={<MockIcon />}
-            rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
-            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
+            rightTop={<p></p>}
+            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">5 MIN</p>}
             decorator={<img src={documentIcon} alt="document" />}
           />
           <StyledItem
-            title="Focus Dynamics"
-            caption="MEDIUM"
+            title="Impulse Precision"
+            caption="INTERMEDIATE"
             icon={<MockIcon />}
-            rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
-            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
+            rightTop={<p></p>}
+            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">15 MIN</p>}
             decorator={<img src={documentIcon} alt="document" />}
           />
 
           <StyledHeader title="Completed Assessments" />
           <StyledItem
-            title="Focus Dynamics"
+            title="Problem Solving"
+            caption="INTERMEDIATE"
+            icon={<MockIcon />}
+            rightTop={<p></p>}
+            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
+            decorator={<img src={documentIcon} alt="document" />}
+          />
+          <StyledItem
+            title="Rapid Perception"
             caption="MEDIUM"
             icon={<MockIcon />}
-            rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
+            rightTop={<p></p>}
             rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
             decorator={<img src={documentIcon} alt="document" />}
           />
@@ -62,15 +71,7 @@ export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank }) 
             title="Focus Dynamics"
             caption="MEDIUM"
             icon={<MockIcon />}
-            rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
-            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
-            decorator={<img src={documentIcon} alt="document" />}
-          />
-          <StyledItem
-            title="Focus Dynamics"
-            caption="MEDIUM"
-            icon={<MockIcon />}
-            rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
+            rightTop={<p></p>}
             rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
             decorator={<img src={documentIcon} alt="document" />}
           />
@@ -151,9 +152,9 @@ export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank }) 
               <span className="text-[10px] font-bold uppercase">{new Date(nextAssessmentDate).getTime() > new Date().getTime() ? `${Math.floor((new Date(nextAssessmentDate).getTime() - new Date().getTime()) / (1000 * 60 * 60))}h:${Math.floor((new Date(nextAssessmentDate).getTime() - new Date().getTime()) % (1000 * 60 * 60) / (1000 * 60))}m` : "-"}</span>
             </div>
             <div className="w-full flex flex-row items-center justify-between border-b border-[#1E2927] py-1 px-2 bg-[#C8FFD303]">
-              <span className="text-[#C8FFD380] text-[10px] uppercase">points earned</span>
+              <span className="text-[#C8FFD380] text-[10px] uppercase">xp earned</span>
               <div className="flex flex-row items-center gap-1">
-                <span className="text-[10px] font-bold uppercase">1430</span>
+                <span className="text-[10px] font-bold uppercase">{user && user?.xp}</span>
                 <div className="w-1 h-1 rotate-45 border-[1px] border-[#FC0747] -mt-[1px]"></div>
               </div>
             </div>

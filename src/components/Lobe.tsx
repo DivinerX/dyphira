@@ -1,23 +1,24 @@
 import { FC, useState } from "react";
 import { Hex } from "./Hex";
-import brain from "@/assets/images/brain.svg";
-
+import { Brain } from "./Brain";
+import { TAssessmentScore } from "@/types";
 interface Point {
   x: number;
   y: number;
 }
 
-export const Lobe: FC = () => {
+type LobeProps = {
+  score: TAssessmentScore;
+  averageScoreList: any;
+  rank: any;
+}
+
+export const Lobe: FC<LobeProps> = ({ score, averageScoreList, rank }) => {
   const [point, setPoint] = useState<Point | null>(null);
   return (
     <div className="flex flex-col w-1/2 h-[90vh] relative">
-      <Hex setPoint={setPoint} />
-      <img
-        src={brain}
-        alt="brain"
-        className="absolute top-0 left-0 w-2/3 transform translate-x-[25%] translate-y-[40%] z-10 pointer-events-none"
-      />
-      <div className="flex flex-row w-full justify-center gap-24 -mt-36">
+      <Hex setPoint={setPoint} score={score} averageScoreList={averageScoreList} rank={rank} />
+      <div className="flex flex-row w-full justify-center gap-24 -mt-36 pointer-events-none">
         <div className="flex flex-row gap-1">
           <div className="w-4 h-full py-1 px-1">
             <div className="relative w-full h-full">
