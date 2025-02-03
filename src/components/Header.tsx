@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import logo from "@/assets/images/logo.svg";
 import { VerticalDivider } from "./VerticalDivider";
 import settingIcon from "@/assets/images/setting-icon.svg";

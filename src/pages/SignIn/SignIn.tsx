@@ -16,9 +16,10 @@ type TSignInProps = {
   navigate: any
   setFormData: (data: TLoginUser) => void
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  isLoading: boolean
 }
 
-export const SignIn: FC<TSignInProps> = ({ formData, error, navigate, setFormData, handleSubmit }) => {
+export const SignIn: FC<TSignInProps> = ({ formData, error, navigate, setFormData, handleSubmit, isLoading }) => {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center h-full w-full">
@@ -69,9 +70,9 @@ export const SignIn: FC<TSignInProps> = ({ formData, error, navigate, setFormDat
             <p className="text-[10px] text-[#C8FFD380] uppercase">Forgot Password?</p>
           </div>
           <div></div>
-          <StyledButton type="submit">
+          <StyledButton type="submit" disabled={isLoading}>
             <div className="flex flex-row items-center justify-center gap-2">
-              <span>LOG IN</span>
+              <span>{isLoading ? "LOGGING IN..." : "LOG IN"}</span>
               <img src={fingerprintIcon} alt="fingerprint icon" />
             </div>
           </StyledButton>
