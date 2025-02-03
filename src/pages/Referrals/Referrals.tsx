@@ -13,6 +13,7 @@ import verifiedIcon from "@/assets/images/verified-icon.svg";
 import telegramIcon from "@/assets/images/telegram-icon.svg";
 import twitterIcon from "@/assets/images/x-icon.svg";
 import shareIcon from "@/assets/images/share-icon.svg";
+import clickIcon from "@/assets/images/click-icon.svg";
 import { MovePageButton } from "@/components/MovePageButton";
 import { formatDistanceToNow } from "date-fns";
 import QRCode from "react-qr-code";
@@ -117,7 +118,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                     <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">referral points</span>
                   </div>
                   <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
-                    <img src={redBrain} alt="red brain" />
+                    <div className="w-2 h-2 rotate-45 border-[2px] border-[#FC0747] -mt-[1px] ml-[2px]"></div>
                     <p className="-mb-[2px]">{referrals.length}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between px-2 w-full">
@@ -142,7 +143,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                     <span className="text-[10px] text-[#C8FFD380] pl-2 w-full uppercase">clicks</span>
                   </div>
                   <div className="flex flex-row items-center justify-start w-full px-2 gap-2">
-                    <img src={redBrain} alt="red brain" />
+                    <img src={clickIcon} alt="click icon" />
                     <p className="-mb-[2px]">{click.clicks.length}</p>
                   </div>
                   <div className="flex flex-row items-center justify-between px-2 w-full">

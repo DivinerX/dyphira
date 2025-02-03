@@ -7,6 +7,7 @@ import cameraIcon from '@/assets/images/camera-icon.svg'
 import spectre from '@/assets/images/spectre.svg'
 import CamVideo from '@/components/CameraVideo'
 import ProgressBarComp from '@/components/Progressbar'
+import twitterIcon from '@/assets/images/twitter-icon.svg'
 
 type TTakeAssessment = {
   user: any,
@@ -38,11 +39,30 @@ export const TakeAssessment: FC<TTakeAssessment> = ({
             <div className="flex flex-col justify-center items-center w-full p-4">
               <ProgressBarComp />
 
-              <div className='flex flex-col justify-center items-center min-h-72 w-full text-[12px] text-[#E4FFEA] uppercase text-center gap-8 [text-shadow:0_0_15px_rgba(70,255,91,0.25),0_0_2px_rgba(125,255,151,0.5)]'>
-                <p >Imagine you’re presenting an investment thesis<br /> for a controversial or misunderstood technology.</p>
-                {assessment && <p >Why should you receive Dyphira?</p>}
+              <div className='flex flex-col justify-center items-center min-h-72 w-1/2 text-[12px] text-[#E4FFEA] uppercase text-center gap-4 [text-shadow:0_0_15px_rgba(70,255,91,0.25),0_0_2px_rgba(125,255,151,0.5)]'>
+                {
+                  user && user.twitterId ?
+                    <><p >Imagine you’re presenting an investment thesis<br /> for a controversial or misunderstood technology.</p>
+                      {assessment && <p >Why should you receive Dyphira?</p>}
+                    </>
+                    :
+                    <>
+                      <p>THE DYPHIRA ALGORITHM WILL ANALYZE YOUR NETWORK, INFLUENCE, AND ENGAGEMENT ON TWITTER TO ASSESS YOUR CONNECTIONS AND SOCIAL CAPITAL.
+                      </p>
+                      <p>THE MORE IMPACTFUL YOUR PRESENCE, THE HIGHER YOUR SCORE.</p>
+                      <p>CLICK BELOW TO CONNECT YOUR TWITTER ACCOUNT.</p>
+                      <StyledBoxWithoutWhiteCorners>
+                        <div
+                          className='flex flex-row items-center justify-between px-6 py-1 cursor-pointer'
+                          onClick={handleLinkAccount("twitter")}
+                        >
+                          <span className='text-[10px] uppercase -mb-[2px]'>connect twitter</span>
+                          <img src={twitterIcon} alt="twitter icon" className='-m-3' />
+                        </div>
+                      </StyledBoxWithoutWhiteCorners>
+                    </>
+                }
               </div>
-
               <div className='flex flex-row justify-between items-end w-full'>
                 <Spectrum />
                 {
@@ -84,34 +104,34 @@ export const TakeAssessment: FC<TTakeAssessment> = ({
                     </div>
                   </StyledBoxWithoutWhiteCorners>
                 </div>
-
-                <StyledBoxWithoutWhiteCorners>
-                  {
-                    user && user.twitterId ?
-                      assessmentCompleted ?
-                        <div className="text-[10px] font-semibold uppercase px-6 py-1">Assessment Completed</div> :
-                        assessment ? (
-                          <span
-                            className='text-[10px] text-[#C8FFD3] uppercase px-6 pb-1 pt-[6px] bg-[#C8FFD30D] flex flex-row items-center gap-1 cursor-pointer'
-                            onClick={processQuestionCompletion}
-                          >
-                            end assessment
-                            <div className='w-[6px] h-[6px] bg-[#C8FFD3] rounded-sm -mt-[2px]'></div>
-                          </span>
-                        ) : (
-                          <span
-                            className='text-[10px] text-[#C8FFD3] uppercase px-6 pb-1 pt-[6px] bg-[#C8FFD30D] flex flex-row items-center gap-1 cursor-pointer'
-                            onClick={startAssessment}
-                          >
-                            start assessment
-                            <div className='w-[6px] h-[6px] bg-[#C8FFD3] rounded-sm -mt-[2px]'></div>
-                          </span>
-                        )
-                      :
-                      <div className="text-[10px] font-semibold uppercase px-6 py-1 cursor-pointer" onClick={handleLinkAccount("twitter")}>Login twitter to start assessment</div>
-                  }
-                </StyledBoxWithoutWhiteCorners>
+                {
+                  user && user.twitterId ?
+                    <StyledBoxWithoutWhiteCorners>
+                      {
+                        assessmentCompleted ?
+                          <div className="text-[10px] font-semibold uppercase px-6 py-1">Assessment Completed</div> :
+                          assessment ? (
+                            <span
+                              className='text-[10px] text-[#C8FFD3] uppercase px-6 pb-1 pt-[6px] bg-[#C8FFD30D] flex flex-row items-center gap-1 cursor-pointer'
+                              onClick={processQuestionCompletion}
+                            >
+                              end assessment
+                              <div className='w-[6px] h-[6px] bg-[#C8FFD3] rounded-sm -mt-[2px]'></div>
+                            </span>
+                          ) : (
+                            <span
+                              className='text-[10px] text-[#C8FFD3] uppercase px-6 pb-1 pt-[6px] bg-[#C8FFD30D] flex flex-row items-center gap-1 cursor-pointer'
+                              onClick={startAssessment}
+                            >
+                              start assessment
+                              <div className='w-[6px] h-[6px] bg-[#C8FFD3] rounded-sm -mt-[2px]'></div>
+                            </span>
+                          )
+                      }
+                    </StyledBoxWithoutWhiteCorners> : <p className="w-36"></p>
+                }
               </div>
+
             </div>
           </StyledBox>
         </div>

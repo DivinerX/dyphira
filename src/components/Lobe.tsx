@@ -7,7 +7,6 @@ interface Point {
   y: number;
 }
 
-
 type LobeProps = {
   score: TAssessmentScore;
   averageScoreList: any;
