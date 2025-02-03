@@ -247,7 +247,7 @@ export const TestRating: FC<TestRatingProps> = ({ score, averageScore, avgScoreL
           <span className="text-[#C8FFD3] text-[6px] uppercase">Your Ranked</span>
           <div className="flex flex-row items-center gap-1">
             <div className="w-[5px] h-[2px] bg-[#FDFB8F] rounded-full"></div>
-            <span className="text-[#FDFB8F] text-[10px] uppercase">TOP {rank.percentile ? rank.percentile.toFixed(1) : "-"}%</span>
+            <span className="text-[#FDFB8F] text-[10px] uppercase">TOP {rank.percentile ? rank.percentile.toFixed(1) : "UNRANKED"}%</span>
           </div>
         </div>
         <StyledBox className="px-10 py-1 cursor-pointer">

@@ -1,21 +1,29 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { LobeDetail } from './LobeDetail';
-
+import { Brain } from './Brain';
+import { TAssessmentScore } from '@/types';
 interface Point {
   x: number;
   y: number;
 }
 
-export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ setPoint }) => {
-  const [mousePos, setMousePos] = useState<Point | null>(null);
-  const [isInside, setIsInside] = useState(false);
-  const [dimensions, setDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
-  const [cursorPosition, setCursorPosition] = useState<{ left: number; top: number }>({ left: 0, top: 0 });
+type HexProps = {
+  setPoint: (point: Point | null) => void;
+  score: TAssessmentScore;
+  rank: any;
+  averageScoreList: any;
+}
 
-  // Calculate hex points based on container size
+export const Hex: React.FC<HexProps> = ({ setPoint, score, rank, averageScoreList }) => {
+  const [mousePos, setMousePos] = useState<Point | null>(null);
+
+  const [isInside, setIsInside] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState<{ left: number; top: number }>({ left: 0, top: 0 });
+  const [showTooltip, setShowTooltip] = useState<"out" | "front" | "top" | "back" | "center" | "bottom">("out");
   const calculateHexPoints = useCallback(() => {
-    const center = { x: dimensions.width / 2, y: dimensions.height / 2 };
-    const size = Math.min(dimensions.width, dimensions.height) * 0.45; // 45% of the smaller dimension
+
+    const center = { x: 400, y: 400 };
+    const size = 800 * 0.45; // 45% of the smaller dimension
 
     const points: Point[] = [];
     for (let i = 0; i < 6; i++) {
@@ -26,9 +34,8 @@ export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ set
       });
     }
     return points;
-  }, [dimensions]);
+  }, []);
 
-  // Check if point is inside hex
   const isPointInHex = useCallback(
     (point: Point) => {
       const hexPoints = calculateHexPoints();
@@ -58,7 +65,6 @@ export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ set
       const svg = document.querySelector('svg');
       if (svg) {
         const rect = svg.getBoundingClientRect();
-        setDimensions({ width: rect.width, height: rect.height });
       }
     };
 
@@ -75,8 +81,8 @@ export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ set
 
       // Calculate the scaled coordinates
       const point = {
-        x: dimensions.width * ((e.clientX - rect.left) / rect.width),
-        y: dimensions.height * ((e.clientY - rect.top) / rect.height),
+        x: 800 * ((e.clientX - rect.left) / rect.width),
+        y: 800 * ((e.clientY - rect.top) / rect.height),
       };
 
       // Set actual cursor position for LobDetail positioning
@@ -89,7 +95,7 @@ export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ set
       setIsInside(isPointInHex(point));
       setPoint(point);
     },
-    [dimensions, isPointInHex]
+    [isPointInHex]
   );
 
   useEffect(() => {
@@ -105,9 +111,10 @@ export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ set
 
   return (
     <>
-      <svg className="w-full h-full z-20" viewBox={`0 0 ${dimensions.width} ${dimensions.height}`} preserveAspectRatio="xMidYMid meet">
+      <svg className="" viewBox={`0 0 ${800} ${800}`} preserveAspectRatio="xMidYMid meet">
         <defs>
           {/* Glowing circle filter */}
+
           <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="2" result="coloredBlur" />
             <feMerge>
@@ -197,20 +204,24 @@ export const Hex: React.FC<{ setPoint: (point: Point | null) => void }> = ({ set
             />
           </g>
         )}
+        <Brain setShowTooltip={setShowTooltip} />
       </svg>
-      
-      {isInside && mousePos && (
-        <div 
+
+
+
+      {showTooltip !== "out" && isInside && mousePos && (
+        <div
           style={{
             position: 'fixed',
             left: cursorPosition.left,
             top: cursorPosition.top,
             transform: 'translate(10px, 10px)', // Offset from cursor
+
             pointerEvents: 'none', // Prevent interference with hex interaction
             zIndex: 30
           }}
         >
-          <LobeDetail />
+          <LobeDetail part={showTooltip} score={score} averageScoreList={averageScoreList} rank={rank} />
         </div>
       )}
     </>
