@@ -12,11 +12,8 @@ import { useAuth } from "@/contexts/auth.hook";
 
 export const Header: FC = () => {
   const navigate = useNavigate();
-  const { user, loggedIn, getUser } = useAuth();
+  const { user, loggedIn } = useAuth();
   const activePage = useLocation().pathname;
-  useEffect(() => {
-    getUser();
-  }, []);
   return (
     <header className="flex flex-col px-10 py-5 gap-4">
       <div className="flex items-center justify-between">
