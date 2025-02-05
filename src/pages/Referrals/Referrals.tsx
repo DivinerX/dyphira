@@ -35,7 +35,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-row items-start justify-center w-[70%] gap-4">
+        <div className="flex flex-row items-start justify-center w-[75%] gap-4">
           <div className="w-[66%] flex flex-col">
             <div className="flex flex-row items-start justify-start gap-4 w-full">
               <div className="w-[75%] flex flex-col">
@@ -61,7 +61,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                 </div>
                 <div className="flex flex-row items-center justify-between gap-2">
                   {/* referral link and share button */}
-                  <div className="w-[60%]">
+                  <div className="w-[70%]">
                     <StyledBoxWithoutWhiteCorners className="bg-[#00000040]">
                       <div className="flex flex-row items-center justify-start w-full px-2 py-1 gap-2 cursor-pointer"
                         onClick={() => {
@@ -79,7 +79,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
                       </div>
                     </StyledBoxWithoutWhiteCorners>
                   </div>
-                  <div className="w-[40%]">
+                  <div className="w-[30%]">
                     <StyledBoxWithoutWhiteCorners>
                       <div className="flex flex-row items-center justify-center w-full gap-2">
                         <p className="text-[10px] text-[#C8FFD3] uppercase -mb-[2px] py-1">share link</p>
@@ -214,7 +214,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
             </StyledBoxWithoutWhiteCorners>
           </div>
         </div>
-        <div className="flex flex-row items-start justify-center w-[70%] gap-4">
+        <div className="flex flex-row items-start justify-center w-[75%] gap-4">
           <div className="w-[70%]">
             <StyledBoxWithoutWhiteCorners>
               <div className="bg-[#C8FFD306] w-full">
@@ -321,7 +321,7 @@ export const Referrals: FC<TReferralsProps> = ({ referralLink, referrals, notifi
           </div>
         </div>
       </div>
-      <div className="absolute top-0 left-0 w-full h-screen pointer-events-none">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </Layout >

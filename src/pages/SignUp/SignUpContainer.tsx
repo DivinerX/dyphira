@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import { TSignupUser, TRegisterError } from "@/types";
 
 export const SignUpContainer: FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const referralCode = searchParams.get("ref");
   const [formData, setFormData] = useState<TSignupUser>({
@@ -36,12 +37,15 @@ export const SignUpContainer: FC = () => {
   }
   if (!validateRegister(formData)) return;
   try {
+    setIsLoading(true)
     await register(signUpData)
     navigate("/")
   } catch (error: any) {
     console.error("register error", error)
     setError(error?.response?.data)
     throw error
+  } finally {
+    setIsLoading(false)
   }
 }
 
@@ -69,6 +73,6 @@ const validateRegister = (formData: TSignupUser) => {
   console.log(error)
   return isValid
 }
-return <SignUp formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} error={error} />;
+return <SignUp formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} error={error} isLoading={isLoading} />;
 };
 

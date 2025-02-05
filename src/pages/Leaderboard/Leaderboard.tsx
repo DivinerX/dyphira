@@ -16,9 +16,16 @@ type TLeaderboardProps = {
   error: string | null;
   page: number;
   setPage: (page: number) => void;
+  period: "24h" | "7d" | "30d" | "all";
+  setPeriod: (period: "24h" | "7d" | "30d" | "all") => void;
+  sortBy: "xp" | "points";
+  setSortBy: (sortBy: "xp" | "points") => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+
 }
 
-export const Leaderboard: FC<TLeaderboardProps> = ({ leaderboard, status, error, page, setPage }) => {
+export const Leaderboard: FC<TLeaderboardProps> = ({ leaderboard, status, error, page, setPage, period, setPeriod, sortBy, setSortBy, isOpen, setIsOpen }) => {
   return (
     <>
       <Layout>
@@ -38,23 +45,19 @@ export const Leaderboard: FC<TLeaderboardProps> = ({ leaderboard, status, error,
                 <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
                 <div className="flex flex-row items-center justify-center gap-2">
                   <div className="flex items-center justify-start gap-2 p-1">
-                    <StyledButton>
+                    <StyledButton onClick={() => setPeriod("24h")} active={period === "24h"}>
                       <p className="text-[10px] text-[#C8FFD380] uppercase pb-[2px]">24h</p>
                     </StyledButton>
-                    <StyledButton>
+                    <StyledButton onClick={() => setPeriod("7d")} active={period === "7d"}>
                       <p className="text-[10px] text-[#C8FFD380] uppercase pb-[2px]">7d</p>
                     </StyledButton>
-                    <StyledButton>
+
+                    <StyledButton onClick={() => setPeriod("30d")} active={period === "30d"}>
                       <p className="text-[10px] text-[#C8FFD380] uppercase pb-[2px]">30d</p>
                     </StyledButton>
-                    <div className={`relative p-0 overflow-hidden`}>
-                      <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#FC074780]"></div>
-                      <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#FC074780] bg-[#0d191a] z-30"></div>
-                      <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#FC074780] bg-[#0d191a] z-30"></div>
-                      <div className="flex flex-row items-center justify-center gap-2 px-3 pt-1 bg-[#FC074726]">
-                        <p className="text-[10px] text-[#C8FFD380] uppercase pb-[2px]">All Time</p>
-                      </div>
-                    </div>
+                    <StyledButton onClick={() => setPeriod("all")} active={period === "all"}>
+                      <p className="text-[10px] text-[#C8FFD380] uppercase pb-[2px]">All Time</p>
+                    </StyledButton>
                   </div>
                 </div>
               </div>
@@ -65,11 +68,36 @@ export const Leaderboard: FC<TLeaderboardProps> = ({ leaderboard, status, error,
                     <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440]"></div>
                     <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
                     <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
-                    <div className="flex flex-row items-center justify-center gap-2 px-3">
-                      <p className="text-[10px] text-[#C8FFD3] uppercase pb-[2px] pt-1">Score</p>
+                    <div
+                      className="flex flex-row items-center justify-center gap-2 px-3 cursor-pointer relative"
+                      onClick={() => setIsOpen(!isOpen)}
+                    >
+                      <p className="text-[10px] text-[#C8FFD3] uppercase pb-[2px] pt-1">
+                        {sortBy === 'xp' ? 'XP' : 'Points'}
+                      </p>
                       <img src={rightArrow} alt="right-arrow" className="w-2 h-2" />
                     </div>
+
                   </div>
+                  {isOpen && (
+                    <div className="absolute mt-20 bg-[#0d191a] border-[0.5px] border-[#C8FFF440] z-50">
+                      {['xp', 'points'].map((option) => (
+                        <div
+                          key={option}
+                          className="px-4 py-1 hover:bg-[#FC074726] cursor-pointer"
+                          onClick={() => {
+                            setSortBy(option as "xp" | "points");
+                            setIsOpen(false);
+                          }}
+                        >
+                          <p className="text-[10px] text-[#C8FFD3] uppercase">
+                            {option === 'xp' ? 'XP' : 'Points'}
+                          </p>
+                        </div>
+
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -93,7 +121,7 @@ export const Leaderboard: FC<TLeaderboardProps> = ({ leaderboard, status, error,
                         username={leader.username}
                         twitterId={leader.twitterId}
                         twitterScore={leader.twitterScore}
-                        xp={leader.xp}
+                        points={leader.points}
                         overallScore={leader.overallScore}
                         rankFrom={new Date("2025-01-19")}
                       />
@@ -116,19 +144,19 @@ export const Leaderboard: FC<TLeaderboardProps> = ({ leaderboard, status, error,
           </StyledBox>
         </div>
       </Layout>
-      <div className="absolute top-0 left-0 w-full h-screen pointer-events-none">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </>
   )
 };
 
-const StyledButton: FC<{ children: ReactNode, className?: string }> = ({ children, className }) => {
+const StyledButton: FC<{ children: ReactNode, className?: string, onClick?: () => void, active?: boolean }> = ({ children, className, onClick, active = false }) => {
   return (
-    <div className={`relative p-0 overflow-hidden ${className}`}>
-      <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440]"></div>
-      <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
-      <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
+    <div className={`relative p-0 overflow-hidden ${className} ${active ? "bg-[#FC074726]" : ""}`} onClick={onClick}>
+      <div className={`absolute top-0 left-0 w-full h-full border-[0.5px] ${active ? "border-[#FC074780]" : "border-[#C8FFF440]"}`}></div>
+      <div className={`absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] ${active ? "border-[#FC074780]" : "border-[#C8FFF440]"} bg-[#0d191a] z-30`}></div>
+      <div className={`absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] ${active ? "border-[#FC074780]" : "border-[#C8FFF440]"} bg-[#0d191a] z-30`}></div>
       <div className="flex flex-row items-center justify-center gap-2 px-3 pt-1">
         {children}
       </div>
@@ -142,12 +170,12 @@ type RankProps = {
   username: string,
   twitterId: string,
   twitterScore: number,
-  xp: number,
+  points: number,
   overallScore: number,
   rankFrom?: Date
 }
 
-const Rank: FC<RankProps> = ({ rank, username, twitterId, twitterScore, xp, overallScore, rankFrom }) => {
+const Rank: FC<RankProps> = ({ rank, username, twitterId, twitterScore, points, overallScore, rankFrom }) => {
   const color = rank > 3 ? "#C8FFD3" : rank === 1 ? "#FC0757" : rank === 2 ? "#EC69BD" : "#B7A5FF";
   const style = color !== "#C8FFD3" ? {
     background: `linear-gradient(to right, ${color}40 0%, transparent 40%)`,
@@ -196,20 +224,20 @@ const Rank: FC<RankProps> = ({ rank, username, twitterId, twitterScore, xp, over
       </div>
       <div className="flex flex-row items-center justify-end gap-2 w-[60%]">
         <div className="flex flex-col items-end">
-          <span className="text-[8px] text-[#C8FFD380] uppercase">overall score</span>
+          <span className="text-[8px] text-[#C8FFD380] uppercase">xp</span>
           <div className="flex flex-row items-center justify-start gap-1">
             <div className="w-1 h-1 border border-[#FC0747] bg-[#FC074726] rotate-45 -mt-[2px]"></div>
-            <p className={`text-[10px] uppercase`}>{overallScore ? overallScore.toFixed(2) : "-"}</p>
+            <p className={`text-[10px] uppercase`}>{overallScore.toFixed(2)}</p>
           </div>
         </div>
         <div>
           <VerticalDivider style="h-4" />
         </div>
         <div className="flex flex-col items-end">
-          <span className="text-[8px] text-[#C8FFD380] uppercase">gained xp</span>
+          <span className="text-[8px] text-[#C8FFD380] uppercase">points</span>
           <div className="flex flex-row items-center justify-start gap-1">
             <div className="w-1 h-1 border border-[#FC0747] bg-[#FC074726] rotate-45 -mt-[2px]"></div>
-            <p className={`text-[10px] uppercase`}>{xp ? xp.toFixed(2) : "-"}</p>
+            <p className={`text-[10px] uppercase`}>{points}</p>
           </div>
         </div>
       </div>

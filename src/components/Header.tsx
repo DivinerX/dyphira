@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import logo from "@/assets/images/logo.svg";
 import { VerticalDivider } from "./VerticalDivider";
 import settingIcon from "@/assets/images/setting-icon.svg";
@@ -38,8 +38,8 @@ export const Header: FC = () => {
                       <span className="text-[6px] leading-none uppercase text-[#C8FFD3]">points</span>
                     </div>
                     <div className="flex items-center justify-start gap-1">
-                      <span className="text-[10px] leading-none font-bold text-[#C8FFD3]">{user && user?.xp}</span>
                       <div className="w-1 h-1 border-[1px] rotate-45 border-[#F00]"></div>
+                      <span className="text-[10px] leading-none font-bold text-[#C8FFD3]">{user && user?.points}</span>
                     </div>
                   </div>
 

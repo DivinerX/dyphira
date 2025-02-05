@@ -8,11 +8,11 @@ const initialState: TLeaderboardState = {
   leaderboard: [],
 };
 
-export const fetchLeaderboard = createAsyncThunk<TLeaderboard[], void>(
+export const fetchLeaderboard = createAsyncThunk<TLeaderboard[], { period: "24h" | "7d" | "30d" | "all", sortBy: "xp" | "points" }>(
   "leaderboard/fetchLeaderboard",
-  async (_, { rejectWithValue }) => {
+  async ({ period, sortBy }, { rejectWithValue }) => {
     try {
-      const response = await getLeaderboard();
+      const response = await getLeaderboard(period, sortBy);
       return response.data;
     } catch (error) {
       return rejectWithValue(error);

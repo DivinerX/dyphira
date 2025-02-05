@@ -10,13 +10,14 @@ import personPlusIcon from "@/assets/images/person-plus-icon.svg";
 import { TRegisterError, TSignupUser } from "@/types";
 
 type TSignUpProps = {
+  isLoading: boolean
   formData: TSignupUser
   error: TRegisterError
   setFormData: (data: TSignupUser) => void
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-export const SignUp: FC<TSignUpProps> = ({ formData, error, setFormData, handleSubmit }) => {
+export const SignUp: FC<TSignUpProps> = ({ formData, error, setFormData, handleSubmit, isLoading }) => {
   return (
     <Layout>
       <div className="flex flex-col items-center justify-center h-full w-full">
@@ -91,7 +92,7 @@ export const SignUp: FC<TSignUpProps> = ({ formData, error, setFormData, handleS
           <div></div>
           <StyledButton type="submit">
             <div className="flex flex-row items-center justify-center gap-2">
-              <span>CREATE ACCOUNT</span>
+              <span>{isLoading ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}</span>
               <img src={personPlusIcon} alt="person plus icon" />
             </div>
           </StyledButton>

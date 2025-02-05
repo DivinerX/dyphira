@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { TLoginError, TLoginUser } from "@/types";
 
 export const SignInContainer: FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<TLoginUser>({
     email: "",
     password: "",
@@ -21,6 +22,7 @@ export const SignInContainer: FC = () => {
     e.preventDefault()
     console.log(formData)
     try {
+      setIsLoading(true)
       await login(formData)
       navigate("/")
     } catch (err: any) {
@@ -31,15 +33,19 @@ export const SignInContainer: FC = () => {
         attempts: typeof err.response.data === "string"
       })
       throw error
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return <SignIn
+    isLoading={isLoading}
     formData={formData}
     error={error}
     navigate={navigate}
     setFormData={setFormData}
     handleSubmit={handleSubmit}
+
   />;
 };
 
