@@ -3,7 +3,7 @@ export type TLeaderboard = {
   username: string;
   twitterId: string;
   twitterScore: number;
-  xp: number;
+  points: number;
   overallScore: number;
 };
 
@@ -34,7 +34,7 @@ export type TUser = {
   fund?: any;
   twitterId?: string;
   linkedinId?: string;
-  xp?: number;
+  points?: number;
 }
 
 export type TUserState = {

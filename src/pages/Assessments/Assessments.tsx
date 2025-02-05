@@ -152,9 +152,9 @@ export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank, us
               <span className="text-[10px] font-bold uppercase">{new Date(nextAssessmentDate).getTime() > new Date().getTime() ? `${Math.floor((new Date(nextAssessmentDate).getTime() - new Date().getTime()) / (1000 * 60 * 60))}h:${Math.floor((new Date(nextAssessmentDate).getTime() - new Date().getTime()) % (1000 * 60 * 60) / (1000 * 60))}m` : "-"}</span>
             </div>
             <div className="w-full flex flex-row items-center justify-between border-b border-[#1E2927] py-1 px-2 bg-[#C8FFD303]">
-              <span className="text-[#C8FFD380] text-[10px] uppercase">xp earned</span>
+              <span className="text-[#C8FFD380] text-[10px] uppercase">points earned</span>
               <div className="flex flex-row items-center gap-1">
-                <span className="text-[10px] font-bold uppercase">{user && user?.xp}</span>
+                <span className="text-[10px] font-bold uppercase">{user && user?.points}</span>
                 <div className="w-1 h-1 rotate-45 border-[1px] border-[#FC0747] -mt-[1px]"></div>
               </div>
             </div>
