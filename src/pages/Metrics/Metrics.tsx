@@ -21,7 +21,7 @@ export const Metrics: FC<MetricsProps> = ({ score, averageScore, avgScoreList, r
         <TestSummary />
         <Lobe score={score} averageScoreList={avgScoreList} rank={rank} />
       </div>
-      <div className="absolute top-0 left-0 w-full h-screen pointer-events-none">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </Layout>

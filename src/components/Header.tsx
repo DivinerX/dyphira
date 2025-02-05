@@ -38,8 +38,8 @@ export const Header: FC = () => {
                       <span className="text-[6px] leading-none uppercase text-[#C8FFD3]">points</span>
                     </div>
                     <div className="flex items-center justify-start gap-1">
-                      <span className="text-[10px] leading-none font-bold text-[#C8FFD3]">{user && user?.points}</span>
                       <div className="w-1 h-1 border-[1px] rotate-45 border-[#F00]"></div>
+                      <span className="text-[10px] leading-none font-bold text-[#C8FFD3]">{user && user?.points}</span>
                     </div>
                   </div>
 

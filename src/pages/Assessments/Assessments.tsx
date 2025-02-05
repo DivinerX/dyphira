@@ -25,56 +25,51 @@ export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank, us
       <div className="flex flex-row gap-8 py-12 px-36 w-full h-full">
         <div className="flex flex-col gap-4 w-[35%]">
           <StyledHeader title="Available Assessments" />
-          <StyledItem
-            title="Focus Dynamics"
-            caption="MEDIUM"
-            icon={<MockIcon />}
-            rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
-            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
-            decorator={<img src={documentIcon} alt="document" />}
-          />
-          <StyledItem
-            title="Pattern Fusion"
-            caption="EASY"
-            icon={<MockIcon />}
-            rightTop={<p></p>}
-            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">5 MIN</p>}
-            decorator={<img src={documentIcon} alt="document" />}
-          />
-          <StyledItem
-            title="Impulse Precision"
-            caption="INTERMEDIATE"
-            icon={<MockIcon />}
-            rightTop={<p></p>}
-            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">15 MIN</p>}
-            decorator={<img src={documentIcon} alt="document" />}
-          />
-
+          {
+            !user.verified &&
+            <StyledItem
+              title="twitter connection"
+              caption="EASY"
+              icon={<MockIcon />}
+              rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
+              rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">5 MIN</p>}
+              decorator={<img src={documentIcon} alt="document" />}
+            />
+          }
+          {
+            new Date(nextAssessmentDate).getTime() < new Date().getTime() &&
+            <StyledItem
+              title="Interview Preparation"
+              caption="MEDIUM"
+              icon={<MockIcon />}
+              rightTop={<p></p>}
+              rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">15 MIN</p>}
+              decorator={<img src={documentIcon} alt="document" />}
+            />
+          }
           <StyledHeader title="Completed Assessments" />
-          <StyledItem
-            title="Problem Solving"
-            caption="INTERMEDIATE"
-            icon={<MockIcon />}
-            rightTop={<p></p>}
-            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
-            decorator={<img src={documentIcon} alt="document" />}
-          />
-          <StyledItem
-            title="Rapid Perception"
-            caption="MEDIUM"
-            icon={<MockIcon />}
-            rightTop={<p></p>}
-            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
-            decorator={<img src={documentIcon} alt="document" />}
-          />
-          <StyledItem
-            title="Focus Dynamics"
-            caption="MEDIUM"
-            icon={<MockIcon />}
-            rightTop={<p></p>}
-            rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">10 MIN</p>}
-            decorator={<img src={documentIcon} alt="document" />}
-          />
+          {
+            user.verified &&
+            <StyledItem
+              title="twitter connection"
+              caption="EASY"
+              icon={<MockIcon />}
+              rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
+              rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">5 MIN</p>}
+              decorator={<img src={documentIcon} alt="document" />}
+            />
+          }
+          {
+            new Date(nextAssessmentDate).getTime() > new Date().getTime() &&
+            <StyledItem
+              title="Interview Preparation"
+              caption="MEDIUM"
+              icon={<MockIcon />}
+              rightTop={<p></p>}
+              rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">15 MIN</p>}
+              decorator={<img src={documentIcon} alt="document" />}
+            />
+          }
         </div>
         <div className="flex flex-col gap-4 w-[35%]">
           <StyledBox className="w-full">
@@ -176,7 +171,7 @@ export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank, us
           }
         </div>
       </div>
-      <div className="absolute top-0 left-0 w-full h-screen pointer-events-none">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
       </div>
     </Layout>
