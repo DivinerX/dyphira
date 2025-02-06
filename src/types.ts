@@ -35,7 +35,9 @@ export type TUser = {
   twitterId?: string;
   linkedinId?: string;
   points?: number;
+  verified?: boolean;
 }
+
 
 export type TUserState = {
   user: TUser | null;
@@ -95,3 +97,9 @@ export type TAssessmentScore = {
   focus: number;
   ferocity: number;
 }
+
+export type TTakeAssessmentStatus = {
+  twitter: boolean;
+  interview: boolean;
+}
+

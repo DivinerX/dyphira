@@ -7,169 +7,180 @@ import imageFaceIcon from "@/assets/images/image-face-icon.svg";
 import metricListIcon from "@/assets/images/metric-list-icon.svg";
 import reportIcon from "@/assets/images/report-icon.svg";
 import boxes from "@/assets/images/boxes.svg";
+import lockedBoxes from "@/assets/images/locked-boxes.svg";
 import { StyledBox } from "@/components/StyledBox";
 import checkIcon from "@/assets/images/check-icon.svg";
 import back_logo from "@/assets/images/back-logo.svg";
 import resumeIcon from "@/assets/images/resume-icon.svg";
 import { DistributionGraph } from "@/components/DistributionGraph";
-import { useNavigate } from "react-router-dom";
+
+import { contents } from "./contents";
+import { TTakeAssessmentStatus } from "@/types";
 
 type AssessmentsProps = {
   user: any;
   nextAssessmentDate: string | null;
   rank: any;
+  openAssessment: "twitter" | "interview" | null;
+  setOpenAssessment: (openAssessment: "twitter" | "interview" | null) => void;
+  takeAssessmentStatus: TTakeAssessmentStatus;
+  takeAssessment: (option: "twitter" | "interview") => void;
 }
-export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank, user }) => {
+export const Assessments: FC<AssessmentsProps> = ({ nextAssessmentDate, rank, user, openAssessment, setOpenAssessment, takeAssessmentStatus, takeAssessment }) => {
   return (
     <Layout>
       <div className="flex flex-row gap-8 py-12 px-36 w-full h-full">
         <div className="flex flex-col gap-4 w-[35%]">
           <StyledHeader title="Available Assessments" />
           {
-            !user.verified &&
-            <StyledItem
-              title="twitter connection"
-              caption="EASY"
-              icon={<MockIcon />}
-              rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
-              rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">5 MIN</p>}
-              decorator={<img src={documentIcon} alt="document" />}
-            />
-          }
-          {
-            new Date(nextAssessmentDate).getTime() < new Date().getTime() &&
-            <StyledItem
-              title="Interview Preparation"
-              caption="MEDIUM"
-              icon={<MockIcon />}
-              rightTop={<p></p>}
-              rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">15 MIN</p>}
-              decorator={<img src={documentIcon} alt="document" />}
-            />
+            Object.keys(takeAssessmentStatus).map((key) => (
+              !takeAssessmentStatus[key] &&
+              <StyledItem
+                onClick={() => setOpenAssessment(key as "twitter" | "interview")}
+                className={``}
+                title={contents[key as "twitter" | "interview"].title}
+                caption={contents[key as "twitter" | "interview"].caption}
+                icon={<MockIcon />}
+                rightTop={<p></p>}
+                rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">5 MIN</p>}
+                decorator={<img src={documentIcon} alt="document" />}
+              />
+            ))
           }
           <StyledHeader title="Completed Assessments" />
           {
-            user.verified &&
-            <StyledItem
-              title="twitter connection"
-              caption="EASY"
-              icon={<MockIcon />}
-              rightTop={<p className="text-[10px] bg-[#FC07471A] px-1 border border-[#FC074780] uppercase">new</p>}
-              rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">5 MIN</p>}
-              decorator={<img src={documentIcon} alt="document" />}
-            />
-          }
-          {
-            new Date(nextAssessmentDate).getTime() > new Date().getTime() &&
-            <StyledItem
-              title="Interview Preparation"
-              caption="MEDIUM"
-              icon={<MockIcon />}
-              rightTop={<p></p>}
-              rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">15 MIN</p>}
-              decorator={<img src={documentIcon} alt="document" />}
-            />
+            Object.keys(takeAssessmentStatus).map((key) => (
+              takeAssessmentStatus[key] &&
+              <StyledItem
+                onClick={() => setOpenAssessment(key as "twitter" | "interview")}
+                className={``}
+                title={contents[key as "twitter" | "interview"].title}
+                caption={contents[key as "twitter" | "interview"].caption}
+                icon={<MockIcon />}
+                rightTop={<p></p>}
+                rightBottom={<p className="text-[10px] text-[#C8FFD380] uppercase">5 MIN</p>}
+                decorator={<img src={documentIcon} alt="document" />}
+              />
+            ))
           }
         </div>
-        <div className="flex flex-col gap-4 w-[35%]">
-          <StyledBox className="w-full">
-            <div className="flex flex-row items-center justify-between w-full bg-[#C8FFD306] p-2">
-              <div className="flex flex-row items-center gap-2">
-                <img src={imageFaceIcon} alt="image face" />
-                <p className="text-xs uppercase">RAPID PERCEPTION ASSESSMENT</p>
+        {
+          openAssessment &&
+          <div className="flex flex-col gap-4 w-[35%] h-full">
+            <StyledBox className="w-full max-h-[50%]">
+              <div className="w-full overflow-y-auto">
+                <div className="flex flex-row items-center justify-between w-full bg-[#C8FFD306] p-2">
+                  <div className="flex flex-row items-center gap-2">
+                    <img src={imageFaceIcon} alt="image face" />
+                    <p className="text-xs uppercase">{contents[openAssessment].title}</p>
+                  </div>
+                  <span className="text-[10px] text-[#C8FFD380] uppercase">Medium</span>
+                </div>
+                {
+                  contents[openAssessment].focus && contents[openAssessment].focus.length > 0 &&
+                  <div className="flex flex-col items-start justify-between w-full p-2">
+                    <p className="text-xs text-[#C8FFD380] uppercase py-2">mainly focuses on:</p>
+                    <div className="flex flex-col items-center w-full">
+                      {
+                        contents[openAssessment].focus &&
+                        contents[openAssessment].focus.map((focus: string) => (
+                          <RapidPerceptionAssessmentItem key={focus} title={focus} score={0} />
+                        ))
+                      }
+                    </div>
+                  </div>
+                }
               </div>
-              <span className="text-[10px] text-[#C8FFD380] uppercase">Medium</span>
-            </div>
-
-            <div className="flex flex-col items-start justify-between w-full p-2">
-              <p className="text-xs text-[#C8FFD380] uppercase py-2">mainly focuses on:</p>
-              <div className="flex flex-col items-center w-full">
-                <RapidPerceptionAssessmentItem title="REACTION TIME" score={76.00} />
-                <RapidPerceptionAssessmentItem title="PROCESSING SPEED" score={72.00} />
-                <RapidPerceptionAssessmentItem title="VISUAL PERCEPTION" score={68.00} />
-                <RapidPerceptionAssessmentItem title="PATTERN RECOGNITION" score={64.00} />
+            </StyledBox>
+            <div className="w-full max-h-[50%]">
+              <div className="text-[6px] text-[#C8FFD380] uppercase flex flex-row items-center justify-between py-2">
+                <span>DYPHIRA INTELLIGENCE METRICS ALGORITHM</span>
+                <span>#DESCRIPTION</span>
+              </div>
+              <div className="flex flex-row items-center justify-between">
+                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
+                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+              </div>
+              <div className="text-[10px] text-[#C8FFD380] font-mono py-2 overflow-y-auto">
+                {contents[openAssessment].description}
+              </div>
+              <div className="flex flex-row items-center justify-between">
+                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+                <div className="w-full bg-[#C8FFF440] h-[0.5px]"></div>
+                <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
+              </div>
+              <div className="flex flex-row items-center uppercase justify-between text-[6px] text-[#C8FFD380] py-2">
+                <div className="flex flex-col items-start">
+                  <span>dyphira intelligence</span>
+                  <span>metrics algorithm</span>
+                </div>
+                <div className="flex flex-col items-end">
+                  <span>dyphira intelligence</span>
+                  <span>metrics algorithm</span>
+                </div>
               </div>
             </div>
-          </StyledBox>
+          </div>
+        }
+        {
+          openAssessment &&
+          <div className="w-[30%]">
+            <StyledBox className="w-full">
+              <div className="flex flex-row items-center justify-between w-full bg-[#C8FFD306] p-2">
+                <div className="flex flex-row items-center gap-2">
+                  <img src={reportIcon} alt="report" />
+                  <p className="text-xs uppercase">{contents[openAssessment].title} ASSESSMENT</p>
+                </div>
+                <span className=""></span>
+              </div>
+              <div className="w-full px-4 py-2 flex flex-col items-center gap-2">
+                <div className="w-full flex flex-row justify-between items-center">
+                  <p className="text-[#C8FFD3] text-[8px] font-bold uppercase">response evaluation:</p>
+                  <p className="text-[#C8FFD3] text-[10px] font-bold uppercase">34<span className="text-[#C8FFD3] text-[8px] font-normal">/50</span></p>
+                </div>
+                {
+                  takeAssessmentStatus[openAssessment] ?
+                    <img src={boxes} alt="boxes" className="w-full" />
+                    :
+                    <img src={lockedBoxes} alt="locked boxes" className="w-full" />
+                }
+              </div>
 
-          <div>
-            <div className="text-[6px] text-[#C8FFD380] uppercase flex flex-row items-center justify-between py-2">
-              <span>DYPHIRA INTELLIGENCE METRICS ALGORITHM</span>
-              <span>#DESCRIPTION</span>
-            </div>
-            <div className="flex flex-row items-center justify-between">
-              <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-              <div className="w-full bg-[#C8FFF440] h-[0.5px] mt-[1px]"></div>
-              <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-            </div>
-            <div className="text-[10px] text-[#C8FFD380] font-mono py-2">
-              <p>This task evaluates your ability to process visual information, recognize patterns, and react quickly under pressure.</p>
-              <p>You’ll complete challenges like identifying patterns, locating targets, or responding to visual prompts within tight time limits. Distractions and complexity will test your focus and adaptability.</p>
-              <p>Performance is measured by accuracy, speed, and consistency, highlighting your visual perception and cognitive processing skills.</p>
-              <p>Your results will reveal strengths in reaction time, processing speed, and visual perception.</p>
-              <p>Your results will reveal strengths in reaction time, processing speed, and visual perception.</p>
-            </div>
-            <div className="flex flex-row items-center justify-between">
+              <div className="w-full flex flex-row items-center justify-between border-t border-b border-[#1E2927] py-1 px-2">
+                <span className="text-[#C8FFD380] text-[10px] uppercase">{takeAssessmentStatus[openAssessment] ? "time to finish" : "estimated time"}</span>
+                <span className="text-[10px] font-bold uppercase">{contents[openAssessment].time}</span>
+              </div>
+              <div className="w-full flex flex-row items-center justify-between border-b border-[#1E2927] py-1 px-2 bg-[#C8FFD303]">
+                <span className="text-[#C8FFD380] text-[10px] uppercase">xp earned</span>
+                <div className="flex flex-row items-center gap-1">
+                  <span className="text-[10px] font-bold uppercase">{user && user?.twitterScore}</span>
+                  <div className="w-1 h-1 rotate-45 border-[1px] border-[#FC0747] -mt-[1px]"></div>
+                </div>
+              </div>
+              <div className="w-full flex flex-row items-center justify-center p-2">
+                <DistributionGraph rank={rank} take={takeAssessmentStatus[openAssessment]} />
+              </div>
+              <div className="w-full flex flex-row items-center justify-between border-t border-[#1E2927] bg-[#C8FFD303] p-2">
+                <span className="text-[10px] text-[#C8FFD380] uppercase">You ranked:</span>
+                <p className="text-[10px] text-[#FFF047] font-bold uppercase">{
+                  takeAssessmentStatus[openAssessment] ?
+                    `Top ${rank.percentile ? rank.percentile.toFixed(1) : "-"}%` :
+                    "unranked"
+                }</p>
+              </div>
+            </StyledBox>
+            <div className="flex flex-row items-center justify-between py-4">
+
               <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
               <div className="w-full bg-[#C8FFF440] h-[0.5px]"></div>
               <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
             </div>
-            <div className="flex flex-row items-center uppercase justify-between text-[6px] text-[#C8FFD380] py-2">
-              <div className="flex flex-col items-start">
-                <span>dyphira intelligence</span>
-                <span>metrics algorithm</span>
-              </div>
-              <div className="flex flex-col items-end">
-                <span>dyphira intelligence</span>
-                <span>metrics algorithm</span>
-              </div>
-            </div>
+            {
+              takeAssessmentStatus[openAssessment] ? <CompletedButton /> : <ResumeButton onClick={() => takeAssessment(openAssessment)} />
+            }
           </div>
-        </div>
-        <div className="w-[30%]">
-          <StyledBox className="w-full">
-            <div className="flex flex-row items-center justify-between w-full bg-[#C8FFD306] p-2">
-              <div className="flex flex-row items-center gap-2">
-                <img src={reportIcon} alt="report" />
-                <p className="text-xs uppercase">RAPID PERCEPTION ASSESSMENT</p>
-              </div>
-              <span className=""></span>
-            </div>
-            <div className="w-full px-4 py-2 flex flex-col items-center gap-2">
-              <div className="w-full flex flex-row justify-between items-center">
-                <p className="text-[#C8FFD3] text-[8px] font-bold uppercase">response evaluation:</p>
-                <p className="text-[#C8FFD3] text-[10px] font-bold uppercase">34<span className="text-[#C8FFD3] text-[8px] font-normal">/50</span></p>
-              </div>
-              <img src={boxes} alt="boxes" className="w-full" />
-            </div>
-            <div className="w-full flex flex-row items-center justify-between border-t border-b border-[#1E2927] py-1 px-2">
-              <span className="text-[#C8FFD380] text-[10px] uppercase">time to finish</span>
-              <span className="text-[10px] font-bold uppercase">{new Date(nextAssessmentDate).getTime() > new Date().getTime() ? `${Math.floor((new Date(nextAssessmentDate).getTime() - new Date().getTime()) / (1000 * 60 * 60))}h:${Math.floor((new Date(nextAssessmentDate).getTime() - new Date().getTime()) % (1000 * 60 * 60) / (1000 * 60))}m` : "-"}</span>
-            </div>
-            <div className="w-full flex flex-row items-center justify-between border-b border-[#1E2927] py-1 px-2 bg-[#C8FFD303]">
-              <span className="text-[#C8FFD380] text-[10px] uppercase">points earned</span>
-              <div className="flex flex-row items-center gap-1">
-                <span className="text-[10px] font-bold uppercase">{user && user?.points}</span>
-                <div className="w-1 h-1 rotate-45 border-[1px] border-[#FC0747] -mt-[1px]"></div>
-              </div>
-            </div>
-            <div className="w-full flex flex-row items-center justify-center p-2">
-              <DistributionGraph rank={rank} />
-            </div>
-            <div className="w-full flex flex-row items-center justify-between border-t border-[#1E2927] bg-[#C8FFD303] p-2">
-              <span className="text-[10px] text-[#C8FFD380] uppercase">You ranked:</span>
-              <p className="text-[10px] text-[#FFF047] font-bold uppercase">Top {rank.percentile ? rank.percentile.toFixed(1) : "-"}%</p>
-            </div>
-          </StyledBox>
-          <div className="flex flex-row items-center justify-between py-4">
-            <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-            <div className="w-full bg-[#C8FFF440] h-[0.5px]"></div>
-            <div className="w-[2px] h-[2px] rotate-45 bg-[#C8FFF440]"></div>
-          </div>
-          {
-            new Date(nextAssessmentDate).getTime() > new Date().getTime() ? <CompletedButton /> : <ResumeButton />
-          }
-        </div>
+        }
       </div>
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <img src={back_logo} alt="back-logo" className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-100%]" />
@@ -200,9 +211,19 @@ const StyledHeader: FC<{ title: string }> = ({ title }) => {
   );
 };
 
-const StyledItem: FC<{ title: string; caption: string; icon: ReactNode; rightTop: ReactNode; rightBottom: ReactNode; decorator: ReactNode }> = ({ title, caption, icon, rightTop, rightBottom, decorator }) => {
+type StyledItemProps = {
+  title: string;
+  caption: string;
+  icon: ReactNode;
+  rightTop: ReactNode;
+  rightBottom: ReactNode;
+  decorator: ReactNode;
+  onClick?: () => void;
+  className?: string;
+}
+const StyledItem: FC<StyledItemProps> = ({ title, caption, icon, rightTop, rightBottom, decorator, onClick, className }) => {
   return (
-    <div className="flex flex-row items-center justify-between gap-2">
+    <div className={`flex flex-row items-center justify-between gap-2 ${className} ${onClick && "cursor-pointer"}`} onClick={onClick}>
       {decorator}
       <StyledBox className="w-full">
         <div className="flex flex-row items-center justify-between w-full p-2 gap-2">
@@ -247,7 +268,7 @@ const RapidPerceptionAssessmentItem: FC<{ title: string; score: number }> = ({ t
 
 const CompletedButton: FC = () => {
   return (
-    <div className={`relative p-0 overflow-hidden`}>
+    <div className={`relative p-0 overflow-hidden cursor-default`}>
       <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440]"></div>
       <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
       <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
@@ -259,12 +280,9 @@ const CompletedButton: FC = () => {
   )
 }
 
-const ResumeButton: FC = () => {
-  const navigate = useNavigate();
+const ResumeButton: FC<{ onClick: () => void }> = ({ onClick }) => {
   return (
-    <div className={`relative p-0 overflow-hidden cursor-pointer`} onClick={() => {
-      navigate("/assessment");
-    }}>
+    <div className={`relative p-0 overflow-hidden cursor-pointer`} onClick={onClick}>
       <div className="absolute top-0 left-0 w-full h-full border-[0.5px] border-[#C8FFF440] pointer-events-none"></div>
       <div className="absolute -top-1 -left-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
       <div className="absolute -bottom-1 -right-1 w-2 h-2 rotate-45 border-[0.5px] border-[#C8FFF440] bg-[#0d191a] z-30"></div>
