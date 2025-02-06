@@ -1,4 +1,4 @@
-import { TakeAssessment } from "./TakeAssessment";
+import { TakeAssessment } from "./InterviewAssessment";
 import { useMediaPermissions } from "@/contexts/media.hook";
 
 import { useEffect, useState } from "react";
@@ -103,41 +103,6 @@ export const TakeAssessmentContainer = () => {
       .unwrap()
   };
 
-  
-  const openAccount = (provider: string) => {
-    switch (provider) {
-      case "twitter":
-        window.open(
-          `https://twitter.com/i/user/${user?.twitterId}`,
-          "_blank",
-          "noreferrer",
-        );
-        break;
-      case "linkedin":
-        window.open(
-          `https://www.linkedin.com/in/${user?.linkedinId}`,
-          "_blank",
-          "noreferrer",
-        );
-        break;
-
-      default:
-        console.log("Uknown strategy");
-    }
-  };
-  
-  const accountLinked = (provider: string) => {
-    return !!user?.[`${provider}Id` as keyof TUser];
-  };
-
-  const handleLinkAccount = (provider: string) => () => {
-    if (accountLinked(provider)) {
-      openAccount(provider);
-    } else {
-      const accessToken = storage.getAccessToken();
-      window.location.href = `${import.meta.env.VITE_BASE_API_URL}/social/${provider}?accessToken=${accessToken}`;
-    }
-  };
   const processQuestionCompletion = async () => {
     try {
       await handleUpdateAnswer();
@@ -207,7 +172,6 @@ export const TakeAssessmentContainer = () => {
     assessmentCompleted={assessmentCompleted}
     assessment={assessment}
     startAssessment={startAssessment}
-    handleLinkAccount={handleLinkAccount}
     handleRecordingStart={handleRecordingStart}
     processQuestionCompletion={processQuestionCompletion}
   />;

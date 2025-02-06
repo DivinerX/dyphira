@@ -2,23 +2,26 @@
 import { Route, Routes as RouterRoutes } from "react-router-dom";
 import { MetricsContainer } from "./pages/Metrics/MetricsContainer";
 import { AssessmentsContainer } from "./pages/Assessments/AssessmentsContainer";
-import { TakeAssessmentContainer } from "./pages/TakeAssessment/TakeAssessmentContainer";
+import { TakeAssessmentContainer } from "./pages/TakeAssessment/InterviewAssessment/InterviewAssessmentContainer";
 import { LeaderboardContainer } from "./pages/Leaderboard/LeaderboardContainer";
 import { ReferralsContainer } from "./pages/Referrals/ReferralsContainer";
 import { SignInContainer } from "./pages/SignIn/SignInContainer";
 import { SignUpContainer } from "./pages/SignUp/SignUpContainer";
 import PrivateRoute from "./components/PrivateRoute";
+import { TwitterAssessmentContainer } from "./pages/TakeAssessment/TwitterAssessment/TwitterAssessmentContainer";
 
 // const Loading = lazy(() => import("./pages/Loading"));
 
 export const routes = [
-  { path: "/", element: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
+  { path: "/", element: <PrivateRoute><MetricsContainer /></PrivateRoute> },
   { path: "/metrics", element: <PrivateRoute><MetricsContainer /></PrivateRoute> },
   // { path: "/metrics", element: <MetricsContainer /> },
-  { path: "/assessment", element: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
+  { path: "/assessments/twitter", element: <PrivateRoute><TwitterAssessmentContainer /></PrivateRoute> },
+  { path: "/assessments/interview", element: <PrivateRoute><TakeAssessmentContainer /></PrivateRoute> },
   { path: "/assessments", element: <PrivateRoute><AssessmentsContainer /></PrivateRoute> },
   { path: "/rankings", element: <PrivateRoute><LeaderboardContainer /></PrivateRoute> },
   { path: "/referrals", element: <PrivateRoute><ReferralsContainer /></PrivateRoute> },
+
   { path: "/login", element: <SignInContainer /> },
   { path: "/signup", element: <SignUpContainer /> },
 ];

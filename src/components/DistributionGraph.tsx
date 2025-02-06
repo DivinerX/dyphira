@@ -11,6 +11,7 @@ import {
   Legend
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import { TTakeAssessmentStatus } from '@/types';
 
 ChartJS.register(
   CategoryScale,
@@ -25,9 +26,10 @@ ChartJS.register(
 
 interface DistributionGraphProps {
   rank: any;
+  take: boolean;
 }
 
-export const DistributionGraph: FC<DistributionGraphProps> = ({ rank }) => {
+export const DistributionGraph: FC<DistributionGraphProps> = ({ rank, take }) => {
   // Function to calculate normal distribution
   const normalDistribution = (x: number, mean: number, stdDev: number) => {
     const coefficient = 1 / (stdDev * Math.sqrt(2 * Math.PI));
@@ -59,7 +61,7 @@ export const DistributionGraph: FC<DistributionGraphProps> = ({ rank }) => {
     }]
   };
 
-  const options = {
+  let options = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -90,33 +92,38 @@ export const DistributionGraph: FC<DistributionGraphProps> = ({ rank }) => {
         display: false
       },
       annotation: {
-        annotations: {
-          ...stepperAnnotations,
-          youAreHere: {
-            type: 'line' as const,
-            xMin: rank.percentile,
-            xMax: rank.percentile,
-            borderColor: '#FFD700',
-            borderWidth: 2,
-            label: {
-              content: 'YOU ARE HERE',
-              display: true,
-              position: 'start',
-              backgroundColor: 'transparent',
-              color: '#FFD700',
-              font: {
-                size: 8,
-                weight: 'bold'
-              }
-            }
-          },
-        }
       }
     }
   };
 
+  if (take) {
+    options.plugins.annotation = {
+      annotations: {
+        ...stepperAnnotations,
+        youAreHere: {
+          type: 'line' as const,
+          xMin: rank.percentile,
+          xMax: rank.percentile,
+          borderColor: '#FFD700',
+          borderWidth: 2,
+          label: {
+            content: 'YOU ARE HERE',
+            display: true,
+            position: 'start',
+            backgroundColor: 'transparent',
+            color: '#FFD700',
+            font: {
+              size: 8,
+              weight: 'bold'
+            }
+          }
+        },
+      }
+    };
+  }
   return (
     <div id="chart-container">
+
       <Line data={data} options={options as any} />
     </div>
   );

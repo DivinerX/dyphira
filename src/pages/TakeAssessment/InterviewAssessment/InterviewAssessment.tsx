@@ -16,7 +16,6 @@ type TTakeAssessment = {
   handleRecordingStart: () => void,
   startAssessment: () => void,
   processQuestionCompletion: () => void,
-  handleLinkAccount: (provider: string) => () => void,
 }
 
 export const TakeAssessment: FC<TTakeAssessment> = ({
@@ -26,7 +25,6 @@ export const TakeAssessment: FC<TTakeAssessment> = ({
   handleRecordingStart,
   startAssessment,
   processQuestionCompletion,
-  handleLinkAccount,
 }) => {
   return (
     <Layout>
@@ -40,28 +38,9 @@ export const TakeAssessment: FC<TTakeAssessment> = ({
               <ProgressBarComp />
 
               <div className='flex flex-col justify-center items-center min-h-72 w-1/2 text-[12px] text-[#E4FFEA] uppercase text-center gap-4 [text-shadow:0_0_15px_rgba(70,255,91,0.25),0_0_2px_rgba(125,255,151,0.5)]'>
-                {
-                  user && user.twitterId ?
-                    <><p >Imagine you’re presenting an investment thesis<br /> for a controversial or misunderstood technology.</p>
-                      {assessment && <p >Why should you receive Dyphira?</p>}
-                    </>
-                    :
-                    <>
-                      <p>THE DYPHIRA ALGORITHM WILL ANALYZE YOUR NETWORK, INFLUENCE, AND ENGAGEMENT ON TWITTER TO ASSESS YOUR CONNECTIONS AND SOCIAL CAPITAL.
-                      </p>
-                      <p>THE MORE IMPACTFUL YOUR PRESENCE, THE HIGHER YOUR SCORE.</p>
-                      <p>CLICK BELOW TO CONNECT YOUR TWITTER ACCOUNT.</p>
-                      <StyledBoxWithoutWhiteCorners>
-                        <div
-                          className='flex flex-row items-center justify-between px-6 py-1 cursor-pointer'
-                          onClick={handleLinkAccount("twitter")}
-                        >
-                          <span className='text-[10px] uppercase -mb-[2px]'>connect twitter</span>
-                          <img src={twitterIcon} alt="twitter icon" className='-m-3' />
-                        </div>
-                      </StyledBoxWithoutWhiteCorners>
-                    </>
-                }
+                <><p >Imagine you’re presenting an investment thesis<br /> for a controversial or misunderstood technology.</p>
+                  {assessment && <p >Why should you receive Dyphira?</p>}
+                </>
               </div>
               <div className='flex flex-row justify-between items-end w-full'>
                 <Spectrum />
